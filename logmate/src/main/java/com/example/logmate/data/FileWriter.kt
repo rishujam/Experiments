@@ -23,6 +23,10 @@ class FileWriter(
     private val maxFileSize: Int
 ) {
 
+    private var areObjectsInitialized = false
+    private val bufferLogList = mutableListOf<String>()
+    private var hasDelayedLogsAdded = false
+
     private var coroutineContext: CoroutineContext = SupervisorJob()
     private val serviceScope = CoroutineScope(coroutineContext + Dispatchers.IO)
 
@@ -39,6 +43,7 @@ class FileWriter(
             withContext(Dispatchers.Main) {
                 val logFile = File(logsFolder, currFileName)
                 queueFile = QueueFile.Builder(logFile).build()
+                areObjectsInitialized = true
             }
         }
     }
@@ -62,19 +67,26 @@ class FileWriter(
             logBuilder.append(Log.getStackTraceString(t))
         }
         logBuilder.append("\n")
-        if(hasFileReachedMaxSie()) {
-            serviceScope.launch {
-                val currFileName = preferences.setCurrFileName()
-                withContext(Dispatchers.Main) {
-                    val logFile = File(logsFolder, currFileName)
-                    queueFile = QueueFile.Builder(logFile).build()
+        if(areObjectsInitialized) {
+            try {
+                queueFile.add(logBuilder.toString().toByteArray())
+                if(hasDelayedLogsAdded) {
+                    queueFile.add(bufferLogList.toString().toByteArray())
+                }
+            } catch (e: IOException) {
+                Timber.d( "Error writing to file: ${e.message}")
+            }
+            if(hasFileReachedMaxSize()) {
+                serviceScope.launch {
+                    val currFileName = preferences.setCurrFileName()
+                    withContext(Dispatchers.Main) {
+                        val logFile = File(logsFolder, currFileName)
+                        queueFile = QueueFile.Builder(logFile).build()
+                    }
                 }
             }
-        }
-        try {
-            queueFile.add(logBuilder.toString().toByteArray())
-        } catch (e: IOException) {
-            Timber.d( "Error writing to file: ${e.message}")
+        } else {
+            bufferLogList.add("[DELAYED] $logBuilder")
         }
     }
 
@@ -90,7 +102,7 @@ class FileWriter(
         }
     }
 
-    private fun hasFileReachedMaxSie(): Boolean {
+    private fun hasFileReachedMaxSize(): Boolean {
         val fileSizeInKb = queueFile.file().length().div(1024)
         if (fileSizeInKb >= maxFileSize) {
             return true

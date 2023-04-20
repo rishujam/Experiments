@@ -11,5 +11,10 @@ class MainApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         LogMate.mate(applicationContext, LogMateConfig(40, LogMateProperties.STORE_SHOW))
+        var i = 0
+        while(i <10) {
+            LogMate.d("current value: i = $i")
+            i++
+        }
     }
 }
