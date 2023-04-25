@@ -67,7 +67,6 @@
             android:layout_marginRight="16dp"
             android:background="@drawable/dc_onboarding_invitecode_buttonon"
             android:text="Next"
-            android:onClick="@{()->viewModel.clicked()}"
             app:backgroundTint="@null"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"

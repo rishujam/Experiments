@@ -1,5 +1,6 @@
 package com.example.experiments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -8,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.experiments.databinding.ActivityMainBinding
 import com.example.experiments.permission.PermissionManager
+import com.example.experiments.userstory.UserStoryActivity
+import com.example.logmate.LogMate
 import java.io.BufferedReader
 import java.io.FileInputStream
 import java.io.InputStreamReader
@@ -24,8 +27,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.viewModel = mainViewModel
         binding.button.setOnClickListener {
-            Toast.makeText(this, "CLicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Clicked", Toast.LENGTH_LONG).show()
+            startActivity(Intent(this, UserStoryActivity::class.java))
         }
+
+        LogMate.d("main activity: 0")
+
 
     }
 

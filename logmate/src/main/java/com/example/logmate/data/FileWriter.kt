@@ -70,8 +70,10 @@ class FileWriter(
         if(areObjectsInitialized) {
             try {
                 queueFile.add(logBuilder.toString().toByteArray())
+                Log.d("RishuTest", "added in queue file")
                 if(hasDelayedLogsAdded) {
                     queueFile.add(bufferLogList.toString().toByteArray())
+                    Log.d("RishuTest", "added buffer in queue file")
                 }
             } catch (e: IOException) {
                 Timber.d( "Error writing to file: ${e.message}")
@@ -86,6 +88,7 @@ class FileWriter(
                 }
             }
         } else {
+            Log.d("RishuTest", "buffer log")
             bufferLogList.add("[DELAYED] $logBuilder")
         }
     }
