@@ -12,22 +12,28 @@
         android:id="@+id/storyDisplayVideo"
         app:surface_type="texture_view" />
 
+    <ImageView
+        android:id="@+id/storyDisplayImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        app:constraint_referenced_ids="topGradient,storiesProgressView,ivProfileStoryDetail,tvUsernameStoryDetail,tvTimePosted"
-        android:visibility="visible" />
+        app:constraint_referenced_ids="topGradient,storiesProgressView,ivProfileStoryDetail,tvUsernameStoryDetail,tvTimePosted" />
 
     <View
         android:id="@+id/topGradient"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="66dp"
+        android:elevation="2dp"
         android:background="@drawable/story_top_shadow"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.example.experiments.userstory.customview.StoriesProgressView
+    <com.example.experiments.userstorynew.views.StoryTopProgressBar
         android:id="@+id/storiesProgressView"
         android:layout_width="match_parent"
         android:layout_height="3dp"
@@ -38,10 +44,38 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/storyDisplayImage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:id="@+id/ivProfileStoryDetail"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTimePosted"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvUsernameStoryDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/ivProfileStoryDetail"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="16dp"
+        android:paddingStart="16dp"
+        android:includeFontPadding="false"
+        android:textColor="@color/white"
+        android:text="Username"/>
+
+    <TextView
+        android:id="@+id/tvTimePosted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:text="3h"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/ivProfileStoryDetail"
+        app:layout_constraintTop_toBottomOf="@id/tvUsernameStoryDetail" />
 
     <ProgressBar
         android:id="@+id/storyDisplayVideoProgress"
@@ -80,41 +114,5 @@
         app:layout_constraintStart_toEndOf="@id/guidelineNextPrev"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <ImageView
-        android:id="@+id/ivProfileStoryDetail"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/tvTimePosted"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvUsernameStoryDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/ivProfileStoryDetail"
-        app:layout_constraintTop_toTopOf="parent"
-        android:paddingTop="16dp"
-        android:paddingStart="16dp"
-        android:includeFontPadding="false"
-        android:textColor="@color/white"
-        android:text="Username"/>
-
-    <TextView
-        android:id="@+id/tvTimePosted"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:text="3h"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/ivProfileStoryDetail"
-        app:layout_constraintTop_toBottomOf="@id/tvUsernameStoryDetail" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

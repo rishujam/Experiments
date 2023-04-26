@@ -1,4 +1,4 @@
-package com.example.experiments.userstory
+package com.example.experiments.userstorynew
 
 import android.animation.Animator
 import android.animation.ValueAnimator
@@ -7,27 +7,28 @@ import android.os.Bundle
 import android.util.SparseIntArray
 import android.widget.Toast
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import com.example.experiments.userstory.customview.StoryPagerAdapter
-import com.example.experiments.userstory.utils.CubeOutTransformer
-import com.c2m.storyviewer.utils.StoryGenerator
-import com.example.experiments.databinding.ActivityUserStoryBinding
-import com.example.experiments.userstory.utils.PageViewOperator
+import com.example.experiments.databinding.ActivityStoryBinding
+import com.example.experiments.userstorynew.adapters.StoryPagerAdapter
+import com.example.experiments.userstorynew.listeners.AutoNavigateListener
+import com.example.experiments.userstorynew.listeners.StoryPageChangeListener
+import com.example.experiments.userstorynew.models.UserData
+import com.example.experiments.userstorynew.models.UserList
+import com.example.experiments.userstorynew.utils.CubeOutTransformer
+import com.example.experiments.userstorynew.utils.StoryGen
 
-class UserStoryActivity : AppCompatActivity(), PageViewOperator {
+class StoryActivity : AppCompatActivity(), AutoNavigateListener {
 
-    private lateinit var binding: ActivityUserStoryBinding
+    private lateinit var binding: ActivityStoryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityUserStoryBinding.inflate(layoutInflater)
+        binding = ActivityStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setUpPager()
+        val data = intent.extras?.getParcelable<UserList>("user_list")
+        setUpPager((data as UserList).list)
     }
 
-    private lateinit var pagerAdapter: StoryPagerAdapter
-    private var currentPage: Int = 0
-
-    override fun backPageView() {
+    override fun backPageNavigate() {
         if (binding.viewPager.currentItem > 0) {
             try {
                 fakeDrag(false)
@@ -37,7 +38,7 @@ class UserStoryActivity : AppCompatActivity(), PageViewOperator {
         }
     }
 
-    override fun nextPageView() {
+    override fun nextPageNavigate() {
         if (binding.viewPager.currentItem + 1 < (binding.viewPager.adapter?.count ?: 0)) {
             try {
                 fakeDrag(true)
@@ -50,9 +51,10 @@ class UserStoryActivity : AppCompatActivity(), PageViewOperator {
         }
     }
 
-    private fun setUpPager() {
-        val storyUserList = StoryGenerator.generateStories()
+    private lateinit var pagerAdapter: StoryPagerAdapter
+    private var currentPage: Int = 0
 
+    private fun setUpPager(storyUserList: ArrayList<UserData>) {
         pagerAdapter = StoryPagerAdapter(
             supportFragmentManager,
             storyUserList
@@ -65,7 +67,7 @@ class UserStoryActivity : AppCompatActivity(), PageViewOperator {
                 CubeOutTransformer()
             )
         }
-        binding.viewPager.addOnPageChangeListener(object : PageChangeListener() {
+        binding.viewPager.addOnPageChangeListener(object : StoryPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 currentPage = position
@@ -77,16 +79,10 @@ class UserStoryActivity : AppCompatActivity(), PageViewOperator {
         })
     }
 
-    private fun currentFragment(): StoryDisplayFragment {
-        return pagerAdapter.findFragmentByPosition(binding.viewPager, currentPage) as StoryDisplayFragment
+    private fun currentFragment(): StoryFragment {
+        return pagerAdapter.findFragmentByPosition(binding.viewPager, currentPage) as StoryFragment
     }
 
-    /**
-     * Change ViewPage sliding programmatically(not using reflection).
-     * https://tech.dely.jp/entry/2018/12/13/110000
-     * What for?
-     * setCurrentItem(int, boolean) changes too fast. And it cannot set animation duration.
-     */
     private var prevDragPosition = 0
 
     private fun fakeDrag(forward: Boolean) {
@@ -130,5 +126,4 @@ class UserStoryActivity : AppCompatActivity(), PageViewOperator {
     companion object {
         val progressState = SparseIntArray()
     }
-
 }

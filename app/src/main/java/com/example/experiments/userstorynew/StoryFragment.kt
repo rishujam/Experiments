@@ -1,4 +1,4 @@
-package com.example.experiments.userstory
+package com.example.experiments.userstorynew
 
 import android.content.Context
 import android.graphics.Color
@@ -11,17 +11,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.example.experiments.userstory.customview.StoriesProgressView
-import com.example.experiments.userstory.data.Story
-import com.example.experiments.userstory.data.StoryUser
-import com.c2m.storyviewer.utils.OnSwipeTouchListener
-import com.example.experiments.userstory.utils.hide
-import com.example.experiments.userstory.utils.show
 import com.example.experiments.MainApplication
 import com.example.experiments.R
-import com.example.experiments.databinding.FragmentStoryDisplay1Binding
-import com.example.experiments.databinding.FragmentStoryDisplayBinding
-import com.example.experiments.userstory.utils.PageViewOperator
+import com.example.experiments.databinding.FragmentStoryBinding
+import com.example.experiments.userstorynew.listeners.AutoNavigateListener
+import com.example.experiments.userstorynew.listeners.OnSwipeTouchListener
+import com.example.experiments.userstorynew.managers.StoryViewedStateManager
+import com.example.experiments.userstorynew.models.Story
+import com.example.experiments.userstorynew.models.UserData
+import com.example.experiments.userstorynew.utils.hide
+import com.example.experiments.userstorynew.utils.show
+import com.example.experiments.userstorynew.views.StoryTopProgressBar
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.Player
@@ -31,29 +31,25 @@ import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import java.util.*
-import kotlin.collections.ArrayList
 
 /*
- * Created by Sudhanshu Kumar on 24/04/23.
+ * Created by Sudhanshu Kumar on 25/04/23.
  */
 
-class StoryDisplayFragment : Fragment(), StoriesProgressView.StoriesListener {
+class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
 
-    private var _binding : FragmentStoryDisplay1Binding?=null
+    private var _binding: FragmentStoryBinding? = null
     private val binding get() = _binding!!
 
+    private var storyUser: UserData? = null
+    private val stories: ArrayList<Story> by
+    lazy { storyUser!!.stories }
     private val position: Int by
     lazy { arguments?.getInt(EXTRA_POSITION) ?: 0 }
 
-    private var storyUser: StoryUser? = null
-
-    private val stories: ArrayList<Story> by
-    lazy { storyUser!!.stories }
-
     private var simpleExoPlayer: SimpleExoPlayer? = null
     private lateinit var mediaDataSourceFactory: DataSource.Factory
-    private var pageViewOperator: PageViewOperator? = null
+    private var pageViewOperator: AutoNavigateListener? = null
     private var counter = 0
     private var pressTime = 0L
     private var limit = 500L
@@ -65,21 +61,24 @@ class StoryDisplayFragment : Fragment(), StoriesProgressView.StoriesListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentStoryDisplay1Binding.inflate(inflater,container,false)
+        _binding = FragmentStoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        storyUser = arguments?.getSerializable(EXTRA_STORY_USER) as StoryUser
+        storyUser = arguments?.getParcelable(EXTRA_STORY_USER)
         binding.storyDisplayVideo.useController = false
+        storyUser?.let {
+            StoryViewedStateManager.addToViewed(Pair(it.username, true))
+        }
         updateStory()
         setUpUi()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        this.pageViewOperator = context as PageViewOperator
+        this.pageViewOperator = context as AutoNavigateListener
     }
 
     override fun onStart() {
@@ -101,7 +100,7 @@ class StoryDisplayFragment : Fragment(), StoriesProgressView.StoriesListener {
             binding.storiesProgressView.startStories()
         } else {
             // restart animation
-            counter = UserStoryActivity.progressState.get(arguments?.getInt(EXTRA_POSITION) ?: 0)
+            counter = StoryActivity.progressState.get(arguments?.getInt(EXTRA_POSITION) ?: 0)
             binding.storiesProgressView.startStories(counter)
         }
     }
@@ -110,32 +109,6 @@ class StoryDisplayFragment : Fragment(), StoriesProgressView.StoriesListener {
         super.onPause()
         simpleExoPlayer?.playWhenReady = false
         binding.storiesProgressView.abandon()
-    }
-
-    override fun onComplete() {
-        simpleExoPlayer?.release()
-        pageViewOperator?.nextPageView()
-    }
-
-    override fun onPrev() {
-        if (counter - 1 < 0) return
-        --counter
-        savePosition(counter)
-        updateStory()
-    }
-
-    override fun onNext() {
-        if (stories.size <= counter + 1) {
-            return
-        }
-        ++counter
-        savePosition(counter)
-        updateStory()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        simpleExoPlayer?.release()
     }
 
     private fun updateStory() {
@@ -152,9 +125,9 @@ class StoryDisplayFragment : Fragment(), StoriesProgressView.StoriesListener {
             Glide.with(this).load(stories[counter].url).into(binding.storyDisplayImage)
         }
 
-        val cal: Calendar = Calendar.getInstance(Locale.ENGLISH).apply {
-            timeInMillis = stories[counter].storyDate
-        }
+//        val cal: Calendar = Calendar.getInstance(Locale.ENGLISH).apply {
+//            timeInMillis = stories[counter].storyDate
+//        }
 //        binding.storyDisplayTime.text = DateFormat.format("MM-dd-yyyy HH:mm:ss", cal).toString()
     }
 
@@ -192,7 +165,7 @@ class StoryDisplayFragment : Fragment(), StoriesProgressView.StoriesListener {
                 super.onPlayerError(error)
                 binding.storyDisplayVideoProgress.hide()
                 if (counter == stories.size.minus(1)) {
-                    pageViewOperator?.nextPageView()
+                    pageViewOperator?.nextPageNavigate()
                 } else {
                     binding.storiesProgressView.skip()
                 }
@@ -229,14 +202,14 @@ class StoryDisplayFragment : Fragment(), StoriesProgressView.StoriesListener {
                 when (view) {
                     binding.nextStory -> {
                         if (counter == stories.size - 1) {
-                            pageViewOperator?.nextPageView()
+                            pageViewOperator?.nextPageNavigate()
                         } else {
                             binding.storiesProgressView.skip()
                         }
                     }
                     binding.prevStory -> {
                         if (counter == 0) {
-                            pageViewOperator?.backPageView()
+                            pageViewOperator?.backPageNavigate()
                         } else {
                             binding.storiesProgressView.reverse()
                         }
@@ -245,7 +218,8 @@ class StoryDisplayFragment : Fragment(), StoriesProgressView.StoriesListener {
             }
 
             override fun onLongClick() {
-                hideStoryOverlay()
+                binding.group.visibility = View.INVISIBLE
+                pauseCurrentStory()
             }
 
             override fun onTouchView(view: View, event: MotionEvent): Boolean {
@@ -257,7 +231,7 @@ class StoryDisplayFragment : Fragment(), StoriesProgressView.StoriesListener {
                         return false
                     }
                     MotionEvent.ACTION_UP -> {
-                        showStoryOverlay()
+                        binding.group.visibility = View.VISIBLE
                         resumeCurrentStory()
                         return limit < System.currentTimeMillis() - pressTime
                     }
@@ -274,34 +248,17 @@ class StoryDisplayFragment : Fragment(), StoriesProgressView.StoriesListener {
         binding.storiesProgressView.setAllStoryDuration(4000L)
         binding.storiesProgressView.setStoriesListener(this)
 
-        Glide.with(this).load(storyUser?.profilePicUrl).circleCrop().into(binding.ivProfileStoryDetail)
+        Glide.with(this).load(storyUser?.profilePicUrl).circleCrop()
+            .into(binding.ivProfileStoryDetail)
         binding.tvUsernameStoryDetail.text = storyUser?.username
     }
 
-    private fun showStoryOverlay() {
-        if (binding.group.alpha != 0F) return
-
-        binding.group.animate()
-            .setDuration(100)
-            .alpha(1F)
-            .start()
-    }
-
-    private fun hideStoryOverlay() {
-        if (binding.group.alpha != 1F) return
-
-        binding.group.animate()
-            .setDuration(200)
-            .alpha(0F)
-            .start()
-    }
-
     private fun savePosition(pos: Int) {
-        UserStoryActivity.progressState.put(position, pos)
+        StoryActivity.progressState.put(position, pos)
     }
 
     private fun restorePosition(): Int {
-        return UserStoryActivity.progressState.get(position)
+        return StoryActivity.progressState.get(position)
     }
 
     fun pauseCurrentStory() {
@@ -312,7 +269,7 @@ class StoryDisplayFragment : Fragment(), StoriesProgressView.StoriesListener {
     fun resumeCurrentStory() {
         if (onResumeCalled) {
             simpleExoPlayer?.playWhenReady = true
-            showStoryOverlay()
+            binding.group.visibility = View.VISIBLE
             binding.storiesProgressView.resume()
         }
     }
@@ -320,18 +277,38 @@ class StoryDisplayFragment : Fragment(), StoriesProgressView.StoriesListener {
     companion object {
         private const val EXTRA_POSITION = "EXTRA_POSITION"
         private const val EXTRA_STORY_USER = "EXTRA_STORY_USER"
-        fun newInstance(position: Int, story: StoryUser): StoryDisplayFragment {
-            return StoryDisplayFragment().apply {
+        fun newInstance(position: Int, story: UserData): StoryFragment {
+            return StoryFragment().apply {
                 arguments = Bundle().apply {
                     putInt(EXTRA_POSITION, position)
-                    putSerializable(EXTRA_STORY_USER, story)
+                    putParcelable(EXTRA_STORY_USER, story)
                 }
             }
         }
+    }
+
+    override fun onComplete() {
+        simpleExoPlayer?.release()
+        pageViewOperator?.nextPageNavigate()
+    }
+
+    override fun onPrev() {
+        if (counter - 1 < 0) return
+        --counter
+        savePosition(counter)
+        updateStory()
+    }
+
+    override fun onNext() {
+        if (stories.size <= counter + 1) return
+        ++counter
+        savePosition(counter)
+        updateStory()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
 }

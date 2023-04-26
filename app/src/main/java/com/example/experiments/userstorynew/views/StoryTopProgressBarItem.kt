@@ -1,17 +1,16 @@
-package com.example.experiments.userstory.customview
+package com.example.experiments.userstorynew.views
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
-import android.view.animation.Animation.AnimationListener
 import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
-import com.example.experiments.userstory.utils.PausableScaleAnimation
 import com.example.experiments.R
+import com.example.experiments.userstorynew.utils.PausableScaleAnimation
 
-class PausableProgressBar @JvmOverloads constructor(
+class StoryTopProgressBarItem @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -21,7 +20,7 @@ class PausableProgressBar @JvmOverloads constructor(
     private var maxProgressView: View? = null
     private var animation: PausableScaleAnimation? = null
     private var duration = DEFAULT_PROGRESS_DURATION.toLong()
-    private var callback: Callback? = null
+    private var callback: ProgressCallback? = null
     private var isStarted = false
 
     init {
@@ -38,7 +37,7 @@ class PausableProgressBar @JvmOverloads constructor(
         }
     }
 
-    fun setCallback(callback: Callback) {
+    fun setCallback(callback: ProgressCallback) {
         this.callback = callback
     }
 
@@ -69,13 +68,13 @@ class PausableProgressBar @JvmOverloads constructor(
     }
 
     private fun finishProgress(isMax: Boolean) {
-        if (isMax) maxProgressView!!.setBackgroundResource(R.color.progress_max_active)
-        maxProgressView!!.visibility = if (isMax) View.VISIBLE else View.GONE
+        if (isMax) maxProgressView?.setBackgroundResource(R.color.progress_max_active)
+        maxProgressView?.visibility = if (isMax) View.VISIBLE else View.GONE
         if (animation != null) {
-            animation!!.setAnimationListener(null)
-            animation!!.cancel()
+            animation?.setAnimationListener(null)
+            animation?.cancel()
             if (callback != null) {
-                callback!!.onFinishProgress()
+                callback?.onFinishProgress()
             }
         }
     }
@@ -94,21 +93,21 @@ class PausableProgressBar @JvmOverloads constructor(
                 Animation.RELATIVE_TO_SELF,
                 0f
             )
-        animation!!.duration = duration
-        animation!!.interpolator = LinearInterpolator()
-        animation!!.setAnimationListener(object : AnimationListener {
+        animation?.duration = duration
+        animation?.interpolator = LinearInterpolator()
+        animation?.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {
                 if (isStarted) {
                     return
                 }
                 isStarted = true
-                frontProgressView!!.visibility = View.VISIBLE
-                if (callback != null) callback!!.onStartProgress()
+                frontProgressView?.visibility = View.VISIBLE
+                if (callback != null) callback?.onStartProgress()
             }
 
             override fun onAnimationEnd(animation: Animation) {
                 isStarted = false
-                if (callback != null) callback!!.onFinishProgress()
+                if (callback != null) callback?.onFinishProgress()
             }
 
             override fun onAnimationRepeat(animation: Animation) {
@@ -139,7 +138,7 @@ class PausableProgressBar @JvmOverloads constructor(
         }
     }
 
-    interface Callback {
+    interface ProgressCallback {
         fun onStartProgress()
         fun onFinishProgress()
     }

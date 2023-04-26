@@ -1,4 +1,4 @@
-package com.example.experiments.userstory
+package com.example.experiments.userstorynew.listeners
 
 import android.os.Handler
 import android.util.Log
@@ -11,7 +11,7 @@ import androidx.viewpager.widget.ViewPager
  * Created by Sudhanshu Kumar on 24/04/23.
  */
 
-abstract class PageChangeListener : ViewPager.OnPageChangeListener {
+abstract class StoryPageChangeListener : ViewPager.OnPageChangeListener {
 
     private var pageBeforeDragging = 0
     private var currentPage = 0

@@ -1,7 +1,11 @@
-package com.example.experiments.userstory.utils
+package com.example.experiments.userstorynew.utils
 
 import android.view.animation.ScaleAnimation
 import android.view.animation.Transformation
+
+/*
+ * Created by Sudhanshu Kumar on 25/04/23.
+ */
 
 class PausableScaleAnimation internal constructor(
     fromX: Float, toX: Float, fromY: Float,

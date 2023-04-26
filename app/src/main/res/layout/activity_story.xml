@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".userstory.UserStoryActivity">
+    tools:context=".userstorynew.StoryActivity">
 
-    <com.example.experiments.userstory.customview.FixedViewPager
+    <com.example.experiments.userstorynew.views.StoryViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

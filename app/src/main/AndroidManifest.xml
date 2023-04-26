@@ -18,7 +18,7 @@
         android:theme="@style/Theme.Experiments"
         tools:targetApi="31">
         <activity
-            android:name=".userstory.UserStoryActivity"
+            android:name=".userstorynew.StoryActivity"
             android:exported="false" />
 
         <receiver

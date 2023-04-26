@@ -1,19 +1,24 @@
-package com.example.experiments.userstory.customview
+package com.example.experiments.userstorynew.views
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.example.experiments.R
-import java.util.*
+import com.example.experiments.userstorynew.views.StoryTopProgressBarItem
+import java.util.ArrayList
 
-class StoriesProgressView @JvmOverloads constructor(
+/*
+ * Created by Sudhanshu Kumar on 25/04/23.
+ */
+
+class StoryTopProgressBar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
 ) : LinearLayout(context, attrs, defStyle) {
 
-    private val progressBars: MutableList<PausableProgressBar> = ArrayList()
+    private val progressBars: MutableList<StoryTopProgressBarItem> = ArrayList()
     private var storiesListener: StoriesListener? = null
     private var storiesCount = -1
     private var current = -1
@@ -46,8 +51,8 @@ class StoriesProgressView @JvmOverloads constructor(
         }
     }
 
-    private fun createProgressBar(): PausableProgressBar {
-        return PausableProgressBar(context).apply {
+    private fun createProgressBar(): StoryTopProgressBarItem {
+        return StoryTopProgressBarItem(context).apply {
             layoutParams =
                 PROGRESS_BAR_LAYOUT_PARAM
         }
@@ -60,8 +65,8 @@ class StoriesProgressView @JvmOverloads constructor(
         }
     }
 
-    private fun callback(index: Int): PausableProgressBar.Callback {
-        return object : PausableProgressBar.Callback {
+    private fun callback(index: Int): StoryTopProgressBarItem.ProgressCallback {
+        return object : StoryTopProgressBarItem.ProgressCallback {
             override fun onStartProgress() {
                 current = index
             }
@@ -173,7 +178,7 @@ class StoriesProgressView @JvmOverloads constructor(
         progressBars[current].resumeProgress()
     }
 
-    fun getProgressWithIndex(index: Int): PausableProgressBar {
+    fun getProgressWithIndex(index: Int): StoryTopProgressBarItem {
         return progressBars[index]
     }
 

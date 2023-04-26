@@ -1,16 +1,21 @@
-package com.example.experiments.userstory.customview
+package com.example.experiments.userstorynew.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.example.experiments.userstory.data.StoryUser
-import com.example.experiments.userstory.StoryDisplayFragment
+import com.example.experiments.userstorynew.StoryFragment
+import com.example.experiments.userstorynew.models.UserData
 
-class StoryPagerAdapter constructor(fragmentManager: FragmentManager, private val storyList: ArrayList<StoryUser>)
+/*
+ * Created by Sudhanshu Kumar on 25/04/23.
+ */
+
+class StoryPagerAdapter constructor(fragmentManager: FragmentManager, private val storyList: ArrayList<UserData>)
     : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    override fun getItem(position: Int): Fragment = StoryDisplayFragment.newInstance(position, storyList[position])
+    override fun getItem(position: Int): Fragment =
+        StoryFragment.newInstance(position, storyList[position])
 
     override fun getCount(): Int {
         return storyList.size
