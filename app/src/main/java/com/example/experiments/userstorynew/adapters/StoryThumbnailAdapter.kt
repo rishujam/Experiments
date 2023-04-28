@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.experiments.databinding.ItemHomeRvBinding
-import com.example.experiments.userstorynew.managers.StoryViewedStateManager
 import com.example.experiments.userstorynew.models.UserData
 
 /*
@@ -34,9 +33,9 @@ class StoryThumbnailAdapter(
     override fun onBindViewHolder(holder: StoryThumbnailAdapter.StoryThumbnailViewHolder, position: Int) {
         holder.binding.apply {
             val userData = list[position]
-            if(StoryViewedStateManager.isViewed(userData.username)) {
-                tvViewed.visibility = View.VISIBLE
-            }
+//            if(StoryViewedStateManager.isViewed(userData.username)) {
+//                tvViewed.visibility = View.VISIBLE
+//            }
             storyThumbnail.setOnClickListener {
                 onItemClickListener?.let { it(userData) }
             }

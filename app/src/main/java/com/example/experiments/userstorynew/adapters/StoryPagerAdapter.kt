@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.example.experiments.userstorynew.StoryFragment
+import com.example.experiments.userstorynew.StoryFragment1
 import com.example.experiments.userstorynew.models.UserData
 
 /*
@@ -15,7 +15,7 @@ class StoryPagerAdapter constructor(fragmentManager: FragmentManager, private va
     : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment =
-        StoryFragment.newInstance(position, storyList[position])
+        StoryFragment1.newInstance(position, storyList[position])
 
     override fun getCount(): Int {
         return storyList.size

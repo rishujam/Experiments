@@ -88,10 +88,10 @@ open class OnSwipeTouchListener(context: Activity) : View.OnTouchListener {
 
     open fun onSwipeBottom() {}
 
-    companion object {
-        private const val SWIPE_THRESHOLD = 100
-        private const val SWIPE_VELOCITY_THRESHOLD = 100
-        private const val CLICK_TIME_THRESHOLD = 200L
-        private const val TOUCH_MOVE_THRESHOLD = 150L
+    private companion object {
+        const val SWIPE_THRESHOLD = 100
+        const val SWIPE_VELOCITY_THRESHOLD = 100
+        const val CLICK_TIME_THRESHOLD = 200L
+        const val TOUCH_MOVE_THRESHOLD = 150L
     }
 }

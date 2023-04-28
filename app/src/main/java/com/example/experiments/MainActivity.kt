@@ -10,11 +10,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.experiments.databinding.ActivityMainBinding
+import com.example.experiments.pocotpless.OtplessApi
+import com.example.experiments.pocotpless.ResponseData
+import com.example.experiments.pocotpless.TokenRequest
 import com.example.experiments.userstorynew.StoryActivity
 import com.example.experiments.userstorynew.adapters.StoryThumbnailAdapter
 import com.example.experiments.userstorynew.managers.StoryViewedStateManager
 import com.example.experiments.userstorynew.models.UserList
 import com.example.experiments.userstorynew.utils.StoryGen
+import com.google.gson.GsonBuilder
+import com.otpless.dto.OtplessResponse
+import com.otpless.views.OtplessManager
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,9 +41,9 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = mainViewModel
 
         StoryViewedStateManager.init()
+        OtplessManager.getInstance().init(this)
 
         val storyUserList = UserList(StoryGen.createData())
-        Log.d("Rishu", storyUserList.list.toString())
         adapter = StoryThumbnailAdapter(storyUserList.list)
         binding.apply {
             homeRv.adapter = adapter
@@ -47,6 +58,37 @@ class MainActivity : AppCompatActivity() {
                 putExtras(bundle)
             }
             startActivity(intent)
+        }
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://docquity.authlink.me")
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+            .build()
+
+        val api = retrofit.create(OtplessApi::class.java)
+
+
+        binding.whatsappLogin.setResultCallback{
+            val waId = it.waId
+            val call = api.getToken("pppdicut", "uy4ab1s52isxl2jp", "application/json", TokenRequest(waId))
+            call.enqueue(object : Callback<ResponseData> {
+                override fun onResponse(
+                    call: Call<ResponseData>,
+                    response: Response<ResponseData>
+                ) {
+                    if (response.isSuccessful) {
+                        val token = response.body()
+                        Log.d("RishuTest", token.toString())
+                        // do something with the token
+                    } else {
+                        // handle error
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseData>, t: Throwable) {
+                    Log.d("Rishutest", "error: ${t.message}")
+                }
+            })
         }
     }
 }

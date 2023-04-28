@@ -74,13 +74,14 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
             }
 
             override fun onPageScrollCanceled() {
-                currentFragment().resumeCurrentStory()
+                //TODO
+//                currentFragment().resumeCurrentStory()
             }
         })
     }
 
-    private fun currentFragment(): StoryFragment {
-        return pagerAdapter.findFragmentByPosition(binding.viewPager, currentPage) as StoryFragment
+    private fun currentFragment(): StoryFragment1 {
+        return pagerAdapter.findFragmentByPosition(binding.viewPager, currentPage) as StoryFragment1
     }
 
     private var prevDragPosition = 0

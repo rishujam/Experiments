@@ -16,7 +16,6 @@ import com.example.experiments.R
 import com.example.experiments.databinding.FragmentStoryBinding
 import com.example.experiments.userstorynew.listeners.AutoNavigateListener
 import com.example.experiments.userstorynew.listeners.OnSwipeTouchListener
-import com.example.experiments.userstorynew.managers.StoryViewedStateManager
 import com.example.experiments.userstorynew.models.Story
 import com.example.experiments.userstorynew.models.UserData
 import com.example.experiments.userstorynew.utils.hide
@@ -44,15 +43,15 @@ class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
     private var storyUser: UserData? = null
     private val stories: ArrayList<Story> by
     lazy { storyUser!!.stories }
-    private val position: Int by
-    lazy { arguments?.getInt(EXTRA_POSITION) ?: 0 }
 
     private var simpleExoPlayer: SimpleExoPlayer? = null
     private lateinit var mediaDataSourceFactory: DataSource.Factory
     private var pageViewOperator: AutoNavigateListener? = null
-    private var counter = 0
+
+    private var storyPosition = 0
     private var pressTime = 0L
     private var limit = 500L
+
     private var onResumeCalled = false
     private var onVideoPrepared = false
 
@@ -69,9 +68,6 @@ class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
         super.onViewCreated(view, savedInstanceState)
         storyUser = arguments?.getParcelable(EXTRA_STORY_USER)
         binding.storyDisplayVideo.useController = false
-        storyUser?.let {
-            StoryViewedStateManager.addToViewed(Pair(it.username, true))
-        }
         updateStory()
         setUpUi()
     }
@@ -81,27 +77,22 @@ class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
         this.pageViewOperator = context as AutoNavigateListener
     }
 
-    override fun onStart() {
-        super.onStart()
-        counter = restorePosition()
-    }
-
     override fun onResume() {
         super.onResume()
         onResumeCalled = true
-        if (stories[counter].isVideo() && !onVideoPrepared) {
+        if (stories[storyPosition].isVideo() && !onVideoPrepared) {
             simpleExoPlayer?.playWhenReady = false
             return
         }
 
         simpleExoPlayer?.seekTo(5)
         simpleExoPlayer?.playWhenReady = true
-        if (counter == 0) {
+        if (storyPosition == 0) {
             binding.storiesProgressView.startStories()
         } else {
             // restart animation
-            counter = StoryActivity.progressState.get(arguments?.getInt(EXTRA_POSITION) ?: 0)
-            binding.storiesProgressView.startStories(counter)
+            storyPosition = StoryActivity.progressState.get(arguments?.getInt(EXTRA_POSITION) ?: 0)
+            binding.storiesProgressView.startStories(storyPosition)
         }
     }
 
@@ -113,7 +104,7 @@ class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
 
     private fun updateStory() {
         simpleExoPlayer?.stop()
-        if (stories[counter].isVideo()) {
+        if (stories[storyPosition].isVideo()) {
             binding.storyDisplayVideo.show()
             binding.storyDisplayImage.hide()
             binding.storyDisplayVideoProgress.show()
@@ -122,11 +113,11 @@ class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
             binding.storyDisplayVideo.hide()
             binding.storyDisplayVideoProgress.hide()
             binding.storyDisplayImage.show()
-            Glide.with(this).load(stories[counter].url).into(binding.storyDisplayImage)
+            Glide.with(this).load(stories[storyPosition].url).into(binding.storyDisplayImage)
         }
 
 //        val cal: Calendar = Calendar.getInstance(Locale.ENGLISH).apply {
-//            timeInMillis = stories[counter].storyDate
+//            timeInMillis = stories[storyPosition].storyDate
 //        }
 //        binding.storyDisplayTime.text = DateFormat.format("MM-dd-yyyy HH:mm:ss", cal).toString()
     }
@@ -140,17 +131,14 @@ class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
             simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(requireContext())
         }
 
-        mediaDataSourceFactory = CacheDataSourceFactory(
-            MainApplication.simpleCache!!,
-            DefaultHttpDataSourceFactory(
-                Util.getUserAgent(
-                    requireContext(),
-                    Util.getUserAgent(requireContext(), getString(R.string.app_name))
-                )
+        mediaDataSourceFactory = DefaultHttpDataSourceFactory(
+            Util.getUserAgent(
+                requireContext(),
+                Util.getUserAgent(requireContext(), getString(R.string.app_name))
             )
         )
         val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(
-            Uri.parse(stories[counter].url)
+            Uri.parse(stories[storyPosition].url)
         )
         simpleExoPlayer?.prepare(mediaSource, false, false)
         if (onResumeCalled) {
@@ -164,7 +152,7 @@ class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
             override fun onPlayerError(error: ExoPlaybackException) {
                 super.onPlayerError(error)
                 binding.storyDisplayVideoProgress.hide()
-                if (counter == stories.size.minus(1)) {
+                if (storyPosition == stories.size.minus(1)) {
                     pageViewOperator?.nextPageNavigate()
                 } else {
                     binding.storiesProgressView.skip()
@@ -179,7 +167,7 @@ class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
                     pauseCurrentStory()
                 } else {
                     binding.storyDisplayVideoProgress.hide()
-                    binding.storiesProgressView.getProgressWithIndex(counter)
+                    binding.storiesProgressView.getProgressWithIndex(storyPosition)
                         .setDuration(simpleExoPlayer?.duration ?: 8000L)
                     onVideoPrepared = true
                     resumeCurrentStory()
@@ -201,14 +189,14 @@ class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
             override fun onClick(view: View) {
                 when (view) {
                     binding.nextStory -> {
-                        if (counter == stories.size - 1) {
+                        if (storyPosition == stories.size - 1) {
                             pageViewOperator?.nextPageNavigate()
                         } else {
                             binding.storiesProgressView.skip()
                         }
                     }
                     binding.prevStory -> {
-                        if (counter == 0) {
+                        if (storyPosition == 0) {
                             pageViewOperator?.backPageNavigate()
                         } else {
                             binding.storiesProgressView.reverse()
@@ -219,7 +207,6 @@ class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
 
             override fun onLongClick() {
                 binding.group.visibility = View.INVISIBLE
-                pauseCurrentStory()
             }
 
             override fun onTouchView(view: View, event: MotionEvent): Boolean {
@@ -251,14 +238,6 @@ class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
         Glide.with(this).load(storyUser?.profilePicUrl).circleCrop()
             .into(binding.ivProfileStoryDetail)
         binding.tvUsernameStoryDetail.text = storyUser?.username
-    }
-
-    private fun savePosition(pos: Int) {
-        StoryActivity.progressState.put(position, pos)
-    }
-
-    private fun restorePosition(): Int {
-        return StoryActivity.progressState.get(position)
     }
 
     fun pauseCurrentStory() {
@@ -293,16 +272,16 @@ class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
     }
 
     override fun onPrev() {
-        if (counter - 1 < 0) return
-        --counter
-        savePosition(counter)
+        if (storyPosition <= 0) return
+        storyPosition--
         updateStory()
     }
 
     override fun onNext() {
-        if (stories.size <= counter + 1) return
-        ++counter
-        savePosition(counter)
+        if (storyPosition >= stories.size - 1) {
+            return
+        }
+        storyPosition++
         updateStory()
     }
 

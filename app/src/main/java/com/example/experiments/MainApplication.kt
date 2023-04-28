@@ -17,17 +17,5 @@ class MainApplication: Application() {
 //            LogMate.d("current value: i = $i")
 //            i++
 //        }
-
-        val leastRecentlyUsedCacheEvictor = LeastRecentlyUsedCacheEvictor(90 * 1024 * 1024)
-        val databaseProvider: DatabaseProvider = ExoDatabaseProvider(this)
-
-        if (simpleCache == null) {
-            simpleCache = SimpleCache(cacheDir, leastRecentlyUsedCacheEvictor, databaseProvider)
-        }
-
-    }
-
-    companion object {
-        var simpleCache: Cache? = null
     }
 }
