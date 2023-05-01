@@ -266,7 +266,6 @@ class StoryFragment1 : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        Log.d("RishuTest", "is OnStop")
     }
 
     override fun onResume() {
