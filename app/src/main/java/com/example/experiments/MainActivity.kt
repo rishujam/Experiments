@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: StoryThumbnailAdapter
+    private lateinit var storyUserList: UserList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         StoryViewedStateManager.init()
         OtplessManager.getInstance().init(this)
 
-        val storyUserList = UserList(StoryGen.createData())
+        storyUserList = UserList(StoryGen.createData())
         adapter = StoryThumbnailAdapter(storyUserList.list)
         binding.apply {
             homeRv.adapter = adapter
@@ -84,7 +85,6 @@ class MainActivity : AppCompatActivity() {
                         // handle error
                     }
                 }
-
                 override fun onFailure(call: Call<ResponseData>, t: Throwable) {
                     Log.d("Rishutest", "error: ${t.message}")
                 }

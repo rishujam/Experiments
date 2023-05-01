@@ -9,6 +9,8 @@ import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
 import com.example.experiments.R
 import com.example.experiments.userstorynew.utils.PausableScaleAnimation
+import com.example.experiments.userstorynew.utils.hide
+import com.example.experiments.userstorynew.utils.show
 
 /*
  * Created by Sudhanshu Kumar on 27/04/23.
@@ -22,31 +24,44 @@ class ProgressItem @JvmOverloads constructor(
 
     private var progressView: View? = null
     private var bgView: View? = null
-    private lateinit var animation: PausableScaleAnimation
+    private var maxBar: View? = null
+    private var animation: PausableScaleAnimation? = null
+    private var callback: ProgressCallback? = null
     private var duration = DEFAULT_PROGRESS_DURATION
 
     init {
         LayoutInflater.from(context).inflate(R.layout.progress_item, this)
         progressView = findViewById(R.id.progress)
         bgView = findViewById(R.id.bgPbItem)
+        maxBar = findViewById(R.id.maxBar)
     }
 
-    fun start(duration: Long?) {
+    fun start(duration: Long?, callback: ProgressCallback) {
         duration?.let {
             this.duration = it
         }
+        this.callback = callback
         startProgress()
     }
 
-    /** Force complete or reset progress  */
-    fun updateProgress(width: Int) {
-        progressView?.layoutParams = LayoutParams(
-            width,
-            2
-        )
+    fun setProgressMax() {
+        maxBar?.show()
+        maxBar?.setBackgroundColor(context.getColor(R.color.white))
+    }
+
+    fun setProgressMin() {
+        maxBar?.hide()
+        progressView?.hide()
+    }
+
+    fun clearAnim() {
+        animation?.setAnimationListener(null)
+        animation?.cancel()
+        animation = null
     }
 
     private fun startProgress() {
+        maxBar?.hide()
         if (duration <= 0) duration = DEFAULT_PROGRESS_DURATION
         animation = PausableScaleAnimation(
             0f,
@@ -58,34 +73,32 @@ class ProgressItem @JvmOverloads constructor(
             Animation.RELATIVE_TO_SELF,
             0f
         )
-        animation.duration = duration
-        animation.interpolator = LinearInterpolator()
-        animation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation) {
-
-            }
+        animation?.duration = duration
+        animation?.interpolator = LinearInterpolator()
+        animation?.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation) {  }
 
             override fun onAnimationEnd(animation: Animation) {
-
+                callback?.onFinishProgress()
             }
 
             override fun onAnimationRepeat(animation: Animation) {
                 //NO-OP
             }
         })
-        animation.fillAfter = true
+        animation?.fillAfter = true
+        progressView?.startAnimation(animation)
     }
 
     fun pauseProgress() {
-        animation.pause()
+        animation?.pause()
     }
 
     fun resumeProgress() {
-        animation.resume()
+        animation?.resume()
     }
 
     interface ProgressCallback {
-        fun onStartProgress()
         fun onFinishProgress()
     }
 

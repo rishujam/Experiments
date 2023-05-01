@@ -2,6 +2,7 @@ package com.example.experiments.userstorynew.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.experiments.R
@@ -18,11 +19,9 @@ class StoryProgressView @JvmOverloads constructor(
     defStyle: Int = 0
 ) : LinearLayout(context, attrs, defStyle) {
 
-    private val progressBars = mutableListOf<ProgressItem>()
-    private val storyNavigateListener: StoryNavigateListener? = null
-    private var storyItemProgressCallback: ProgressItem.ProgressCallback? = null
+    private lateinit var progressBars: MutableList<ProgressItem>
     private var storyCount = -1
-
+    private var callback: ProgressFinishCallback? = null
 
     init {
         orientation = HORIZONTAL
@@ -32,17 +31,18 @@ class StoryProgressView @JvmOverloads constructor(
         )
         storyCount = typedArray.getInt(R.styleable.StoriesProgressView_progressCount, 0)
         typedArray.recycle()
-        bindViews()
-        registerCallback()
     }
 
-    private fun bindViews() {
-        progressBars.clear()
+    fun bindViews(storyCount: Int) {
         removeAllViews()
+        progressBars = mutableListOf()
         for (i in 0 until storyCount) {
             val p = createProgressBar()
             progressBars.add(p)
             addView(p)
+            if (i + 1 < storyCount) {
+                addView(createSpace())
+            }
         }
     }
 
@@ -52,33 +52,36 @@ class StoryProgressView @JvmOverloads constructor(
         }
     }
 
-    private fun registerCallback() {
-        storyItemProgressCallback = object : ProgressItem.ProgressCallback {
-            override fun onStartProgress() {
+    private fun createSpace(): View {
+        return View(context).apply {
+            layoutParams = SPACE_LAYOUT_PARAM
+        }
+    }
 
-            }
+    fun startProgress(position: Int, duration: Long?, fragCallback: ProgressFinishCallback) {
+        callback = fragCallback
+        progressBars[position].start(duration, registerFinishCallbackOnProgressItem())
+    }
+
+    private fun registerFinishCallbackOnProgressItem(): ProgressItem.ProgressCallback {
+        return object : ProgressItem.ProgressCallback {
             override fun onFinishProgress() {
-
+                callback?.onFinishProgress()
             }
         }
     }
 
-    fun startStory(position: Int, duration: Long?) {
-        progressBars[position].start(duration)
-    }
-
     fun handleClick(
-        oldPosition: Int,
-        newPosition: Int,
+        position: Int,
         clickType: StoryFragActions
     ) {
-        when(clickType) {
-            is StoryFragActions.NEXT_CLICK -> {
-                progressBars[oldPosition].updateProgress(android.view.ViewGroup.LayoutParams.MATCH_PARENT)
+        progressBars[position].clearAnim()
+        when (clickType) {
+            is StoryFragActions.NextClick -> {
+                progressBars[position].setProgressMax()
             }
-            is StoryFragActions.PREV_CLICK -> {
-                progressBars[oldPosition].updateProgress(0)
-                progressBars[newPosition].updateProgress(0)
+            is StoryFragActions.PrevClick -> {
+                progressBars[position].setProgressMin()
             }
         }
     }
@@ -88,6 +91,7 @@ class StoryProgressView @JvmOverloads constructor(
     }
 
     fun handleResume(position: Int) {
+        //Resume timer also
         progressBars[position].resumeProgress()
     }
 
@@ -96,14 +100,7 @@ class StoryProgressView @JvmOverloads constructor(
         val SPACE_LAYOUT_PARAM = LayoutParams(5, LayoutParams.WRAP_CONTENT)
     }
 
-    interface StoryNavigateListener {
-        /** When user clicks right side */
-        fun onNext()
-
-        /** When user clicks left side */
-        fun onPrev()
-
-        /** When story completes without user interaction */
-        fun onCompletion()
+    interface ProgressFinishCallback {
+        fun onFinishProgress()
     }
 }

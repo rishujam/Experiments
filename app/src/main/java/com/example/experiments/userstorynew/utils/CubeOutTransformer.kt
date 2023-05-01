@@ -2,10 +2,11 @@ package com.example.experiments.userstorynew.utils
 
 import android.view.View
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 
 class CubeOutTransformer @JvmOverloads constructor(
         private val distanceMultiplier: Int = 20
-) : ViewPager.PageTransformer {
+) : ViewPager2.PageTransformer {
 
     private fun onTransform(page: View, position: Float) {
         with(page) {

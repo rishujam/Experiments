@@ -1,5 +1,7 @@
 package com.example.experiments.userstorynew
 
+import android.content.Context
+import android.graphics.Color
 import android.media.session.PlaybackState
 import android.net.Uri
 import android.os.Bundle
@@ -19,13 +21,13 @@ import com.example.experiments.userstorynew.models.Story
 import com.example.experiments.userstorynew.models.UserData
 import com.example.experiments.userstorynew.utils.hide
 import com.example.experiments.userstorynew.utils.show
-import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.ExoPlayerFactory
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
+import com.example.experiments.userstorynew.views.StoryProgressView
+import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
+import com.google.android.exoplayer2.util.Log
 import com.google.android.exoplayer2.util.Util
 
 /*
@@ -50,11 +52,11 @@ class StoryFragment1 : Fragment() {
     private var _binding: FragmentStory1Binding? = null
     private val binding get() = _binding!!
 
-    private var simpleExoPlayer: SimpleExoPlayer? = null
-    private lateinit var mediaDataSourceFactory: DataSource.Factory
+    private var exoPlayer: ExoPlayer? = null
     private var data: UserData? = null
     private var storyPosition = 0
     private var autoNavListener: AutoNavigateListener? = null
+    private lateinit var storyFinishCallback: StoryProgressView.ProgressFinishCallback
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,9 +71,14 @@ class StoryFragment1 : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         data = arguments?.getParcelable(EXTRA_STORY_USER)
-
-        startStory()
-
+        data?.stories?.size?.let { storySize ->
+            binding.storiesProgressView.bindViews(storySize)
+            storyFinishCallback = object : StoryProgressView.ProgressFinishCallback {
+                override fun onFinishProgress() {
+                    nextStoryClick()
+                }
+            }
+        }
         val touchListener = object : OnSwipeTouchListener(requireActivity()) {
             override fun onSwipeTop() {
                 Toast.makeText(context, "onSwipeTop", Toast.LENGTH_LONG).show()
@@ -93,7 +100,7 @@ class StoryFragment1 : Fragment() {
             }
 
             override fun onLongClick() {
-                binding.storiesProgressView.handlePause(storyPosition)
+                pauseStory()
                 binding.group.hide()
             }
 
@@ -115,131 +122,156 @@ class StoryFragment1 : Fragment() {
         binding.nextStory.setOnTouchListener(touchListener)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        this.autoNavListener = context as AutoNavigateListener
+        Log.d("RishuTest", "is OnAttach")
+    }
     private fun nextStoryClick() {
-        storyPosition++
+        binding.storiesProgressView.handleClick(
+            storyPosition,
+            StoryFragActions.NextClick
+        )
         data?.stories?.size?.let {
-            if(storyPosition >= it) {
+            if(storyPosition + 1 >= it) {
                 autoNavListener?.nextPageNavigate()
             } else {
-                startStory(storyPosition-1, storyPosition, StoryFragActions.NEXT_CLICK)
+                storyPosition++
+                startStory()
             }
         }
     }
 
     private fun prevStoryClick() {
-        storyPosition--
+        binding.storiesProgressView.handleClick(
+            storyPosition,
+            StoryFragActions.PrevClick
+        )
         data?.stories?.size?.let {
-            if(storyPosition < 0) {
+            if (storyPosition - 1 < 0) {
                 autoNavListener?.backPageNavigate()
             } else {
-                startStory(storyPosition+1, storyPosition, StoryFragActions.PREV_CLICK)
+                storyPosition--
+                startStory()
             }
         }
     }
 
     private fun startStory() {
-        data?.stories?.get(storyPosition)?.let { story ->
-            if(story.isVideo()) {
-                binding.storyDisplayVideo.show()
-                binding.storyDisplayImage.hide()
-                binding.storyDisplayVideoProgress.show()
-                initPlayer()
-            } else {
-                binding.storyDisplayVideo.hide()
-                binding.storyDisplayVideoProgress.hide()
-                binding.storyDisplayImage.show()
-                Glide.with(this).load(story.url).into(binding.storyDisplayImage)
-            }
-        }
-    }
-
-    private fun startStory(oldPosition: Int, newPosition: Int, clickType: StoryFragActions) {
         data?.stories?.get(storyPosition)?.let {
-            if(it.isVideo()) {
-                binding.storyDisplayVideo.show()
-                binding.storyDisplayImage.hide()
-                binding.storyDisplayVideoProgress.show()
+            if (it.isVideo()) {
+                handleViewsVisibilityWhenVideo()
                 initPlayer()
-                binding.storiesProgressView.handleClick(
-                    oldPosition,
-                    newPosition,
-                    clickType
-                )
             } else {
-                binding.storyDisplayVideo.hide()
-                binding.storyDisplayVideoProgress.hide()
-                binding.storyDisplayImage.show()
+                handleViewVisibilityWhenImage()
                 Glide.with(this).load(it.url).into(binding.storyDisplayImage)
-                binding.storiesProgressView.handleClick(
-                    oldPosition,
-                    newPosition,
-                    clickType
-                )
-                binding.storiesProgressView.startStory(newPosition, null)
+                binding.storiesProgressView.startProgress(storyPosition, null, storyFinishCallback)
             }
         }
     }
 
     private fun initPlayer() {
-        if (simpleExoPlayer == null) {
-            simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(requireContext())
-        } else {
-            simpleExoPlayer?.release()
-            simpleExoPlayer = null
-            simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(requireContext())
+        if (exoPlayer != null) {
+            exoPlayer?.release()
+            exoPlayer = null
         }
-        mediaDataSourceFactory = DefaultHttpDataSourceFactory(
-            Util.getUserAgent(
-                requireContext(),
-                Util.getUserAgent(requireContext(), getString(R.string.app_name))
-            )
-        )
-        data?.stories?.get(storyPosition)?.url?.let {
-            val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(
-                Uri.parse(it)
-            )
-            simpleExoPlayer?.prepare(mediaSource, false, false)
-            simpleExoPlayer?.playWhenReady = true
+        context?.let { notNullContext ->
+            exoPlayer = ExoPlayer.Builder(notNullContext).build()
         }
+        data?.stories?.get(storyPosition)?.url?.let { notNullUrl ->
+            val mediaDataSourceFactory = DefaultHttpDataSource.Factory().setUserAgent(
+                Util.getUserAgent(
+                    requireContext(),
+                    getString(R.string.app_name)
+                )
+            )
+            val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory)
+                .createMediaSource(MediaItem.fromUri(notNullUrl))
+            exoPlayer?.setMediaSource(mediaSource)
+            exoPlayer?.prepare()
+            exoPlayer?.playWhenReady = true
+        }
+        binding.storyDisplayVideo.setShutterBackgroundColor(Color.BLACK)
+        binding.storyDisplayVideo.player = exoPlayer
 
-        simpleExoPlayer?.addListener(object : Player.EventListener {
-            override fun onPlayerError(error: ExoPlaybackException) {
+        exoPlayer?.addListener(object : Player.Listener {
+            override fun onPlayerError(error: PlaybackException) {
                 super.onPlayerError(error)
                 Toast.makeText(context, "Error while loading: ${error.message}", Toast.LENGTH_SHORT)
                     .show()
             }
-            override fun onLoadingChanged(isLoading: Boolean) {
-                super.onLoadingChanged(isLoading)
-                if(isLoading) {
+
+            override fun onIsLoadingChanged(isLoading: Boolean) {
+                super.onIsLoadingChanged(isLoading)
+                if (isLoading) {
                     binding.storyDisplayVideoProgress.show()
                 } else {
                     binding.storyDisplayVideoProgress.hide()
+                }
+            }
+
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                super.onPlaybackStateChanged(playbackState)
+                if (playbackState == Player.STATE_READY) {
+                    binding.storiesProgressView.startProgress(storyPosition, exoPlayer?.duration, storyFinishCallback)
                     data?.stories?.get(storyPosition)?.id?.let {
                         StoryViewedStateManager.addToViewed(Pair(it, true))
                     }
-                }
-            }
-            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-                super.onPlayerStateChanged(playWhenReady, playbackState)
-                if (playbackState == Player.STATE_READY && playWhenReady) {
-                    binding.storiesProgressView.startStory(storyPosition, simpleExoPlayer?.duration)
                 }
             }
         })
     }
 
     private fun pauseStory() {
-        simpleExoPlayer?.playWhenReady = false
+        exoPlayer?.playWhenReady = false
         binding.storiesProgressView.handlePause(storyPosition)
     }
 
     private fun playStory() {
-        simpleExoPlayer?.playWhenReady = true
+        exoPlayer?.playWhenReady = true
         binding.storiesProgressView.handleResume(storyPosition)
+    }
+
+    private fun handleViewsVisibilityWhenVideo() {
+        binding.apply {
+            storyDisplayVideo.show()
+            storyDisplayImage.hide()
+            storyDisplayVideoProgress.show()
+        }
+    }
+
+    private fun handleViewVisibilityWhenImage() {
+        binding.apply {
+            storyDisplayVideo.hide()
+            storyDisplayVideoProgress.hide()
+            storyDisplayImage.show()
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        pauseStory()
+        Log.d("RishuTest", "in onPause")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("RishuTest", "is OnStart")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("RishuTest", "is OnStop")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("RishuTest", "in onResume")
+        startStory()
     }
 }

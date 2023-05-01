@@ -1,9 +1,13 @@
 package com.example.experiments.userstorynew.adapters
 
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Lifecycle
+import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.experiments.userstorynew.StoryFragment1
 import com.example.experiments.userstorynew.models.UserData
 
@@ -11,22 +15,26 @@ import com.example.experiments.userstorynew.models.UserData
  * Created by Sudhanshu Kumar on 25/04/23.
  */
 
-class StoryPagerAdapter constructor(fragmentManager: FragmentManager, private val storyList: ArrayList<UserData>)
-    : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class StoryPagerAdapter(
+    fragmentManager: FragmentActivity,
+    private val storyList: ArrayList<UserData>
+) : FragmentStateAdapter(fragmentManager) {
 
-    override fun getItem(position: Int): Fragment =
-        StoryFragment1.newInstance(position, storyList[position])
+    private val fragments = mutableListOf<Fragment>()
 
-    override fun getCount(): Int {
-        return storyList.size
+    override fun getItemCount(): Int = storyList.size
+
+    override fun createFragment(position: Int): Fragment {
+        val fragment = StoryFragment1.newInstance(position, storyList[position])
+        fragments.add(fragment)
+        return fragment
     }
 
-    fun findFragmentByPosition(viewPager: ViewPager, position: Int): Fragment? {
-        try {
-            val f = instantiateItem(viewPager, position)
-            return f as? Fragment
-        } finally {
-            finishUpdate(viewPager)
-        }
+    fun findFragmentByPosition(position: Int): Fragment {
+        return fragments[position]
+    }
+
+    fun clearFragments() {
+        fragments.clear()
     }
 }

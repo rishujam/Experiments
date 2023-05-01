@@ -22,13 +22,10 @@ import com.example.experiments.userstorynew.utils.hide
 import com.example.experiments.userstorynew.utils.show
 import com.example.experiments.userstorynew.views.StoryTopProgressBar
 import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
-import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 
 /*
@@ -108,7 +105,7 @@ class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
             binding.storyDisplayVideo.show()
             binding.storyDisplayImage.hide()
             binding.storyDisplayVideoProgress.show()
-            initializePlayer()
+//            initializePlayer()
         } else {
             binding.storyDisplayVideo.hide()
             binding.storyDisplayVideoProgress.hide()
@@ -122,59 +119,59 @@ class StoryFragment : Fragment(), StoryTopProgressBar.StoriesListener {
 //        binding.storyDisplayTime.text = DateFormat.format("MM-dd-yyyy HH:mm:ss", cal).toString()
     }
 
-    private fun initializePlayer() {
-        if (simpleExoPlayer == null) {
-            simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(requireContext())
-        } else {
-            simpleExoPlayer?.release()
-            simpleExoPlayer = null
-            simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(requireContext())
-        }
-
-        mediaDataSourceFactory = DefaultHttpDataSourceFactory(
-            Util.getUserAgent(
-                requireContext(),
-                Util.getUserAgent(requireContext(), getString(R.string.app_name))
-            )
-        )
-        val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(
-            Uri.parse(stories[storyPosition].url)
-        )
-        simpleExoPlayer?.prepare(mediaSource, false, false)
-        if (onResumeCalled) {
-            simpleExoPlayer?.playWhenReady = true
-        }
-
-        binding.storyDisplayVideo.setShutterBackgroundColor(Color.BLACK)
-        binding.storyDisplayVideo.player = simpleExoPlayer
-
-        simpleExoPlayer?.addListener(object : Player.EventListener {
-            override fun onPlayerError(error: ExoPlaybackException) {
-                super.onPlayerError(error)
-                binding.storyDisplayVideoProgress.hide()
-                if (storyPosition == stories.size.minus(1)) {
-                    pageViewOperator?.nextPageNavigate()
-                } else {
-                    binding.storiesProgressView.skip()
-                }
-            }
-
-            override fun onLoadingChanged(isLoading: Boolean) {
-                super.onLoadingChanged(isLoading)
-                if (isLoading) {
-                    binding.storyDisplayVideoProgress.show()
-                    pressTime = System.currentTimeMillis()
-                    pauseCurrentStory()
-                } else {
-                    binding.storyDisplayVideoProgress.hide()
-                    binding.storiesProgressView.getProgressWithIndex(storyPosition)
-                        .setDuration(simpleExoPlayer?.duration ?: 8000L)
-                    onVideoPrepared = true
-                    resumeCurrentStory()
-                }
-            }
-        })
-    }
+//    private fun initializePlayer() {
+//        if (simpleExoPlayer == null) {
+//            simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(requireContext())
+//        } else {
+//            simpleExoPlayer?.release()
+//            simpleExoPlayer = null
+//            simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(requireContext())
+//        }
+//
+//        mediaDataSourceFactory = DefaultHttpDataSourceFactory(
+//            Util.getUserAgent(
+//                requireContext(),
+//                Util.getUserAgent(requireContext(), getString(R.string.app_name))
+//            )
+//        )
+//        val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(
+//            Uri.parse(stories[storyPosition].url)
+//        )
+//        simpleExoPlayer?.prepare(mediaSource, false, false)
+//        if (onResumeCalled) {
+//            simpleExoPlayer?.playWhenReady = true
+//        }
+//
+//        binding.storyDisplayVideo.setShutterBackgroundColor(Color.BLACK)
+//        binding.storyDisplayVideo.player = simpleExoPlayer
+//
+//        simpleExoPlayer?.addListener(object : Player.EventListener {
+//            override fun onPlayerError(error: ExoPlaybackException) {
+//                super.onPlayerError(error)
+//                binding.storyDisplayVideoProgress.hide()
+//                if (storyPosition == stories.size.minus(1)) {
+//                    pageViewOperator?.nextPageNavigate()
+//                } else {
+//                    binding.storiesProgressView.skip()
+//                }
+//            }
+//
+//            override fun onLoadingChanged(isLoading: Boolean) {
+//                super.onLoadingChanged(isLoading)
+//                if (isLoading) {
+//                    binding.storyDisplayVideoProgress.show()
+//                    pressTime = System.currentTimeMillis()
+//                    pauseCurrentStory()
+//                } else {
+//                    binding.storyDisplayVideoProgress.hide()
+//                    binding.storiesProgressView.getProgressWithIndex(storyPosition)
+//                        .setDuration(simpleExoPlayer?.duration ?: 8000L)
+//                    onVideoPrepared = true
+//                    resumeCurrentStory()
+//                }
+//            }
+//        })
+//    }
 
     private fun setUpUi() {
         val touchListener = object : OnSwipeTouchListener(requireActivity()) {

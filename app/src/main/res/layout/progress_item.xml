@@ -12,10 +12,16 @@
 
     <View
         android:id="@+id/progress"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/white"
-        android:visibility="invisible"
-        tools:visibility="visible" />
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/maxBar"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:elevation="2dp"
+        android:visibility="gone"/>
 
 </FrameLayout>

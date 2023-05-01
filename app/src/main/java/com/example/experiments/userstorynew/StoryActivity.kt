@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.SparseIntArray
 import android.widget.Toast
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.viewpager2.widget.ViewPager2
 import com.example.experiments.databinding.ActivityStoryBinding
 import com.example.experiments.userstorynew.adapters.StoryPagerAdapter
 import com.example.experiments.userstorynew.listeners.AutoNavigateListener
@@ -14,7 +15,6 @@ import com.example.experiments.userstorynew.listeners.StoryPageChangeListener
 import com.example.experiments.userstorynew.models.UserData
 import com.example.experiments.userstorynew.models.UserList
 import com.example.experiments.userstorynew.utils.CubeOutTransformer
-import com.example.experiments.userstorynew.utils.StoryGen
 
 class StoryActivity : AppCompatActivity(), AutoNavigateListener {
 
@@ -39,7 +39,7 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
     }
 
     override fun nextPageNavigate() {
-        if (binding.viewPager.currentItem + 1 < (binding.viewPager.adapter?.count ?: 0)) {
+        if (binding.viewPager.currentItem + 1 < (binding.viewPager.adapter?.itemCount ?: 0)) {
             try {
                 fakeDrag(true)
             } catch (e: Exception) {
@@ -56,18 +56,22 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
 
     private fun setUpPager(storyUserList: ArrayList<UserData>) {
         pagerAdapter = StoryPagerAdapter(
-            supportFragmentManager,
+            this,
             storyUserList
         )
         binding.viewPager.apply {
             adapter = pagerAdapter
             currentItem = currentPage
-            setPageTransformer(
-                true,
-                CubeOutTransformer()
-            )
+            post {
+                setPageTransformer(CubeOutTransformer())
+            }
         }
-        binding.viewPager.addOnPageChangeListener(object : StoryPageChangeListener() {
+        binding.viewPager.registerOnPageChangeCallback(object : StoryPageChangeListener() {
+            override fun onPageScrollStateChanged(state: Int) {
+                if (state == ViewPager2.SCROLL_STATE_DRAGGING) {
+
+                }
+            }
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 currentPage = position
@@ -81,7 +85,7 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
     }
 
     private fun currentFragment(): StoryFragment1 {
-        return pagerAdapter.findFragmentByPosition(binding.viewPager, currentPage) as StoryFragment1
+        return pagerAdapter.findFragmentByPosition(currentPage) as StoryFragment1
     }
 
     private var prevDragPosition = 0
@@ -122,6 +126,11 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
                 }
             }.start()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        pagerAdapter.clearFragments()
     }
 
     companion object {

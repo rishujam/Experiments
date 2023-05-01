@@ -5,6 +5,6 @@ package com.example.experiments.userstorynew
  */
 
 sealed class StoryFragActions {
-    object NEXT_CLICK : StoryFragActions()
-    object PREV_CLICK : StoryFragActions()
+    object NextClick : StoryFragActions()
+    object PrevClick : StoryFragActions()
 }

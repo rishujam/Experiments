@@ -6,12 +6,13 @@ import android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE
 import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING
 import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_SETTLING
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 
 /*
  * Created by Sudhanshu Kumar on 24/04/23.
  */
 
-abstract class StoryPageChangeListener : ViewPager.OnPageChangeListener {
+abstract class StoryPageChangeListener : ViewPager2.OnPageChangeCallback() {
 
     private var pageBeforeDragging = 0
     private var currentPage = 0
@@ -19,8 +20,7 @@ abstract class StoryPageChangeListener : ViewPager.OnPageChangeListener {
 
     override fun onPageScrollStateChanged(state: Int) {
         when (state) {
-            SCROLL_STATE_IDLE -> {
-                Log.d("onPageScrollState", " SCROLL_STATE_IDLE")
+            ViewPager2.SCROLL_STATE_IDLE -> {
                 val now = System.currentTimeMillis()
                 if (now - lastTime < DEBOUNCE_TIMES) {
                     return
@@ -32,13 +32,10 @@ abstract class StoryPageChangeListener : ViewPager.OnPageChangeListener {
                     }
                 }, 300L)
             }
-            SCROLL_STATE_DRAGGING -> {
-                Log.d("onPageScrollState", " SCROLL_STATE_DRAGGING")
+            ViewPager2.SCROLL_STATE_DRAGGING -> {
                 pageBeforeDragging = currentPage
             }
-            SCROLL_STATE_SETTLING -> {
-                Log.d("onPageScrollState", " SCROLL_STATE_SETTLING")
-            }
+            ViewPager2.SCROLL_STATE_SETTLING -> {}
         }
     }
 
@@ -46,7 +43,6 @@ abstract class StoryPageChangeListener : ViewPager.OnPageChangeListener {
     }
 
     override fun onPageSelected(position: Int) {
-        Log.d("onPageScrollState", "onPageSelected(): position($position)")
         currentPage = position
     }
 

@@ -49,7 +49,7 @@ object StoryGen {
         user1Stories.add(
             Story(
                 1,
-                "https://player.vimeo.com/external/403295268.sd.mp4?s=3446f787cefa52e7824d6ce6501db5261074d479&profile_id=165&oauth2_token_id=57447761",
+                "https://images.pexels.com/photos/1719344/pexels-photo-1719344.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
                 System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
             )
         )
@@ -63,21 +63,21 @@ object StoryGen {
         user2Stories.add(
             Story(
                 3,
-                "https://player.vimeo.com/external/403295710.sd.mp4?s=788b046826f92983ada6e5caf067113fdb49e209&profile_id=165&oauth2_token_id=57447761",
+                "https://images.pexels.com/photos/2260800/pexels-photo-2260800.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
                 System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
             )
         )
         user2Stories.add(
             Story(
                 4,
-                "https://player.vimeo.com/external/394678700.sd.mp4?s=353646e34d7bde02ad638c7308a198786e0dff8f&profile_id=165&oauth2_token_id=57447761",
+                "https://images.pexels.com/photos/1433052/pexels-photo-1433052.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
                 System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
             )
         )
         user2Stories.add(
             Story(
                 5,
-                "https://player.vimeo.com/external/405333429.sd.mp4?s=dcc3bdec31c93d87c938fc6c3ef76b7b1b188580&profile_id=165&oauth2_token_id=57447761",
+                "https://images.pexels.com/photos/1067333/pexels-photo-1067333.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
                 System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
             )
         )
