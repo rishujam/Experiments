@@ -256,12 +256,10 @@ class StoryFragment1 : Fragment() {
     override fun onPause() {
         super.onPause()
         pauseStory()
-        Log.d("RishuTest", "in onPause")
     }
 
     override fun onStart() {
         super.onStart()
-        Log.d("RishuTest", "is OnStart")
     }
 
     override fun onStop() {
@@ -270,7 +268,6 @@ class StoryFragment1 : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("RishuTest", "in onResume")
         startStory()
     }
 }
