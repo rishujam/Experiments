@@ -32,12 +32,14 @@ class PausableScaleAnimation internal constructor(
     }
 
     fun pause() {
+        //Pause timer also
         if (isPaused) return
         elapsedAtPause = 0
         isPaused = true
     }
 
     fun resume() {
+        //Resume timer also
         isPaused = false
     }
 }

@@ -91,4 +91,15 @@ class MainActivity : AppCompatActivity() {
             })
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("RishuTest", "${StoryViewedStateManager.viewedMap}")
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        StoryViewedStateManager.destroy()
+    }
 }

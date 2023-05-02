@@ -91,7 +91,6 @@ class StoryProgressView @JvmOverloads constructor(
     }
 
     fun handleResume(position: Int) {
-        //Resume timer also
         progressBars[position].resumeProgress()
     }
 

@@ -35,6 +35,9 @@ class StoryPagerAdapter(
     }
 
     fun clearFragments() {
+        for(i in fragments) {
+            i.onDestroy()
+        }
         fragments.clear()
     }
 }

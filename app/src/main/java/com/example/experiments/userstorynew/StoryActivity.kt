@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.SparseIntArray
 import android.widget.Toast
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
@@ -12,6 +13,7 @@ import com.example.experiments.databinding.ActivityStoryBinding
 import com.example.experiments.userstorynew.adapters.StoryPagerAdapter
 import com.example.experiments.userstorynew.listeners.AutoNavigateListener
 import com.example.experiments.userstorynew.listeners.StoryPageChangeListener
+import com.example.experiments.userstorynew.managers.StoryViewedStateManager
 import com.example.experiments.userstorynew.models.UserData
 import com.example.experiments.userstorynew.models.UserList
 import com.example.experiments.userstorynew.utils.CubeOutTransformer
@@ -35,6 +37,8 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
             } catch (e: Exception) {
                 //NO OP
             }
+        } else {
+            finish()
         }
     }
 
@@ -42,12 +46,9 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
         if (binding.viewPager.currentItem + 1 < (binding.viewPager.adapter?.itemCount ?: 0)) {
             try {
                 fakeDrag(true)
-            } catch (e: Exception) {
-                //NO OP
-            }
+            } catch (_: Exception) { }
         } else {
-            //there is no next story
-            Toast.makeText(this, "All stories displayed.", Toast.LENGTH_LONG).show()
+            finish()
         }
     }
 
@@ -67,19 +68,12 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
             }
         }
         binding.viewPager.registerOnPageChangeCallback(object : StoryPageChangeListener() {
-            override fun onPageScrollStateChanged(state: Int) {
-                if (state == ViewPager2.SCROLL_STATE_DRAGGING) {
-
-                }
-            }
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 currentPage = position
             }
-
             override fun onPageScrollCanceled() {
-                //TODO
-//                currentFragment().resumeCurrentStory()
+                currentFragment().playStory()
             }
         })
     }

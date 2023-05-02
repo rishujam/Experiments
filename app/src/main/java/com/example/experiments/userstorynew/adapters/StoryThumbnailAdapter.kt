@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.experiments.databinding.ItemHomeRvBinding
+import com.example.experiments.userstorynew.managers.StoryViewedStateManager
 import com.example.experiments.userstorynew.models.UserData
 
 /*
@@ -15,7 +16,8 @@ class StoryThumbnailAdapter(
     private val list: List<UserData>
 ) : RecyclerView.Adapter<StoryThumbnailAdapter.StoryThumbnailViewHolder>() {
 
-    inner class StoryThumbnailViewHolder(val binding: ItemHomeRvBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class StoryThumbnailViewHolder(val binding: ItemHomeRvBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -30,12 +32,15 @@ class StoryThumbnailAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: StoryThumbnailAdapter.StoryThumbnailViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: StoryThumbnailAdapter.StoryThumbnailViewHolder,
+        position: Int
+    ) {
         holder.binding.apply {
             val userData = list[position]
-//            if(StoryViewedStateManager.isViewed(userData.username)) {
-//                tvViewed.visibility = View.VISIBLE
-//            }
+            if (isAllStoriesViewed(userData)) {
+                tvViewed.visibility = View.VISIBLE
+            }
             storyThumbnail.setOnClickListener {
                 onItemClickListener?.let { it(userData) }
             }
@@ -50,5 +55,16 @@ class StoryThumbnailAdapter(
 
     fun setOnItemClickListener(listener: (UserData) -> Unit) {
         onItemClickListener = listener
+    }
+
+    private fun isAllStoriesViewed(list: UserData): Boolean {
+        var out = true
+        for (i in list.stories) {
+            if (!StoryViewedStateManager.isViewed(i.id)) {
+                out = false
+                break
+            }
+        }
+        return out
     }
 }
