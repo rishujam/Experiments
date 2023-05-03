@@ -44,16 +44,17 @@ class MainActivity : AppCompatActivity() {
         StoryViewedStateManager.init()
         OtplessManager.getInstance().init(this)
 
-        storyUserList = UserList(StoryGen.createData())
+        storyUserList = UserList(StoryGen.getUsersWithStory())
         adapter = StoryThumbnailAdapter(storyUserList.list)
         binding.apply {
             homeRv.adapter = adapter
             homeRv.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
         }
 
-        adapter.setOnItemClickListener {
+        adapter.setOnItemClickListener { position ->
             //TODO Pass the clicked data
             val bundle = Bundle()
+            bundle.putInt("position", position)
             bundle.putParcelable("user_list", storyUserList)
             val intent = Intent(this, StoryActivity::class.java).apply {
                 putExtras(bundle)

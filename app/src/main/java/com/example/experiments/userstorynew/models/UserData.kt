@@ -12,5 +12,5 @@ import kotlinx.parcelize.Parcelize
 data class UserData(
     val username: String,
     val profilePicUrl: String,
-    val stories: ArrayList<Story>
+    val noOfStories: Int
 ) : Parcelable

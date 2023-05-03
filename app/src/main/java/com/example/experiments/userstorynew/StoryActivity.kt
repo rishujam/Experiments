@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.SparseIntArray
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.example.experiments.databinding.ActivityStoryBinding
 import com.example.experiments.userstorynew.adapters.StoryPagerAdapter
@@ -22,8 +21,11 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
         super.onCreate(savedInstanceState)
         binding = ActivityStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val data = intent.extras?.getParcelable<UserList>("user_list")
-        setUpPager((data as UserList).list)
+        intent.extras?.let {
+            val data = it.getParcelable<UserList>("user_list")
+            val position = it.getInt("position")
+            setUpPager((data as UserList).list, position)
+        }
     }
 
     override fun backPageNavigate() {
@@ -51,7 +53,7 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
     private lateinit var pagerAdapter: StoryPagerAdapter
     private var currentPage: Int = 0
 
-    private fun setUpPager(storyUserList: ArrayList<UserData>) {
+    private fun setUpPager(storyUserList: ArrayList<UserData>, position: Int) {
         pagerAdapter = StoryPagerAdapter(
             this,
             storyUserList
@@ -59,6 +61,7 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
         binding.viewPager.apply {
             adapter = pagerAdapter
             currentItem = currentPage
+            currentItem = position
             post {
                 setPageTransformer(CubeOutTransformer())
             }
@@ -69,13 +72,13 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
                 currentPage = position
             }
             override fun onPageScrollCanceled() {
-                currentFragment().playStory()
+                currentFragment()?.playStory()
             }
         })
     }
 
-    private fun currentFragment(): StoryFragment1 {
-        return pagerAdapter.findFragmentByPosition(currentPage) as StoryFragment1
+    private fun currentFragment(): StoryFragment? {
+        return pagerAdapter.findFragmentByPosition(currentPage) as? StoryFragment
     }
 
     private var prevDragPosition = 0
@@ -83,7 +86,7 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
     private fun fakeDrag(forward: Boolean) {
         if (prevDragPosition == 0 && binding.viewPager.beginFakeDrag()) {
             ValueAnimator.ofInt(0, binding.viewPager.width).apply {
-                duration = 400L
+                duration = CUBE_ANIM_TIME
                 interpolator = FastOutSlowInInterpolator()
                 addListener(object : Animator.AnimatorListener {
                     override fun onAnimationStart(animation: Animator) {  }
@@ -124,6 +127,6 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
     }
 
     companion object {
-        val progressState = SparseIntArray()
+        private const val CUBE_ANIM_TIME = 400L
     }
 }

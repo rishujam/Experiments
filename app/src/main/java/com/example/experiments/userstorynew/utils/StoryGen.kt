@@ -9,7 +9,121 @@ import com.example.experiments.userstorynew.models.UserData
 
 object StoryGen {
 
-    fun createData(): ArrayList<UserData> {
+    fun getUsersWithStory(): ArrayList<UserData> {
+        val userList = ArrayList<UserData>()
+        userList.add(
+            UserData(
+                "User 1",
+                "https://randomuser.me/api/portraits/women/1.jpg",
+                2
+            )
+        )
+        userList.add(
+            UserData(
+                "User 2",
+                "https://randomuser.me/api/portraits/men/1.jpg",
+                3
+            )
+        )
+        userList.add(
+            UserData(
+                "User 3",
+                "https://randomuser.me/api/portraits/men/11.jpg",
+                1
+            )
+        )
+        userList.add(
+            UserData(
+                "User 4",
+                "https://randomuser.me/api/portraits/women/11.jpg",
+                1
+            )
+        )
+        userList.add(
+            UserData(
+                "User 5",
+                "https://randomuser.me/api/portraits/men/8.jpg",
+                1
+            )
+        )
+        return userList
+    }
+
+    fun getStoriesOfUser(userName: String): ArrayList<Story> {
+        val stories = ArrayList<Story>()
+        when (userName) {
+            "User 1" -> {
+                stories.add(
+                    Story(
+                        1,
+                        "https://player.vimeo.com/external/409206405.sd.mp4?s=0bc456b6ff355d9907f285368747bf54323e5532&profile_id=165&oauth2_token_id=57447761",
+                        System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
+                    )
+                )
+                stories.add(
+                    Story(
+                        2,
+                        "https://player.vimeo.com/external/403295710.sd.mp4?s=788b046826f92983ada6e5caf067113fdb49e209&profile_id=165&oauth2_token_id=57447761",
+                        System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
+                    )
+                )
+            }
+            "User 2" -> {
+                stories.add(
+                    Story(
+                        3,
+                        "https://player.vimeo.com/external/363465031.sd.mp4?s=15b706ccd3c0e1d9dc9290487ccadc7b20fff7f1&profile_id=165&oauth2_token_id=57447761",
+                        System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
+                    )
+                )
+                stories.add(
+                    Story(
+                        4,
+                        "https://images.pexels.com/photos/1433052/pexels-photo-1433052.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                        System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
+                    )
+                )
+                stories.add(
+                    Story(
+                        5,
+                        "https://images.pexels.com/photos/1067333/pexels-photo-1067333.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                        System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
+                    )
+                )
+            }
+            "User 3" -> {
+                stories.add(
+                    Story(
+                        6,
+                        "https://player.vimeo.com/external/409206405.sd.mp4?s=0bc456b6ff355d9907f285368747bf54323e5532&profile_id=165&oauth2_token_id=57447761",
+                        System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
+                    )
+                )
+            }
+            "User 4" -> {
+                stories.add(
+                    Story(
+                        7,
+                        "https://images.pexels.com/photos/1366630/pexels-photo-1366630.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                        System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
+                    )
+                )
+            }
+            "User 5" -> {
+                stories.add(
+                    Story(
+                        8,
+                        "https://images.pexels.com/photos/1067333/pexels-photo-1067333.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                        System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
+                    )
+                )
+
+            }
+        }
+        return stories
+    }
+
+    fun createData(){
         val storyUrls = ArrayList<String>()
         storyUrls.add("https://player.vimeo.com/external/403295268.sd.mp4?s=3446f787cefa52e7824d6ce6501db5261074d479&profile_id=165&oauth2_token_id=57447761")
         storyUrls.add("https://player.vimeo.com/external/409206405.sd.mp4?s=0bc456b6ff355d9907f285368747bf54323e5532&profile_id=165&oauth2_token_id=57447761")
@@ -37,107 +151,5 @@ object StoryGen {
         storyUrls.add("https://images.pexels.com/photos/2953901/pexels-photo-2953901.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
         storyUrls.add("https://images.pexels.com/photos/3538558/pexels-photo-3538558.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
         storyUrls.add("https://images.pexels.com/photos/2458400/pexels-photo-2458400.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260")
-
-        val userList = ArrayList<UserData>()
-
-        val user1Stories = ArrayList<Story>()
-        val user2Stories = ArrayList<Story>()
-        val user3Stories = ArrayList<Story>()
-        val user4Stories = ArrayList<Story>()
-        val user5Stories = ArrayList<Story>()
-
-        user1Stories.add(
-            Story(
-                1,
-                "https://images.pexels.com/photos/1719344/pexels-photo-1719344.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
-            )
-        )
-        user1Stories.add(
-            Story(
-                2,
-                "https://images.pexels.com/photos/1433052/pexels-photo-1433052.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
-            )
-        )
-        user2Stories.add(
-            Story(
-                3,
-                "https://images.pexels.com/photos/2260800/pexels-photo-2260800.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
-            )
-        )
-        user2Stories.add(
-            Story(
-                4,
-                "https://images.pexels.com/photos/1433052/pexels-photo-1433052.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
-            )
-        )
-        user2Stories.add(
-            Story(
-                5,
-                "https://images.pexels.com/photos/1067333/pexels-photo-1067333.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
-            )
-        )
-        user3Stories.add(
-            Story(
-                6,
-                "https://player.vimeo.com/external/409206405.sd.mp4?s=0bc456b6ff355d9907f285368747bf54323e5532&profile_id=165&oauth2_token_id=57447761",
-                System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
-            )
-        )
-        user4Stories.add(
-            Story(
-                7,
-                "https://images.pexels.com/photos/1366630/pexels-photo-1366630.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
-            )
-        )
-        user5Stories.add(
-            Story(
-                8,
-                "https://images.pexels.com/photos/1067333/pexels-photo-1067333.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
-            )
-        )
-
-        userList.add(
-            UserData(
-                "User 1",
-                "https://randomuser.me/api/portraits/women/1.jpg",
-                user1Stories
-            )
-        )
-        userList.add(
-            UserData(
-                "User 2",
-                "https://randomuser.me/api/portraits/men/1.jpg",
-                user2Stories
-            )
-        )
-        userList.add(
-            UserData(
-                "User 3",
-                "https://randomuser.me/api/portraits/men/11.jpg",
-                user3Stories
-            )
-        )
-        userList.add(
-            UserData(
-                "User 4",
-                "https://randomuser.me/api/portraits/women/11.jpg",
-                user4Stories
-            )
-        )
-        userList.add(
-            UserData(
-                "User 5",
-                "https://randomuser.me/api/portraits/men/8.jpg",
-                user5Stories
-            )
-        )
-        return userList
     }
 }

@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         android:id="@+id/storyDisplayVideo"
+        app:use_controller="false"
         app:surface_type="texture_view" />
 
     <ImageView
@@ -33,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.example.experiments.userstorynew.views.StoryTopProgressBar
+    <com.example.experiments.userstorynew.views.StoryProgressView
         android:id="@+id/storiesProgressView"
         android:layout_width="match_parent"
         android:layout_height="3dp"

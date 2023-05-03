@@ -57,6 +57,7 @@ class ProgressItem @JvmOverloads constructor(
     fun clearAnim() {
         animation?.setAnimationListener(null)
         animation?.cancel()
+        progressView?.clearAnimation()
         animation = null
     }
 
