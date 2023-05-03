@@ -177,6 +177,7 @@ class StoryFragment1 : Fragment() {
         if (exoPlayer != null) {
             exoPlayer?.release()
             exoPlayer = null
+            //TODO See if this can be optimized as always exoPlayer is reinitialized even when not needed
         }
         context?.let { notNullContext ->
             exoPlayer = ExoPlayer.Builder(notNullContext).build()

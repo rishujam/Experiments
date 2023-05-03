@@ -79,14 +79,13 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) {
                         val token = response.body()
-                        Log.d("RishuTest", token.toString())
                         // do something with the token
                     } else {
                         // handle error
                     }
                 }
                 override fun onFailure(call: Call<ResponseData>, t: Throwable) {
-                    Log.d("Rishutest", "error: ${t.message}")
+
                 }
             })
         }
@@ -94,7 +93,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("RishuTest", "${StoryViewedStateManager.viewedMap}")
         adapter.notifyDataSetChanged()
     }
 

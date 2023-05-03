@@ -4,16 +4,12 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.util.SparseIntArray
-import android.widget.Toast
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
-import androidx.viewpager2.widget.ViewPager2
 import com.example.experiments.databinding.ActivityStoryBinding
 import com.example.experiments.userstorynew.adapters.StoryPagerAdapter
 import com.example.experiments.userstorynew.listeners.AutoNavigateListener
 import com.example.experiments.userstorynew.listeners.StoryPageChangeListener
-import com.example.experiments.userstorynew.managers.StoryViewedStateManager
 import com.example.experiments.userstorynew.models.UserData
 import com.example.experiments.userstorynew.models.UserList
 import com.example.experiments.userstorynew.utils.CubeOutTransformer

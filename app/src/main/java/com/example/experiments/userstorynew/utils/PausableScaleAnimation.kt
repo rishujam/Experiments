@@ -17,6 +17,7 @@ class PausableScaleAnimation internal constructor(
 ) {
     private var elapsedAtPause: Long = 0
     private var isPaused = false
+
     override fun getTransformation(
         currentTime: Long,
         outTransformation: Transformation,
@@ -27,19 +28,23 @@ class PausableScaleAnimation internal constructor(
         }
         if (isPaused) {
             startTime = currentTime - elapsedAtPause
+        } else {
+            if (elapsedAtPause != 0L) {
+                startTime += (currentTime - elapsedAtPause) - startTime
+                elapsedAtPause = 0L
+            }
         }
         return super.getTransformation(currentTime, outTransformation, scale)
     }
 
+
     fun pause() {
-        //Pause timer also
         if (isPaused) return
         elapsedAtPause = 0
         isPaused = true
     }
 
     fun resume() {
-        //Resume timer also
         isPaused = false
     }
 }
