@@ -115,6 +115,10 @@ class StoryFragment : Fragment() {
                         binding?.group?.show()
                         playStory()
                     }
+                    MotionEvent.ACTION_CANCEL -> {
+                        binding?.group?.show()
+                        playStory()
+                    }
                 }
                 return false
             }

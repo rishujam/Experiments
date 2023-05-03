@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         adapter.setOnItemClickListener { position ->
-            //TODO Pass the clicked data
             val bundle = Bundle()
             bundle.putInt("position", position)
             bundle.putParcelable("user_list", storyUserList)

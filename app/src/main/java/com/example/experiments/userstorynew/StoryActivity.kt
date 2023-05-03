@@ -62,9 +62,7 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
             adapter = pagerAdapter
             currentItem = currentPage
             currentItem = position
-            post {
-                setPageTransformer(CubeOutTransformer())
-            }
+            post { setPageTransformer(CubeOutTransformer()) }
         }
         binding.viewPager.registerOnPageChangeCallback(object : StoryPageChangeListener() {
             override fun onPageSelected(position: Int) {
