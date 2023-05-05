@@ -10,7 +10,7 @@ import com.example.experiments.userstorynew.models.UserData
  * Created by Sudhanshu Kumar on 25/04/23.
  */
 
-class StoryPagerAdapter(
+class StoryDetailPagerAdapter(
     fragmentManager: FragmentActivity,
     private val storyList: ArrayList<UserData>
 ) : FragmentStateAdapter(fragmentManager) {

@@ -4,9 +4,10 @@ import android.animation.Animator
 import android.animation.ValueAnimator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import com.example.experiments.databinding.ActivityStoryBinding
-import com.example.experiments.userstorynew.adapters.StoryPagerAdapter
+import com.example.experiments.userstorynew.adapters.StoryDetailPagerAdapter
 import com.example.experiments.userstorynew.listeners.AutoNavigateListener
 import com.example.experiments.userstorynew.listeners.StoryPageChangeListener
 import com.example.experiments.userstorynew.models.UserData
@@ -50,19 +51,18 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
         }
     }
 
-    private lateinit var pagerAdapter: StoryPagerAdapter
+    private lateinit var pagerAdapter: StoryDetailPagerAdapter
     private var currentPage: Int = 0
 
     private fun setUpPager(storyUserList: ArrayList<UserData>, position: Int) {
-        pagerAdapter = StoryPagerAdapter(
+        pagerAdapter = StoryDetailPagerAdapter(
             this,
             storyUserList
         )
         binding.viewPager.apply {
             adapter = pagerAdapter
-            currentItem = currentPage
-            currentItem = position
-            post { setPageTransformer(CubeOutTransformer()) }
+            setCurrentItem(position, false)
+            currentPage = position
         }
         binding.viewPager.registerOnPageChangeCallback(object : StoryPageChangeListener() {
             override fun onPageSelected(position: Int) {
@@ -117,6 +117,15 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
                 }
             }.start()
         }
+    }
+
+    fun setPageTransformAnimation() {
+        binding.viewPager.setPageTransformer(CubeOutTransformer())
+    }
+
+    override fun onStop() {
+        super.onStop()
+        binding.viewPager.setPageTransformer(null)
     }
 
     override fun onDestroy() {

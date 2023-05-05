@@ -49,7 +49,6 @@ class StoryFragment : Fragment() {
 
     private var _binding: FragmentStoryBinding? = null
     private val binding get() = _binding
-
     private var exoPlayer: ExoPlayer? = null
     private var userName: String? = null
     private var data: List<Story>? = null
@@ -169,7 +168,7 @@ class StoryFragment : Fragment() {
                     storyDisplayVideo.show()
                     storyDisplayImage.hide()
                 }
-                initPlayer(it.url, it.id)
+                changePlayerUrl(it.url, it.id)
             } else {
                 binding?.apply {
                     storyDisplayVideo.hide()
@@ -184,7 +183,6 @@ class StoryFragment : Fragment() {
         if (exoPlayer != null) {
             exoPlayer?.release()
             exoPlayer = null
-            //TODO See if this can be optimized as always exoPlayer is reinitialized even when not needed
         }
         context?.let { notNullContext ->
             exoPlayer = ExoPlayer.Builder(notNullContext).build()
@@ -239,6 +237,23 @@ class StoryFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun changePlayerUrl(url: String, storyId: Int) {
+        if(exoPlayer != null) {
+            val mediaDataSourceFactory = DefaultHttpDataSource.Factory().setUserAgent(
+                Util.getUserAgent(
+                    requireContext(),
+                    getString(R.string.app_name)
+                )
+            )
+            val mediaSource = ProgressiveMediaSource.Factory(mediaDataSourceFactory)
+                .createMediaSource(MediaItem.fromUri(url))
+            exoPlayer?.setMediaSource(mediaSource, true)
+            exoPlayer?.prepare()
+        } else {
+            initPlayer(url, storyId)
+        }
     }
 
     private fun loadImage(url: String, id: Int) {
@@ -299,6 +314,7 @@ class StoryFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        (activity as StoryActivity).setPageTransformAnimation()
         startStory()
     }
 

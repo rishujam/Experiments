@@ -123,6 +123,25 @@ object StoryGen {
         return stories
     }
 
+    fun getAfter(): ArrayList<Story> {
+        val stories = ArrayList<Story>()
+        stories.add(
+            Story(
+                9,
+                "https://images.pexels.com/photos/1067333/pexels-photo-1067333.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
+            )
+        )
+        stories.add(
+            Story(
+                9,
+                "https://images.pexels.com/photos/1067333/pexels-photo-1067333.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+                System.currentTimeMillis() - (1 * (24 - (1..15).random()) * 60 * 60 * 1000)
+            )
+        )
+        return stories
+    }
+
     fun createData(){
         val storyUrls = ArrayList<String>()
         storyUrls.add("https://player.vimeo.com/external/403295268.sd.mp4?s=3446f787cefa52e7824d6ce6501db5261074d479&profile_id=165&oauth2_token_id=57447761")

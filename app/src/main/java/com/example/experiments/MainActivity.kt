@@ -2,6 +2,7 @@ package com.example.experiments
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.LinearLayout.LayoutParams
 import android.widget.Toast
@@ -69,26 +70,26 @@ class MainActivity : AppCompatActivity() {
         val api = retrofit.create(OtplessApi::class.java)
 
 
-        binding.whatsappLogin.setResultCallback{
-            val waId = it.waId
-            val call = api.getToken("pppdicut", "uy4ab1s52isxl2jp", "application/json", TokenRequest(waId))
-            call.enqueue(object : Callback<ResponseData> {
-                override fun onResponse(
-                    call: Call<ResponseData>,
-                    response: Response<ResponseData>
-                ) {
-                    if (response.isSuccessful) {
-                        val token = response.body()
-                        // do something with the token
-                    } else {
-                        // handle error
-                    }
-                }
-                override fun onFailure(call: Call<ResponseData>, t: Throwable) {
-
-                }
-            })
-        }
+//        binding.whatsappLogin.setResultCallback{
+//            val waId = it.waId
+//            val call = api.getToken("pppdicut", "uy4ab1s52isxl2jp", "application/json", TokenRequest(waId))
+//            call.enqueue(object : Callback<ResponseData> {
+//                override fun onResponse(
+//                    call: Call<ResponseData>,
+//                    response: Response<ResponseData>
+//                ) {
+//                    if (response.isSuccessful) {
+//                        val token = response.body()
+//                        // do something with the token
+//                    } else {
+//                        // handle error
+//                    }
+//                }
+//                override fun onFailure(call: Call<ResponseData>, t: Throwable) {
+//
+//                }
+//            })
+//        }
     }
 
     override fun onResume() {
