@@ -4,17 +4,22 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.View
 import android.widget.LinearLayout.LayoutParams
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.TooltipCompat
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.experiments.databinding.ActivityMainBinding
 import com.example.experiments.pocotpless.OtplessApi
 import com.example.experiments.pocotpless.ResponseData
 import com.example.experiments.pocotpless.TokenRequest
 import com.example.experiments.userstorynew.StoryActivity
+import com.example.experiments.userstorynew.TestFragment
 import com.example.experiments.userstorynew.adapters.StoryThumbnailAdapter
 import com.example.experiments.userstorynew.managers.StoryViewedStateManager
 import com.example.experiments.userstorynew.models.UserList
@@ -35,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: StoryThumbnailAdapter
     private lateinit var storyUserList: UserList
+    private val frag = TestFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +75,22 @@ class MainActivity : AppCompatActivity() {
 
         val api = retrofit.create(OtplessApi::class.java)
 
+        binding.button.setOnClickListener {
+            binding.fm.visibility = View.VISIBLE
+
+            setCurrentFragment(frag)
+        }
+
+        TooltipCompat.setTooltipText(binding.button, "This is a tooltip")
+
+        binding.button.setOnClickListener {
+
+        }
+
+
+
+
+
 
 //        binding.whatsappLogin.setResultCallback{
 //            val waId = it.waId
@@ -90,6 +112,23 @@ class MainActivity : AppCompatActivity() {
 //                }
 //            })
 //        }
+    }
+
+    private fun showTooltip(view: View) {
+        TooltipCompat.setTooltipText(view, null) // Clear the tooltip text temporarily
+        ViewCompat.postOnAnimationDelayed(view, {
+            TooltipCompat.setTooltipText(view, "")
+        }, 100) // Delay before showing the tooltip (adjust as needed)
+    }
+
+    fun setCurrentFragment(fragment: Fragment)=
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fm,fragment)
+            commit()
+        }
+
+    fun removeCurrFrag() {
+        supportFragmentManager.beginTransaction().remove(frag).commit()
     }
 
     override fun onResume() {

@@ -10,6 +10,7 @@ import com.example.experiments.databinding.ActivityStoryBinding
 import com.example.experiments.userstorynew.adapters.StoryDetailPagerAdapter
 import com.example.experiments.userstorynew.listeners.AutoNavigateListener
 import com.example.experiments.userstorynew.listeners.StoryPageChangeListener
+import com.example.experiments.userstorynew.managers.StoryViewedStateManager
 import com.example.experiments.userstorynew.models.UserData
 import com.example.experiments.userstorynew.models.UserList
 import com.example.experiments.userstorynew.utils.CubeOutTransformer
@@ -126,6 +127,11 @@ class StoryActivity : AppCompatActivity(), AutoNavigateListener {
     override fun onStop() {
         super.onStop()
         binding.viewPager.setPageTransformer(null)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("RishuTest", "${StoryViewedStateManager.viewedMap}")
     }
 
     override fun onDestroy() {

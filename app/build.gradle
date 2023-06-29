@@ -82,4 +82,5 @@ dependencies {
 //    implementation project(':otpless-android-sdk')
 
     implementation 'com.github.otpless-tech:otpless-android-sdk:1.1.6'
+    implementation 'com.tomergoldst.android:tooltips:1.1.1'
 }

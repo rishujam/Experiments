@@ -2,7 +2,6 @@ package com.example.logmate.data
 
 import android.content.Context
 import android.util.Log
-import com.example.logmate.util.Common
 import com.example.logmate.util.LogPriority
 import com.squareup.tape2.QueueFile
 import kotlinx.coroutines.*

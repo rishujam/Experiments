@@ -80,16 +80,43 @@
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/button" />
 
+        <FrameLayout
+            android:id="@+id/fm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="4dp"
+            android:visibility="gone" />
 
-<!--        <com.otpless.views.WhatsappLoginButton-->
-<!--            android:id="@+id/whatsapp_login"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:visibility="visible"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:otpless_link="https://docquity.authlink.me" />-->
+        <ImageView
+            android:id="@+id/testImage"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:src="@color/green"
+            app:layout_constraintTop_toBottomOf="@id/homeRv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+<!--        <androidx.constraintlayout.widget.Barrier-->
+<!--            android:id="@+id/barrier"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:barrierDirection="top"-->
+<!--            app:constraint_referenced_ids="testText, testImage" />-->
+
+
+        <TextView
+            android:id="@+id/testText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:paddingBottom="8dp"
+            android:text="tEXT tEXT tESTTTSHDHs"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/testImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:constraint_referenced_ids="homeRv"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
