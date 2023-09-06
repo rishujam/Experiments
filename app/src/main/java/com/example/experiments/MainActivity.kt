@@ -13,6 +13,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.experiments.databinding.ActivityMainBinding
+import com.example.experiments.pdf.PdfActivity
 import com.example.experiments.userstorynew.StoryActivity
 import com.example.experiments.userstorynew.TestFragment
 import com.example.experiments.userstorynew.adapters.StoryThumbnailAdapter
@@ -176,21 +177,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnShowAnim.setOnClickListener {
-            var ctr = 0f
-            val likeIcon = ImageView(this)
-            likeIcon.setImageResource(com.example.experiments.R.drawable.story_reaction_like)
-            likeIcon.alpha = 1f
-            val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-            layoutParams.gravity = Gravity.BOTTOM
-            likeIcon.layoutParams = layoutParams
-            likeIcon.x = 100f
-
-            binding.frameAnim.addView(likeIcon)
-            likeIcon.startAnimation(AnimationUtils.loadAnimation(this, com.example.experiments.R.anim.zigzag_anim))
-            while (ctr <= 20) {
-                likeIcon.animate().x(ctr).setDuration(500).start()
-                ctr++
-            }
+            startActivity(Intent(this, PdfActivity::class.java))
         }
     }
 
