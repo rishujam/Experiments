@@ -35,7 +35,7 @@ class PdfView @JvmOverloads constructor(
 ) : ConstraintLayout(context, attrs) {
 
     private lateinit var pdfAdapter: PDFAdapter
-    private var noOfPages: Int? = null
+    private var noOfPages: String? = null
     private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
     private var pageText: TextView
     private var pageCard: CardView
@@ -55,19 +55,26 @@ class PdfView @JvmOverloads constructor(
             adapter = pdfAdapter
             layoutManager = LinearLayoutManager(context)
             setOnScrollChangeListener { _, _, _, _, _ ->
-                val currPage = (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() + 1
-                noOfPages?.let {
-                    pageText.text = "$currPage / $it"
-                    pageCard.showPagesViewForSomeSeconds(coroutineScope, context)
+                val visiblePosition = (layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+                if(visiblePosition != -1) {
+                    val currPage = visiblePosition + 1
+                    if(!noOfPages.isNullOrEmpty()) {
+                        pageCard.show()
+                        val text = "$currPage / $noOfPages"
+                        pageText.text = text
+                        pageCard.showPagesViewForSomeSeconds(coroutineScope, context)
+                    }
                 }
+
             }
         }
     }
 
     fun setData(uri: String) {
         val list = generateBitmaps(uri)
-        noOfPages = list.size
+        noOfPages = list.size.toString()
         pdfAdapter.differ.submitList(list)
+        pageCard.show()
         pageCard.showPagesViewForSomeSeconds(coroutineScope, context)
     }
 

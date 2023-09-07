@@ -21,7 +21,7 @@ fun View.showPagesViewForSomeSeconds(
 ) {
     this.show()
     scope.launch {
-        delay(2000L)
+        delay(1500L)
         withContext(Dispatchers.Main) {
             val fadeOutAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_out_anim)
             fadeOutAnimation.setAnimationListener(object : Animation.AnimationListener {

@@ -18,8 +18,8 @@
         android:id="@+id/cdPages"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:visibility="gone"
         app:cardCornerRadius="8dp"
+        android:visibility="gone"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
             android:id="@+id/tvPageNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="1/1"
+            android:text="1/1"
             android:layout_gravity="center"
             android:textSize="18sp"
             android:textColor="@color/black"/>
