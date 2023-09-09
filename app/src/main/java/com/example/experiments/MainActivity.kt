@@ -3,17 +3,18 @@ package com.example.experiments
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
+import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
-import android.view.animation.AnimationUtils
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.experiments.databinding.ActivityMainBinding
-import com.example.experiments.pdf.PdfActivity
 import com.example.experiments.userstorynew.StoryActivity
 import com.example.experiments.userstorynew.TestFragment
 import com.example.experiments.userstorynew.adapters.StoryThumbnailAdapter
@@ -21,22 +22,9 @@ import com.example.experiments.userstorynew.managers.StoryViewedStateManager
 import com.example.experiments.userstorynew.models.UserList
 import com.example.experiments.userstorynew.utils.StoryGen
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.gson.GsonBuilder
 import com.otpless.views.OtplessManager
-import com.skydoves.balloon.ArrowPositionRules
-import com.skydoves.balloon.Balloon
-import com.skydoves.balloon.BalloonAnimation
-import com.skydoves.balloon.BalloonSizeSpec
-import com.skydoves.balloon.showAlignTop
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MainActivity : AppCompatActivity() {
@@ -50,29 +38,14 @@ class MainActivity : AppCompatActivity() {
     private val scope = CoroutineScope(Dispatchers.IO)
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>
+    private lateinit var scaleGesture: ScaleGestureDetector
+    private var mScaleFactor = 1.0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         bottomSheetBehavior = BottomSheetBehavior.from(binding.includedSheet.bottomSheet)
-        val balloon = Balloon.Builder(this)
-            .setHeight(BalloonSizeSpec.WRAP)
-            .setWidth(BalloonSizeSpec.WRAP)
-            .setText("Edit your profile here!")
-            .setTextColorResource(R.color.white)
-            .setTextSize(15f)
-            .setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
-            .setArrowSize(10)
-            .setArrowPosition(0.5f)
-            .setPadding(12)
-            .setCornerRadius(8f)
-            .setBackgroundColorResource(R.color.black)
-            .setBalloonAnimation(BalloonAnimation.ELASTIC)
-            .setLifecycleOwner(this)
-            .build()
-
-        binding.button.showAlignTop(balloon)
 
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
@@ -120,65 +93,59 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://docquity.authlink.me")
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
-            .build()
-
-        val frameVideo =
-            "<html><body>Video From YouTube<br><iframe width=\"420\" height=\"315\" src=\"https://www.youtube.com/embed/47yJ2XCRLZs\" frameborder=\"0\" allowfullscreen></iframe></body></html>"
-
-        val call1 = TestApi.api.get("https://run.mocky.io/v3/597d3b48-238e-495c-b0da-1e5cf13d8f94")
-        call1.enqueue(object : Callback<Any> {
-            override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                if(response.isSuccessful) {
-                    Log.d("RishuTest", "success call1: ${call.request().url}")
-                } else {
-                    Log.d("RishuTest", "error call1")
-                }
+        var animShown = false
+        binding.btnShowAnim.viewTreeObserver.addOnGlobalLayoutListener {
+            if(!animShown) {
+                animShown = true
+                Log.d("AnimTest", "${binding.btnShowAnim.width}")
+                showAnim()
             }
-
-            override fun onFailure(call: Call<Any>, t: Throwable) {
-                Log.d("RishuTest", "error call1")
-            }
-        })
-
-        val call2 = TestApi.api.get("https://mocki.io/v1/b477e797-beb8-4e16-840f-7662d884904e")
-        call2.enqueue(object : Callback<Any> {
-            override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                if(response.isSuccessful) {
-                    Log.d("RishuTest", "success call2: ${call.request().url}")
-                } else {
-                    Log.d("RishuTest", "error call2")
-                }
-            }
-
-            override fun onFailure(call: Call<Any>, t: Throwable) {
-                Log.d("RishuTest", "error call2")
-            }
-        })
-
-        scope.launch(Dispatchers.IO) {
-            delay(3000)
-            val call3 = TestApi.api.get("https://run.mocky.io/v3/597d3b48-238e-495c-b0da-1e5cf13d8f94")
-            call3.enqueue(object : Callback<Any> {
-                override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                    if(response.isSuccessful) {
-                        Log.d("RishuTest", "success call3: ${call.request().url}")
-                    } else {
-                        Log.d("RishuTest", "error call3")
-                    }
-                }
-
-                override fun onFailure(call: Call<Any>, t: Throwable) {
-                    Log.d("RishuTest", "error call3")
-                }
-            })
         }
 
-        binding.btnShowAnim.setOnClickListener {
-            startActivity(Intent(this, PdfActivity::class.java))
+        scaleGesture = ScaleGestureDetector(this, ScaleListener())
+
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        event?.let {
+            scaleGesture.onTouchEvent(it)
+            return@let true
         }
+        return false
+    }
+
+    private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+        override fun onScale(detector: ScaleGestureDetector): Boolean {
+            mScaleFactor *= scaleGesture.scaleFactor
+            binding.zoomTest.scaleX = mScaleFactor
+            binding.zoomTest.scaleY = mScaleFactor
+            return true
+        }
+
+        override fun onScaleEnd(detector: ScaleGestureDetector) {
+            super.onScaleEnd(detector)
+            mScaleFactor = 1.0f
+            binding.zoomTest.scaleX = mScaleFactor
+            binding.zoomTest.scaleY = mScaleFactor
+        }
+    }
+
+    private fun showAnim() {
+        val finalXPosition = resources.displayMetrics.widthPixels.toFloat() - 300
+        val animation = TranslateAnimation(0f, finalXPosition, 0f, 0f)
+        animation.duration = 1000
+        animation.interpolator = AccelerateDecelerateInterpolator()
+        animation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {}
+
+            override fun onAnimationEnd(animation: Animation?) {
+                // Set the button's position to the final X position
+                binding.btnShowAnim.x = finalXPosition
+            }
+
+            override fun onAnimationRepeat(animation: Animation?) {}
+        })
+        binding.btnShowAnim.startAnimation(animation)
     }
 
     fun removeCurrFrag() {

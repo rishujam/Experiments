@@ -21,53 +21,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:background="@drawable/dc_onboarding_invitecode_correct"
-        android:elevation="10dp"
-        android:focusedByDefault="false"
-        android:id="@+id/editText2"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_width="0dp"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
-
-    <Button
-        android:background="@drawable/dc_onboarding_invitecode_buttooff"
-        android:id="@+id/button2"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_width="wrap_content"
-        android:text="Next"
-        android:textColor="#A0A0A1"
-        app:backgroundTint="@null"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
-
-    <Button
-        android:background="@drawable/dc_onboarding_invitecode_buttonon"
-        android:id="@+id/button"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_width="wrap_content"
-        android:text="Next"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/homeRv"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/button" />
+        app:layout_constraintTop_toBottomOf="@id/editText" />
 
     <Button
         android:id="@+id/btnBottomSheetPersistent"
@@ -89,9 +49,10 @@
 
     <Button
         android:id="@+id/btnShowAnim"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show animation"
+        android:text="Show anim"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnBottomSheetPersistent"/>
 
     <FrameLayout
@@ -102,5 +63,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/zoomTest"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:src="@drawable/sample"
+        app:layout_constraintTop_toBottomOf="@id/btnShowAnim"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
