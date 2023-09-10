@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Experiments"
         tools:targetApi="31">
         <activity
+            android:name=".imageeditor.PhotoEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".userstorynew.StoryActivity"
             android:exported="false" />
 

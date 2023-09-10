@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.experiments.databinding.ActivityMainBinding
+import com.example.experiments.imageeditor.PhotoEditActivity
 import com.example.experiments.userstorynew.StoryActivity
 import com.example.experiments.userstorynew.TestFragment
 import com.example.experiments.userstorynew.adapters.StoryThumbnailAdapter
@@ -101,6 +102,10 @@ class MainActivity : AppCompatActivity() {
                 Log.d("AnimTest", "${binding.btnShowAnim.width}")
                 showAnim()
             }
+        }
+
+        binding.btnEditor.setOnClickListener {
+            startActivity(Intent(this, PhotoEditActivity::class.java))
         }
 
     }
