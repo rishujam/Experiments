@@ -1,6 +1,9 @@
 package com.example.experiments
 
 import android.content.Intent
+import android.graphics.PointF
+import android.graphics.Rect
+import android.graphics.RectF
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
@@ -13,6 +16,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.experiments.databinding.ActivityMainBinding
 import com.example.experiments.userstorynew.StoryActivity
@@ -23,8 +27,6 @@ import com.example.experiments.userstorynew.models.UserList
 import com.example.experiments.userstorynew.utils.StoryGen
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.otpless.views.OtplessManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,11 +37,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: StoryThumbnailAdapter
     private lateinit var storyUserList: UserList
     private val frag = TestFragment()
-    private val scope = CoroutineScope(Dispatchers.IO)
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>
-    private lateinit var scaleGesture: ScaleGestureDetector
-    private var mScaleFactor = 1.0f
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,33 +103,23 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        scaleGesture = ScaleGestureDetector(this, ScaleListener())
-
     }
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        event?.let {
-            scaleGesture.onTouchEvent(it)
-            return@let true
-        }
-        return false
-    }
-
-    private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-        override fun onScale(detector: ScaleGestureDetector): Boolean {
-            mScaleFactor *= scaleGesture.scaleFactor
-            binding.zoomTest.scaleX = mScaleFactor
-            binding.zoomTest.scaleY = mScaleFactor
-            return true
-        }
-
-        override fun onScaleEnd(detector: ScaleGestureDetector) {
-            super.onScaleEnd(detector)
-            mScaleFactor = 1.0f
-            binding.zoomTest.scaleX = mScaleFactor
-            binding.zoomTest.scaleY = mScaleFactor
-        }
-    }
+//    private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+//        override fun onScale(detector: ScaleGestureDetector): Boolean {
+//            mScaleFactor *= scaleGesture.scaleFactor
+//            binding.zoomTest.scaleX = mScaleFactor
+//            binding.zoomTest.scaleY = mScaleFactor
+//            return true
+//        }
+//
+//        override fun onScaleEnd(detector: ScaleGestureDetector) {
+//            super.onScaleEnd(detector)
+//            mScaleFactor = 1.0f
+//            binding.zoomTest.scaleX = mScaleFactor
+//            binding.zoomTest.scaleY = mScaleFactor
+//        }
+//    }
 
     private fun showAnim() {
         val finalXPosition = resources.displayMetrics.widthPixels.toFloat() - 300
