@@ -12,7 +12,6 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Interpolator
 import android.widget.ImageView
 import android.widget.OverScroller
-import com.example.experiments.zoomview.zoomimage.ZoomableImageUtil.checkZoomLevels
 import com.example.experiments.zoomview.zoomimage.ZoomableImageUtil.hasDrawable
 import com.example.experiments.zoomview.zoomimage.ZoomableImageUtil.isSupportedScaleType
 
@@ -145,18 +144,6 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
         init()
     }
 
-    fun setOnDoubleTapListener(newOnDoubleTapListener: GestureDetector.OnDoubleTapListener?) {
-        mGestureDetector!!.setOnDoubleTapListener(newOnDoubleTapListener)
-    }
-
-    fun setOnScaleChangeListener(onScaleChangeListener: OnScaleChangedListener?) {
-        mScaleChangeListener = onScaleChangeListener
-    }
-
-    fun setOnSingleFlingListener(onSingleFlingListener: OnSingleFlingListener?) {
-        mSingleFlingListener = onSingleFlingListener
-    }
-
     private fun init() {
         mImageView = imageView
         mImageView!!.setOnTouchListener(this)
@@ -165,9 +152,6 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
             return
         }
         mBaseRotation = 0.0f
-        // Create Gesture Detectors...
-        Log.d("PhotoViewer", mImageView.toString())
-        Log.d("PhotoViewer", onGestureListener.toString())
         mScaleDragDetector = CustomGestureDetector(mImageView!!.context, onGestureListener)
         mGestureDetector =
             GestureDetector(mImageView!!.context, object : GestureDetector.SimpleOnGestureListener() {
@@ -231,12 +215,12 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
                     val scale = getScale()
                     val x = ev.x
                     val y = ev.y
-                    if (scale < getMediumScale()) {
-                        setScale(getMediumScale(), x, y, true)
-                    } else if (scale >= getMediumScale() && scale < getMaximumScale()) {
-                        setScale(getMaximumScale(), x, y, true)
+                    if (scale < mMidScale) {
+                        setScale(mMidScale, x, y, true)
+                    } else if (scale >= mMidScale && scale < mMaxScale) {
+                        setScale(mMaxScale, x, y, true)
                     } else {
-                        setScale(getMinimumScale(), x, y, true)
+                        setScale(mMinScale, x, y, true)
                     }
                 } catch (e: ArrayIndexOutOfBoundsException) {
                     // Can sometimes happen when getX() and getY() is called
@@ -261,43 +245,9 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
         return getDisplayRect(getDrawMatrix())
     }
 
-    fun setDisplayMatrix(finalMatrix: Matrix?): Boolean {
-        requireNotNull(finalMatrix) { "Matrix cannot be null" }
-        if (mImageView!!.drawable == null) {
-            return false
-        }
-        mSuppMatrix.set(finalMatrix)
-        checkAndDisplayMatrix()
-        return true
-    }
-
-    fun setBaseRotation(degrees: Float) {
-        mBaseRotation = degrees % 360
-        update()
-        setRotationBy(mBaseRotation)
-        checkAndDisplayMatrix()
-    }
-
-    fun setRotationTo(degrees: Float) {
-        mSuppMatrix.setRotate(degrees % 360)
-        checkAndDisplayMatrix()
-    }
-
     fun setRotationBy(degrees: Float) {
         mSuppMatrix.postRotate(degrees % 360)
         checkAndDisplayMatrix()
-    }
-
-    fun getMinimumScale(): Float {
-        return mMinScale
-    }
-
-    fun getMediumScale(): Float {
-        return mMidScale
-    }
-
-    fun getMaximumScale(): Float {
-        return mMaxScale
     }
 
     fun getScale(): Float {
@@ -309,10 +259,6 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
                 ).toDouble(), 2.0
             ).toFloat()).toDouble()
         ).toFloat()
-    }
-
-    fun getScaleType(): ImageView.ScaleType? {
-        return mScaleType
     }
 
     override fun onLayoutChange(
@@ -389,75 +335,6 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
         return handled
     }
 
-    fun setAllowParentInterceptOnEdge(allow: Boolean) {
-        mAllowParentInterceptOnEdge = allow
-    }
-
-    fun setMinimumScale(minimumScale: Float) {
-        checkZoomLevels(minimumScale, mMidScale, mMaxScale)
-        mMinScale = minimumScale
-    }
-
-    fun setMediumScale(mediumScale: Float) {
-        checkZoomLevels(mMinScale, mediumScale, mMaxScale)
-        mMidScale = mediumScale
-    }
-
-    fun setMaximumScale(maximumScale: Float) {
-        checkZoomLevels(mMinScale, mMidScale, maximumScale)
-        mMaxScale = maximumScale
-    }
-
-    fun setScaleLevels(minimumScale: Float, mediumScale: Float, maximumScale: Float) {
-        checkZoomLevels(minimumScale, mediumScale, maximumScale)
-        mMinScale = minimumScale
-        mMidScale = mediumScale
-        mMaxScale = maximumScale
-    }
-
-    fun setOnLongClickListener(listener: View.OnLongClickListener?) {
-        mLongClickListener = listener
-    }
-
-    fun setOnClickListener(listener: View.OnClickListener?) {
-        mOnClickListener = listener
-    }
-
-    fun setOnMatrixChangeListener(listener: OnMatrixChangedListener?) {
-        mMatrixChangeListener = listener
-    }
-
-    fun setOnPhotoTapListener(listener: OnPhotoTapListener?) {
-        mPhotoTapListener = listener
-    }
-
-    fun setOnOutsidePhotoTapListener(mOutsidePhotoTapListener: OnOutsidePhotoTapListener?) {
-        this.mOutsidePhotoTapListener = mOutsidePhotoTapListener
-    }
-
-    fun setOnViewTapListener(listener: OnViewTapListener?) {
-        mViewTapListener = listener
-    }
-
-    fun setOnViewDragListener(listener: OnViewDragListener?) {
-        mOnViewDragListener = listener
-    }
-
-    fun setScale(scale: Float) {
-        setScale(scale, false)
-    }
-
-    fun setScale(scale: Float, animate: Boolean) {
-        setScale(
-            scale,
-            (
-                    mImageView!!.right / 2).toFloat(),
-            (
-                    mImageView!!.bottom / 2).toFloat(),
-            animate
-        )
-    }
-
     fun setScale(
         scale: Float, focalX: Float, focalY: Float,
         animate: Boolean
@@ -477,69 +354,10 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
         }
     }
 
-    /**
-     * Set the zoom interpolator
-     *
-     * @param interpolator the zoom interpolator
-     */
-    fun setZoomInterpolator(interpolator: Interpolator) {
-        mInterpolator = interpolator
-    }
-
-    fun setScaleType(scaleType: ImageView.ScaleType) {
-        if (isSupportedScaleType(scaleType) && scaleType != mScaleType) {
-            mScaleType = scaleType
-            update()
-        }
-    }
-
-    fun isZoomable(): Boolean {
-        return mZoomEnabled
-    }
-
-    fun setZoomable(zoomable: Boolean) {
-        mZoomEnabled = zoomable
-        update()
-    }
-
-    fun update() {
-        if (mZoomEnabled) {
-            // Update the base matrix using the current drawable
-            updateBaseMatrix(mImageView!!.drawable)
-        } else {
-            // Reset the Matrix...
-            resetMatrix()
-        }
-    }
-
-    /**
-     * Get the display matrix
-     *
-     * @param matrix target matrix to copy to
-     */
-    fun getDisplayMatrix(matrix: Matrix) {
-        matrix.set(getDrawMatrix())
-    }
-
-    /**
-     * Get the current support matrix
-     */
-    fun getSuppMatrix(matrix: Matrix) {
-        matrix.set(mSuppMatrix)
-    }
-
     private fun getDrawMatrix(): Matrix {
         mDrawMatrix.set(mBaseMatrix)
         mDrawMatrix.postConcat(mSuppMatrix)
         return mDrawMatrix
-    }
-
-    fun getImageMatrix(): Matrix? {
-        return mDrawMatrix
-    }
-
-    fun setZoomTransitionDuration(milliseconds: Int) {
-        mZoomDuration = milliseconds
     }
 
     /**

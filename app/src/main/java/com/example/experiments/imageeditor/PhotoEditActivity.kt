@@ -1,9 +1,12 @@
 package com.example.experiments.imageeditor
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Matrix
 import android.os.Bundle
-import com.example.experiments.R
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.experiments.databinding.ActivityPhotoEditBinding
+import kotlin.math.roundToInt
+
 
 class PhotoEditActivity : AppCompatActivity() {
 
@@ -13,7 +16,6 @@ class PhotoEditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPhotoEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
     }
 }
