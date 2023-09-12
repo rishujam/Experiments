@@ -1,19 +1,18 @@
 package com.example.experiments.zoomview.zoomimage
 
-import android.content.Context
 import android.graphics.Matrix
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
-import android.util.Log
-import android.view.GestureDetector
 import android.view.MotionEvent
+import android.view.ScaleGestureDetector
+import android.view.VelocityTracker
 import android.view.View
+import android.view.ViewConfiguration
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Interpolator
 import android.widget.ImageView
-import android.widget.OverScroller
 import com.example.experiments.zoomview.zoomimage.ZoomableImageUtil.hasDrawable
-import com.example.experiments.zoomview.zoomimage.ZoomableImageUtil.isSupportedScaleType
+import kotlin.math.sqrt
 
 /*
  * Created by Sudhanshu Kumar on 05/09/23.
@@ -24,7 +23,6 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
 
     companion object {
         private const val DEFAULT_MAX_SCALE = 3.0f
-        private const val DEFAULT_MID_SCALE = 1.75f
         private const val DEFAULT_MIN_SCALE = 1.0f
         private const val DEFAULT_ZOOM_DURATION = 200
         private const val HORIZONTAL_EDGE_NONE = -1
@@ -41,10 +39,11 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
     private var mZoomDuration = DEFAULT_ZOOM_DURATION
     private var mMinScale = DEFAULT_MIN_SCALE
     private var mMaxScale = DEFAULT_MAX_SCALE
+    private var mActivePointerId = -1
     private var mBlockParentIntercept = false
+    private var mIsDragging = false
 
     private var mImageView: ImageView? = null
-    private var mScaleDragDetector: CustomGestureDetector? = null
 
     // These are set so we don't keep allocating them on the heap
     private val mBaseMatrix = Matrix()
@@ -63,33 +62,57 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
 
     private var mZoomEnabled = true
     private var mScaleType = ImageView.ScaleType.FIT_CENTER
+    private var mActivePointerIndex = 0
+    private var mVelocityTracker: VelocityTracker? = null
+    private var mLastTouchX = 0f
+    private var mLastTouchY = 0f
+    private var mTouchSlop = 0f
 
-    private val onGestureListener: OnGestureListener = object : OnGestureListener {
+    private lateinit var tempListener: ScaleGestureDetector
 
-        override fun onScale(scaleFactor: Float, focusX: Float, focusY: Float) {
-            onScale(scaleFactor, focusX, focusY, 0f, 0f)
-        }
-
-        override fun onScale(
-            scaleFactor: Float,
-            focusX: Float,
-            focusY: Float,
-            dx: Float,
-            dy: Float
-        ) {
-            if (getScale() < mMaxScale || scaleFactor < 1f) {
-                if (mScaleChangeListener != null) {
-                    mScaleChangeListener!!.onScaleChange(scaleFactor, focusX, focusY)
+    private val scaleGestureListener: ScaleGestureDetector.OnScaleGestureListener =
+        object : ScaleGestureDetector.OnScaleGestureListener {
+            private var lastFocusX = 0f
+            private var lastFocusY = 0f
+            override fun onScale(detector: ScaleGestureDetector): Boolean {
+                val scaleFactor = detector.scaleFactor
+                if (java.lang.Float.isNaN(scaleFactor) || java.lang.Float.isInfinite(scaleFactor)) return false
+                if (scaleFactor >= 0) {
+                    val focusX = detector.focusX
+                    val focusY = detector.focusY
+                    val dx = detector.focusX - lastFocusX
+                    val dy = detector.focusY - lastFocusY
+                    temp(scaleFactor, focusX, focusY, dx, dy)
+                    lastFocusX = detector.focusX
+                    lastFocusY = detector.focusY
                 }
-                mSuppMatrix.postScale(scaleFactor, scaleFactor, focusX, focusY)
-                mSuppMatrix.postTranslate(dx, dy)
-                checkAndDisplayMatrix()
+                return true
+            }
+
+            override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
+                lastFocusX = detector.focusX
+                lastFocusY = detector.focusY
+                return true
+            }
+
+            override fun onScaleEnd(detector: ScaleGestureDetector) {
+
             }
         }
-    }
 
     init {
         init()
+    }
+
+    private fun temp(scaleFactor: Float, focusX: Float, focusY: Float, dx: Float, dy: Float) {
+        if (getScale() < mMaxScale || scaleFactor < 1f) {
+            if (mScaleChangeListener != null) {
+                mScaleChangeListener!!.onScaleChange(scaleFactor, focusX, focusY)
+            }
+            mSuppMatrix.postScale(scaleFactor, scaleFactor, focusX, focusY)
+            mSuppMatrix.postTranslate(dx, dy)
+            checkAndDisplayMatrix()
+        }
     }
 
     private fun init() {
@@ -100,7 +123,10 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
             return
         }
         mBaseRotation = 0.0f
-        mScaleDragDetector = CustomGestureDetector(mImageView!!.context, onGestureListener)
+        val configuration = ViewConfiguration
+            .get(imageView.context)
+        mTouchSlop = configuration.scaledTouchSlop.toFloat()
+        tempListener = ScaleGestureDetector(imageView.context, scaleGestureListener)
     }
 
     @Deprecated("")
@@ -183,17 +209,109 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
                         }
                     }
             }
-            // Try the Scale/Drag detector
-            if (mScaleDragDetector != null) {
-                val wasScaling = mScaleDragDetector!!.isScaling()
-                val wasDragging = mScaleDragDetector!!.isDragging()
-                handled = mScaleDragDetector!!.onTouchEvent(ev)
-                val didntScale = !wasScaling && !mScaleDragDetector!!.isScaling()
-                val didntDrag = !wasDragging && !mScaleDragDetector!!.isDragging()
-                mBlockParentIntercept = didntScale && didntDrag
-            }
+            val wasScaling = isScaling()
+            val wasDragging = isDragging()
+            tempListener.onTouchEvent(ev)
+            handled = processTouchEvent(ev)
+            val didntScale = !wasScaling && !isScaling()
+            val didntDrag = !wasDragging && !isDragging()
+            mBlockParentIntercept = didntScale && didntDrag
         }
         return handled
+    }
+
+    private fun processTouchEvent(ev: MotionEvent): Boolean {
+        val action = ev.action
+        when (action and MotionEvent.ACTION_MASK) {
+            MotionEvent.ACTION_DOWN -> {
+                mActivePointerId = ev.getPointerId(0)
+                mVelocityTracker = VelocityTracker.obtain()
+                if (null != mVelocityTracker) {
+                    mVelocityTracker?.addMovement(ev)
+                }
+                mLastTouchX = getActiveX(ev)
+                mLastTouchY = getActiveY(ev)
+                mIsDragging = false
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                val x = getActiveX(ev)
+                val y = getActiveY(ev)
+                val dx = x - mLastTouchX
+                val dy = y - mLastTouchY
+                if (!mIsDragging) {
+                    // Use Pythagoras to see if drag length is larger than
+                    // touch slop
+                    mIsDragging = sqrt((dx * dx + dy * dy).toDouble()) >= mTouchSlop
+                }
+                if (mIsDragging) {
+                    mLastTouchX = x
+                    mLastTouchY = y
+                }
+            }
+
+            MotionEvent.ACTION_CANCEL -> {
+                mActivePointerId = -1
+                if (null != mVelocityTracker) {
+                    mVelocityTracker?.recycle()
+                    mVelocityTracker = null
+                }
+            }
+
+            MotionEvent.ACTION_UP -> {
+                mActivePointerId = -1
+                if (mIsDragging) {
+                    if (null != mVelocityTracker) {
+                        mLastTouchX = getActiveX(ev)
+                        mLastTouchY = getActiveY(ev)
+                        mVelocityTracker?.addMovement(ev)
+                        mVelocityTracker?.computeCurrentVelocity(1000)
+                    }
+                }
+                if (null != mVelocityTracker) {
+                    mVelocityTracker?.recycle()
+                    mVelocityTracker = null
+                }
+            }
+
+            MotionEvent.ACTION_POINTER_UP -> {
+                val pointerIndex = ZoomableImageUtil.getPointerIndex(ev.action)
+                val pointerId = ev.getPointerId(pointerIndex)
+                if (pointerId == mActivePointerId) {
+                    val newPointerIndex = if (pointerIndex == 0) 1 else 0
+                    mActivePointerId = ev.getPointerId(newPointerIndex)
+                    mLastTouchX = ev.getX(newPointerIndex)
+                    mLastTouchY = ev.getY(newPointerIndex)
+                }
+            }
+        }
+        mActivePointerIndex = ev
+            .findPointerIndex(if (mActivePointerId != -1) mActivePointerId else 0)
+        return true
+    }
+
+    private fun getActiveX(ev: MotionEvent): Float {
+        return try {
+            ev.getX(mActivePointerIndex)
+        } catch (e: Exception) {
+            ev.x
+        }
+    }
+
+    private fun getActiveY(ev: MotionEvent): Float {
+        return try {
+            ev.getY(mActivePointerIndex)
+        } catch (e: Exception) {
+            ev.y
+        }
+    }
+
+    private fun isScaling(): Boolean {
+        return tempListener.isInProgress
+    }
+
+    private fun isDragging(): Boolean {
+        return mIsDragging
     }
 
     private fun getDrawMatrix(): Matrix {
@@ -404,7 +522,7 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
             val t = interpolate()
             val scale = mZoomStart + t * (mZoomEnd - mZoomStart)
             val deltaScale: Float = scale / getScale()
-            onGestureListener.onScale(deltaScale, mFocalX, mFocalY)
+            temp(deltaScale, mFocalX, mFocalY, 0f, 0f)
             // We haven't hit our target scale yet, so post ourselves again
             if (t < 1f) {
                 ZoomableImageUtil.postOnAnimation(mImageView!!, this)
