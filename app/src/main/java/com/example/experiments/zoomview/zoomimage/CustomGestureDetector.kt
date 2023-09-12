@@ -127,12 +127,8 @@ class CustomGestureDetector(context: Context, listener: OnGestureListener) {
                     mIsDragging = sqrt((dx * dx + dy * dy).toDouble()) >= mTouchSlop
                 }
                 if (mIsDragging) {
-                    mListener!!.onDrag(dx, dy)
                     mLastTouchX = x
                     mLastTouchY = y
-                    if (null != mVelocityTracker) {
-                        mVelocityTracker?.addMovement(ev)
-                    }
                 }
             }
 
@@ -152,16 +148,6 @@ class CustomGestureDetector(context: Context, listener: OnGestureListener) {
                         mLastTouchY = getActiveY(ev)
                         mVelocityTracker?.addMovement(ev)
                         mVelocityTracker?.computeCurrentVelocity(1000)
-                        val vX = mVelocityTracker?.xVelocity
-                        val vY = mVelocityTracker?.yVelocity
-                        if (vX != null && vY != null) {
-                            if (abs(vX).coerceAtLeast(abs(vY)) >= mMinimumVelocity) {
-                                mListener!!.onFling(
-                                    mLastTouchX, mLastTouchY, -vX,
-                                    -vY
-                                )
-                            }
-                        }
                     }
                 }
                 if (null != mVelocityTracker) {

@@ -35,22 +35,15 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
         private const val VERTICAL_EDGE_TOP = 0
         private const val VERTICAL_EDGE_BOTTOM = 1
         private const val VERTICAL_EDGE_BOTH = 2
-        private const val SINGLE_TOUCH = 1
     }
 
     private var mInterpolator: Interpolator = AccelerateDecelerateInterpolator()
     private var mZoomDuration = DEFAULT_ZOOM_DURATION
     private var mMinScale = DEFAULT_MIN_SCALE
-    private var mMidScale = DEFAULT_MID_SCALE
     private var mMaxScale = DEFAULT_MAX_SCALE
-
-    private var mAllowParentInterceptOnEdge = true
     private var mBlockParentIntercept = false
 
     private var mImageView: ImageView? = null
-
-    // Gesture Detectors
-    private var mGestureDetector: GestureDetector? = null
     private var mScaleDragDetector: CustomGestureDetector? = null
 
     // These are set so we don't keep allocating them on the heap
@@ -62,16 +55,8 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
 
     // Listeners
     private var mMatrixChangeListener: OnMatrixChangedListener? = null
-    private var mPhotoTapListener: OnPhotoTapListener? = null
-    private var mOutsidePhotoTapListener: OnOutsidePhotoTapListener? = null
-    private var mViewTapListener: OnViewTapListener? = null
-    private var mOnClickListener: View.OnClickListener? = null
-    private var mLongClickListener: View.OnLongClickListener? = null
     private var mScaleChangeListener: OnScaleChangedListener? = null
-    private var mSingleFlingListener: OnSingleFlingListener? = null
-    private var mOnViewDragListener: OnViewDragListener? = null
 
-    private var mCurrentFlingRunnable: FlingRunnable? = null
     private var mHorizontalScrollEdge = HORIZONTAL_EDGE_BOTH
     private var mVerticalScrollEdge = VERTICAL_EDGE_BOTH
     private var mBaseRotation = 0f
@@ -80,43 +65,6 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
     private var mScaleType = ImageView.ScaleType.FIT_CENTER
 
     private val onGestureListener: OnGestureListener = object : OnGestureListener {
-        override fun onDrag(dx: Float, dy: Float) {
-            if (mScaleDragDetector!!.isScaling()) {
-                return  // Do not drag if we are already scaling
-            }
-            if (mOnViewDragListener != null) {
-                mOnViewDragListener!!.onDrag(dx, dy)
-            }
-            mSuppMatrix.postTranslate(dx, dy)
-            checkAndDisplayMatrix()
-
-            /*
-                      * Here we decide whether to let the ImageView's parent to start taking
-                      * over the touch event.
-                      *
-                      * First we check whether this function is enabled. We never want the
-                      * parent to take over if we're scaling. We then check the edge we're
-                      * on, and the direction of the scroll (i.e. if we're pulling against
-                      * the edge, aka 'overscrolling', let the parent take over).
-                      */
-            val parent = mImageView!!.parent
-            if (mAllowParentInterceptOnEdge && !mScaleDragDetector!!.isScaling() && !mBlockParentIntercept) {
-                if (mHorizontalScrollEdge == HORIZONTAL_EDGE_BOTH || mHorizontalScrollEdge == HORIZONTAL_EDGE_LEFT && dx >= 1f || mHorizontalScrollEdge == HORIZONTAL_EDGE_RIGHT && dx <= -1f || mVerticalScrollEdge == VERTICAL_EDGE_TOP && dy >= 1f || mVerticalScrollEdge == VERTICAL_EDGE_BOTTOM && dy <= -1f) {
-                    parent?.requestDisallowInterceptTouchEvent(false)
-                }
-            } else {
-                parent?.requestDisallowInterceptTouchEvent(true)
-            }
-        }
-
-        override fun onFling(startX: Float, startY: Float, velocityX: Float, velocityY: Float) {
-            mCurrentFlingRunnable = FlingRunnable(mImageView!!.context)
-            mCurrentFlingRunnable!!.fling(
-                getImageViewWidth(mImageView),
-                getImageViewHeight(mImageView), velocityX.toInt(), velocityY.toInt()
-            )
-            mImageView!!.post(mCurrentFlingRunnable)
-        }
 
         override fun onScale(scaleFactor: Float, focusX: Float, focusY: Float) {
             onScale(scaleFactor, focusX, focusY, 0f, 0f)
@@ -153,86 +101,6 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
         }
         mBaseRotation = 0.0f
         mScaleDragDetector = CustomGestureDetector(mImageView!!.context, onGestureListener)
-        mGestureDetector =
-            GestureDetector(mImageView!!.context, object : GestureDetector.SimpleOnGestureListener() {
-                // forward long click listener
-                override fun onLongPress(e: MotionEvent) {
-                    if (mLongClickListener != null) {
-                        mLongClickListener!!.onLongClick(mImageView)
-                    }
-                }
-
-                override fun onFling(
-                    e1: MotionEvent, e2: MotionEvent,
-                    velocityX: Float, velocityY: Float
-                ): Boolean {
-                    if (mSingleFlingListener != null) {
-                        if (getScale() > DEFAULT_MIN_SCALE) {
-                            return false
-                        }
-                        return if (e1.pointerCount > SINGLE_TOUCH
-                            || e2.pointerCount > SINGLE_TOUCH
-                        ) {
-                            false
-                        } else mSingleFlingListener!!.onFling(e1, e2, velocityX, velocityY)
-                    }
-                    return false
-                }
-            })
-        mGestureDetector!!.setOnDoubleTapListener(object : GestureDetector.OnDoubleTapListener {
-            override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-                if (mOnClickListener != null) {
-                    mOnClickListener!!.onClick(mImageView)
-                }
-                val displayRect = getDisplayRect()
-                val x = e.x
-                val y = e.y
-                if (mViewTapListener != null) {
-                    mViewTapListener!!.onViewTap(mImageView, x, y)
-                }
-                if (displayRect != null) {
-                    // Check to see if the user tapped on the photo
-                    if (displayRect.contains(x, y)) {
-                        val xResult = ((x - displayRect.left)
-                                / displayRect.width())
-                        val yResult = ((y - displayRect.top)
-                                / displayRect.height())
-                        if (mPhotoTapListener != null) {
-                            mPhotoTapListener!!.onPhotoTap(mImageView, xResult, yResult)
-                        }
-                        return true
-                    } else {
-                        if (mOutsidePhotoTapListener != null) {
-                            mOutsidePhotoTapListener!!.onOutsidePhotoTap(mImageView)
-                        }
-                    }
-                }
-                return false
-            }
-
-            override fun onDoubleTap(ev: MotionEvent): Boolean {
-                try {
-                    val scale = getScale()
-                    val x = ev.x
-                    val y = ev.y
-                    if (scale < mMidScale) {
-                        setScale(mMidScale, x, y, true)
-                    } else if (scale >= mMidScale && scale < mMaxScale) {
-                        setScale(mMaxScale, x, y, true)
-                    } else {
-                        setScale(mMinScale, x, y, true)
-                    }
-                } catch (e: ArrayIndexOutOfBoundsException) {
-                    // Can sometimes happen when getX() and getY() is called
-                }
-                return true
-            }
-
-            override fun onDoubleTapEvent(e: MotionEvent): Boolean {
-                // Wait for the confirmed onDoubleTap() instead
-                return false
-            }
-        })
     }
 
     @Deprecated("")
@@ -287,9 +155,6 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
                     // First, disable the Parent from intercepting the touch
                     // event
                     parent?.requestDisallowInterceptTouchEvent(true)
-                    // If we're flinging, and the user presses down, cancel
-                    // fling
-                    cancelFling()
                 }
 
                 MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP ->                     // If the user has zoomed less than min scale, zoom back
@@ -327,31 +192,8 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
                 val didntDrag = !wasDragging && !mScaleDragDetector!!.isDragging()
                 mBlockParentIntercept = didntScale && didntDrag
             }
-            // Check to see if the user double tapped
-            if (mGestureDetector != null && mGestureDetector!!.onTouchEvent(ev)) {
-                handled = true
-            }
         }
         return handled
-    }
-
-    fun setScale(
-        scale: Float, focalX: Float, focalY: Float,
-        animate: Boolean
-    ) {
-        // Check to see if the scale is within bounds
-        require(!(scale < mMinScale || scale > mMaxScale)) { "Scale must be within the range of minScale and maxScale" }
-        if (animate) {
-            mImageView!!.post(
-                AnimatedZoomRunnable(
-                    getScale(), scale,
-                    focalX, focalY
-                )
-            )
-        } else {
-            mSuppMatrix.setScale(scale, scale, focalX, focalY)
-            checkAndDisplayMatrix()
-        }
     }
 
     private fun getDrawMatrix(): Matrix {
@@ -543,13 +385,6 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
         return imageView!!.height - imageView.paddingTop - imageView.paddingBottom
     }
 
-    private fun cancelFling() {
-        if (mCurrentFlingRunnable != null) {
-            mCurrentFlingRunnable!!.cancelFling()
-            mCurrentFlingRunnable = null
-        }
-    }
-
     inner class AnimatedZoomRunnable(
         currentZoom: Float, targetZoom: Float,
         private val mFocalX: Float, private val mFocalY: Float
@@ -581,75 +416,6 @@ class PhotoViewerAttacher(private val imageView: ImageView) : View.OnTouchListen
             t = Math.min(1f, t)
             t = mInterpolator.getInterpolation(t)
             return t
-        }
-    }
-
-    inner class FlingRunnable(context: Context?) : Runnable {
-        private val mScroller: OverScroller
-        private var mCurrentX = 0
-        private var mCurrentY = 0
-
-        init {
-            mScroller = OverScroller(context)
-        }
-
-        fun cancelFling() {
-            mScroller.forceFinished(true)
-        }
-
-        fun fling(
-            viewWidth: Int, viewHeight: Int, velocityX: Int,
-            velocityY: Int
-        ) {
-            val rect: RectF = getDisplayRect() ?: return
-            val startX = Math.round(-rect.left)
-            val minX: Int
-            val maxX: Int
-            val minY: Int
-            val maxY: Int
-            if (viewWidth < rect.width()) {
-                minX = 0
-                maxX = Math.round(rect.width() - viewWidth)
-            } else {
-                maxX = startX
-                minX = maxX
-            }
-            val startY = Math.round(-rect.top)
-            if (viewHeight < rect.height()) {
-                minY = 0
-                maxY = Math.round(rect.height() - viewHeight)
-            } else {
-                maxY = startY
-                minY = maxY
-            }
-            mCurrentX = startX
-            mCurrentY = startY
-            // If we actually can move, fling the scroller
-            if (startX != maxX || startY != maxY) {
-                mScroller.fling(
-                    startX, startY, velocityX, velocityY, minX,
-                    maxX, minY, maxY, 0, 0
-                )
-            }
-        }
-
-        override fun run() {
-            if (mScroller.isFinished) {
-                return  // remaining post that should not be handled
-            }
-            if (mScroller.computeScrollOffset()) {
-                val newX = mScroller.currX
-                val newY = mScroller.currY
-                mSuppMatrix.postTranslate(
-                    (mCurrentX - newX).toFloat(),
-                    (mCurrentY - newY).toFloat()
-                )
-                checkAndDisplayMatrix()
-                mCurrentX = newX
-                mCurrentY = newY
-                // Post On animation
-                ZoomableImageUtil.postOnAnimation(mImageView!!, this)
-            }
         }
     }
 }
