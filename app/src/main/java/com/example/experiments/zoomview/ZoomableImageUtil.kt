@@ -1,4 +1,4 @@
-package com.example.experiments.zoomview.zoomimage
+package com.example.experiments.zoomview
 
 import android.view.MotionEvent
 import android.view.View
