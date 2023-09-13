@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Matrix
 import android.graphics.RectF
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.VelocityTracker
@@ -12,7 +13,6 @@ import android.view.ViewConfiguration
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Interpolator
 import androidx.appcompat.widget.AppCompatImageView
-import java.lang.Math.pow
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
@@ -26,7 +26,6 @@ internal class ZoomImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : AppCompatImageView(context, attrs) {
-    private var pendingScaleType: ScaleType? = null
 
     companion object {
         private const val DEFAULT_MAX_SCALE = 3.0f
@@ -45,7 +44,6 @@ internal class ZoomImageView @JvmOverloads constructor(
     private val mDisplayRect = RectF()
     private val mMatrixValues = FloatArray(9)
 
-    private var mScaleType = ScaleType.FIT_CENTER
     private var mActivePointerIndex = 0
     private var mVelocityTracker: VelocityTracker? = null
     private var mLastTouchX = 0f
@@ -91,10 +89,6 @@ internal class ZoomImageView @JvmOverloads constructor(
             scaleDetector = ScaleGestureDetector(context, scaleGestureListener)
         }
         super.setScaleType(ScaleType.MATRIX)
-        if (pendingScaleType != null) {
-            scaleType = pendingScaleType
-            pendingScaleType = null
-        }
     }
 
     private fun setOnTouchListener() {
@@ -160,18 +154,15 @@ internal class ZoomImageView @JvmOverloads constructor(
         if (getScale() < DEFAULT_MAX_SCALE || scaleFactor < 1f) {
             mSuppMatrix.postScale(scaleFactor, scaleFactor, focusX, focusY)
             mSuppMatrix.postTranslate(dx, dy)
-            checkAndDisplayMatrix()
+            if (checkMatrixBounds()) {
+                imageMatrix = getDrawMatrix()
+            }
         }
     }
 
     private fun getDisplayRect(): RectF? {
         checkMatrixBounds()
         return getDisplayRect(getDrawMatrix())
-    }
-
-    private fun setRotationBy() {
-        mSuppMatrix.postRotate(BASE_ROTATION % 360)
-        checkAndDisplayMatrix()
     }
 
     fun getScale(): Float {
@@ -273,43 +264,11 @@ internal class ZoomImageView @JvmOverloads constructor(
         return mDrawMatrix
     }
 
-    /**
-     * Helper method that 'unpacks' a Matrix and returns the required value
-     *
-     * @param matrix     Matrix to unpack
-     * @param whichValue Which value from Matrix.M* to return
-     * @return returned value
-     */
     private fun getValue(matrix: Matrix, whichValue: Int): Float {
         matrix.getValues(mMatrixValues)
         return mMatrixValues[whichValue]
     }
 
-    /**
-     * Resets the Matrix back to FIT_CENTER, and then displays its contents
-     */
-    private fun resetMatrix() {
-        mSuppMatrix.reset()
-        setRotationBy()
-        imageMatrix = getDrawMatrix()
-        checkMatrixBounds()
-    }
-
-    /**
-     * Helper method that simply checks the Matrix, and then displays the result
-     */
-    private fun checkAndDisplayMatrix() {
-        if (checkMatrixBounds()) {
-            imageMatrix = getDrawMatrix()
-        }
-    }
-
-    /**
-     * Helper method that maps the supplied Matrix to the current Drawable
-     *
-     * @param matrix - Matrix to map Drawable against
-     * @return RectF - Displayed Rectangle
-     */
     private fun getDisplayRect(matrix: Matrix): RectF? {
         drawable?.let {
             mDisplayRect[0f, 0f, drawable.intrinsicWidth.toFloat()] = drawable.intrinsicHeight.toFloat()
@@ -319,11 +278,6 @@ internal class ZoomImageView @JvmOverloads constructor(
         return null
     }
 
-    /**
-     * Calculate Matrix for FIT_CENTER
-     *
-     * @param drawable - Drawable being displayed
-     */
     private fun updateBaseMatrix() {
         if (drawable == null) { return }
         val viewWidth = getImageViewWidth().toFloat()
@@ -331,62 +285,19 @@ internal class ZoomImageView @JvmOverloads constructor(
         val drawableWidth = drawable.intrinsicWidth
         val drawableHeight = drawable.intrinsicHeight
         mBaseMatrix.reset()
-        val widthScale = viewWidth / drawableWidth
-        val heightScale = viewHeight / drawableHeight
-        if (mScaleType == ScaleType.CENTER) {
-            mBaseMatrix.postTranslate(
-                (viewWidth - drawableWidth) / 2f,
-                (viewHeight - drawableHeight) / 2f
-            )
-        } else if (mScaleType == ScaleType.CENTER_CROP) {
-            val scale = max(widthScale, heightScale)
-            mBaseMatrix.postScale(scale, scale)
-            mBaseMatrix.postTranslate(
-                (viewWidth - drawableWidth * scale) / 2f,
-                (viewHeight - drawableHeight * scale) / 2f
-            )
-        } else if (mScaleType == ScaleType.CENTER_INSIDE) {
-            val scale = min(1.0f, min(widthScale, heightScale))
-            mBaseMatrix.postScale(scale, scale)
-            mBaseMatrix.postTranslate(
-                (viewWidth - drawableWidth * scale) / 2f,
-                (viewHeight - drawableHeight * scale) / 2f
-            )
-        } else {
-            var mTempSrc = RectF(0f, 0f, drawableWidth.toFloat(), drawableHeight.toFloat())
-            val mTempDst = RectF(0f, 0f, viewWidth, viewHeight)
-            if (BASE_ROTATION.toInt() % 180 != 0) {
-                mTempSrc = RectF(0f, 0f, drawableHeight.toFloat(), drawableWidth.toFloat())
-            }
-            when (mScaleType) {
-                ScaleType.FIT_CENTER -> mBaseMatrix.setRectToRect(
-                    mTempSrc,
-                    mTempDst,
-                    Matrix.ScaleToFit.CENTER
-                )
-
-                ScaleType.FIT_START -> mBaseMatrix.setRectToRect(
-                    mTempSrc,
-                    mTempDst,
-                    Matrix.ScaleToFit.START
-                )
-
-                ScaleType.FIT_END -> mBaseMatrix.setRectToRect(
-                    mTempSrc,
-                    mTempDst,
-                    Matrix.ScaleToFit.END
-                )
-
-                ScaleType.FIT_XY -> mBaseMatrix.setRectToRect(
-                    mTempSrc,
-                    mTempDst,
-                    Matrix.ScaleToFit.FILL
-                )
-
-                else -> {}
-            }
+        var mTempSrc = RectF(0f, 0f, drawableWidth.toFloat(), drawableHeight.toFloat())
+        val mTempDst = RectF(0f, 0f, viewWidth, viewHeight)
+        if (BASE_ROTATION.toInt() % 180 != 0) {
+            mTempSrc = RectF(0f, 0f, drawableHeight.toFloat(), drawableWidth.toFloat())
         }
-        resetMatrix()
+        mBaseMatrix.setRectToRect(
+            mTempSrc,
+            mTempDst,
+            Matrix.ScaleToFit.CENTER
+        )
+        mSuppMatrix.reset()
+        mSuppMatrix.postRotate(BASE_ROTATION % 360)
+        imageMatrix = getDrawMatrix()
     }
 
     private fun checkMatrixBounds(): Boolean {
@@ -397,11 +308,7 @@ internal class ZoomImageView @JvmOverloads constructor(
         var deltaY = 0f
         val viewHeight = getImageViewHeight()
         if (height <= viewHeight) {
-            deltaY = when (mScaleType) {
-                ScaleType.FIT_START -> -rect.top
-                ScaleType.FIT_END -> viewHeight - height - rect.top
-                else -> (viewHeight - height) / 2 - rect.top
-            }
+            deltaY = (viewHeight - height) / 2 - rect.top
         } else if (rect.top > 0) {
             deltaY = -rect.top
         } else if (rect.bottom < viewHeight) {
@@ -409,11 +316,7 @@ internal class ZoomImageView @JvmOverloads constructor(
         }
         val viewWidth = getImageViewWidth()
         if (width <= viewWidth) {
-            deltaX = when (mScaleType) {
-                ScaleType.FIT_START -> -rect.left
-                ScaleType.FIT_END -> viewWidth - width - rect.left
-                else -> (viewWidth - width) / 2 - rect.left
-            }
+            deltaX = (viewWidth - width) / 2 - rect.left
         } else if (rect.left > 0) {
             deltaX = -rect.left
         } else if (rect.right < viewWidth) {
@@ -427,8 +330,6 @@ internal class ZoomImageView @JvmOverloads constructor(
     private fun getImageViewWidth() = width - paddingLeft - paddingRight
 
     private fun getImageViewHeight() = height - paddingTop - paddingBottom
-
-    private fun postOnAnimation(view: View, runnable: Runnable) = view.postOnAnimation(runnable)
 
     private fun getPointerIndex(action: Int): Int {
         return action and MotionEvent.ACTION_POINTER_INDEX_MASK shr MotionEvent.ACTION_POINTER_INDEX_SHIFT
@@ -455,7 +356,7 @@ internal class ZoomImageView @JvmOverloads constructor(
             temp(deltaScale, mFocalX, mFocalY, 0f, 0f)
             // We haven't hit our target scale yet, so post ourselves again
             if (t < 1f) {
-                postOnAnimation(this@ZoomImageView, this)
+                postOnAnimation(this)
             }
         }
 
