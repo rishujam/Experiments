@@ -6,16 +6,13 @@ import com.google.android.exoplayer2.database.ExoDatabaseProvider
 import com.google.android.exoplayer2.upstream.cache.Cache
 import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
 import com.google.android.exoplayer2.upstream.cache.SimpleCache
+import io.branch.referral.Branch
 
 class MainApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-//        LogMate.mate(applicationContext, LogMateConfig(40, LogMateProperties.STORE_SHOW))
-//        var i = 0
-//        while(i < 5) {
-//            LogMate.d("current value: i = $i")
-//            i++
-//        }
+        Branch.enableLogging()
+        Branch.getAutoInstance(this)
     }
 }
