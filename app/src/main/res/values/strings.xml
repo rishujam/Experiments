@@ -36,4 +36,7 @@
     <string name="routingTitle"><u>Routing</u></string>
     <string name="routingPageDescription"><i>The default color of the block is white. When this page opens via deeplink with a specified \"blockColor\" parameter, the block changes to the specified color.</i></string>
 
+
+    <string name="capture">Capture</string>
+
 </resources>

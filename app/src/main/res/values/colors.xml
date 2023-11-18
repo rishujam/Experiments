@@ -18,4 +18,56 @@
     <color name="progress_primary">@color/white</color>
     <color name="progress_secondary">@color/gray_scale</color>
     <color name="progress_max_active">@color/white</color>
+
+
+
+
+    <color name="color_primary_red">#E2504B</color>
+    <color name="color_primary_black">#1D1919</color>
+    <color name="color_primary_white">#FFFFFF</color>
+
+    <!--Secondary-->
+    <color name="color_secondary_blue">#00B5D5</color>
+    <color name="color_secondary_deep_green">#1B4A52</color>
+    <color name="color_secondary_error_red">#DC1313</color>
+    <color name="color_secondary_info_blue">#2F80ED</color>
+    <color name="color_secondary_warning_yellow">#E2B93B</color>
+    <color name="color_secondary_warning_success_green">#27AE60</color>
+
+    <!--greys-->
+    <color name="color_grey_700">#444242</color>
+    <color name="color_grey_500">#737171</color>
+    <color name="color_grey_400">#929090</color>
+    <color name="color_grey_300">#D0D0D0</color>
+    <color name="color_grey_100">#EFEFEF</color>
+    <color name="color_grey_light">#FBFBFB</color>
+    <color name="color_grey_dark_border">#C9C9C9</color>
+    <color name="color_grey_light_border">#EEEEEE</color>
+    <color name="color_grey_black_40_percent">#661D1919</color>
+
+    <!--background-->
+    <color name="color_bg_red_300">#FFDAD8</color>
+    <color name="color_bg_red_200">#FFE9E7</color>
+    <color name="color_bg_red_100">#FFF8F8</color>
+    <color name="color_bg_blue_300">#BFEDF5</color>
+    <color name="color_bg_blue_200">#D9F4F9</color>
+    <color name="color_bg_blue_100">#F3FCFE</color>
+    <color name="color_bg_deep_green_300">#C3D4D7</color>
+    <color name="color_bg_deep_green_200">#DCE5E6</color>
+    <color name="color_bg_deep_green_100">#F4F6F7</color>
+    <color name="color_bg_brown_300">#FFEFE1</color>
+    <color name="color_bg_brown_200">#FFF5EC</color>
+    <color name="color_bg_brown_100">#FEFAF6</color>
+
+    <!--gradient-->
+    <color name="color_gradient_black_start">#424242</color>
+    <color name="color_gradient_black_end">#252424</color>
+    <color name="color_gradient_red_start">#00FF6961</color>
+    <color name="color_gradient_red_end">#FF6961</color>
+    <color name="color_gradient_brown_start">#FFFFFF</color>
+    <color name="color_gradient_brown_end">#E9A373</color>
+
+
+    <color name="color_blue_gradient_1">#00B5D5</color>
+    <color name="color_blue_gradient_2">#00D9FF</color>
 </resources>

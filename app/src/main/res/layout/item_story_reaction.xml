@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#131313">
+
+
+    <ImageView
+        android:id="@+id/ivProfileReactionSheet"
+        android:layout_width="@dimen/_40dp"
+        android:layout_height="@dimen/_40dp"
+        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginTop="@dimen/_12dp"
+        android:layout_marginBottom="@dimen/_12dp"
+        android:src="@color/color_bg_blue_100"
+        app:layout_constraintBottom_toTopOf="@id/seperatorStorySheetItem"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivReactionStorySheet"
+        app:layout_constraintStart_toEndOf="@id/ivProfileReactionSheet"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvNameReactionSheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:maxLines="1"
+            tools:text="Jacob Jones njsadhjsahdjsahdjsahdsdhdbqduqedhduehduhd" />
+
+        <TextView
+            android:id="@+id/tvSpecialityReactionSheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="oncologist"
+			android:ellipsize="end"
+			android:visibility="gone"
+			tools:visibility="visible"
+			android:maxLines="1"
+			/>
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/ivReactionStorySheet"
+        android:layout_width="@dimen/_24dp"
+        android:layout_height="@dimen/_24dp"
+        android:layout_marginEnd="@dimen/_16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/seperatorStorySheetItem"
+        android:layout_width="@dimen/_0dp"
+        android:layout_height="@dimen/_1dp"
+        android:layout_marginHorizontal="@dimen/_16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

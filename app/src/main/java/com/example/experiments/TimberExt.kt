@@ -13,6 +13,8 @@ import java.util.concurrent.TimeUnit
 
 object TimberExt {
 
+    var testI: TestI? = null
+
     fun plantTree(fileName: String, context: Context, enableSync: Boolean) {
         if(enableSync) {
             Timber.plant(FileLoggingTree(context, fileName))
