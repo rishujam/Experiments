@@ -1,46 +1,30 @@
 package com.example.experiments
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import android.graphics.PointF
-import android.graphics.Rect
-import android.graphics.RectF
 import android.os.Bundle
 import android.util.Log
-import android.view.MotionEvent
-import android.view.ScaleGestureDetector
-import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
-import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.experiments.camera.CameraActivity
 import com.example.experiments.databinding.ActivityMainBinding
-import com.example.experiments.imageeditor.PhotoEditActivity
+import com.example.experiments.octetstream.PdfApi
+import com.example.experiments.octetstream.PdfRepo
 import com.example.experiments.userstorynew.StoryActivity
 import com.example.experiments.userstorynew.TestFragment
 import com.example.experiments.userstorynew.adapters.StoryThumbnailAdapter
 import com.example.experiments.userstorynew.managers.StoryViewedStateManager
 import com.example.experiments.userstorynew.models.UserList
 import com.example.experiments.userstorynew.utils.StoryGen
-import com.example.experiments.userstorynew.utils.hide
-import com.example.experiments.userstorynew.utils.show
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.otpless.views.OtplessManager
-import io.branch.indexing.BranchUniversalObject
-import io.branch.referral.Branch
-import io.branch.referral.BranchError
-import io.branch.referral.SharingHelper
-import io.branch.referral.util.LinkProperties
-import io.branch.referral.util.ShareSheetStyle
-import java.util.Calendar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MainActivity : AppCompatActivity() {
@@ -57,8 +41,6 @@ class MainActivity : AppCompatActivity() {
     private val frag = TestFragment()
     private var infalted = false
 
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<FrameLayout>
-
     private var x = 1
 
 
@@ -67,40 +49,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        bottomSheetBehavior = BottomSheetBehavior.from(binding.includedSheet.reactionSheetRoot)
-
-        binding.includedSheet.btnCloseStorySheet.setOnClickListener {
-//            binding.includedSheet.apply {
-//                collapsedGroup.show()
-//                expandedGroup.hide()
-//            }
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        }
-
-        Log.d("RishuTets", "size ${binding.includedSheet.tvTitleStorySheet.height}")
-        bottomSheetBehavior.peekHeight = resources.getDimensionPixelSize(R.dimen.dimen_55dp)
-
-        bottomSheetBehavior.addBottomSheetCallback(object :
-            BottomSheetBehavior.BottomSheetCallback() {
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                        binding.includedSheet.collapsedGroup.show()
-                    }
-
-                    BottomSheetBehavior.STATE_DRAGGING -> {
-                        binding.includedSheet.collapsedGroup.hide()
-                    }
-                    else -> {}
-                }
-            }
-        })
-
-        StoryViewedStateManager.init()
-        OtplessManager.getInstance().init(this)
 
         storyUserList = UserList(StoryGen.getUsersWithStory())
         adapter = StoryThumbnailAdapter(storyUserList.list)
@@ -130,7 +78,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnEditor.setOnClickListener {
 //            val intent = Intent(this, PhotoEditActivity::class.java)
-            startActivity(Intent(this, CameraActivity::class.java))
         }
 
         binding.btnShowAnim.setOnClickListener {
@@ -139,21 +86,25 @@ class MainActivity : AppCompatActivity() {
                 infalted = true
             }
         }
-        setupBottomAdapter()
-    }
 
-    private fun setupBottomAdapter() {
-        val reactionAdapter = StoryReactionSheetAdapter()
-        binding.includedSheet.rvReactionsStory.apply {
-            adapter = reactionAdapter
-            layoutManager = LinearLayoutManager(context)
+        binding.btn2.setOnClickListener {
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
+            val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+            val api = Retrofit.Builder()
+                .baseUrl("https://fs-dev.dxassist.ai/")
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(PdfApi::class.java)
+            val repo = PdfRepo(api)
+            lifecycleScope.launch(Dispatchers.IO) {
+                repo.getPdf(
+                    "https://fs-dev.dxassist.ai/01HDDEDDWSPK2GFTHJSYEFRNDT?Expires=1709380969&Signature=a97XLSN7CChhDInxvSuwaAeAHDWi-51i3qwKKkdqh9yCqoKrypVNL98PV0MucSrWr5oPukQDkEo-6I6x2eA3VpEauX6G-fcGsU6~qbtPugrmfA3wC-aGa42FT6mmHXpK4KylYYveFlJAXj4cecO2F-RbssrchNg01VB6Py7h5Lz-UQhjgnXEw1ZQ1frqbiEs5NiEnovYh4IczxCCUdrzi~ijbNssoShbfz3dXCc8HJLWB~MSsvj4LxdQvtCOpnvVjZZ8WIA0OyHRPY9gsE4Ywb0h5eXB6FN0LSewBe95z4ZnmCFDla0VloCBrjMVyTolZHv5BGMFw68teneXBBHzJw__&Key-Pair-Id=K2BC7R8SEVH8JU"
+                )
+            }
+
         }
-        val list = mutableListOf(
-            StoryReaction("heif", "skhf", "gdsgd","", StoryReaction.StoryReactionType.Like, false),
-            StoryReaction("heif", "skhf", "gdsgd","", StoryReaction.StoryReactionType.Like, false),
-            StoryReaction("heif", "skhf", "gdsgd","", StoryReaction.StoryReactionType.Like, false)
-        )
-        reactionAdapter.differ.submitList(list)
     }
 
     private fun showAnim() {
