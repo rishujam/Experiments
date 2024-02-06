@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MainApplication"
@@ -16,18 +18,14 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
+        android:hardwareAccelerated="false"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Experiments"
         tools:targetApi="31">
         <activity
-            android:name=".grow.StarWarHomeActivity"
-            android:exported="false" />
-        <activity
             android:name=".commentbox.CommentActivity"
-            android:exported="false" />
-        <activity
-            android:name=".camera.CameraActivity"
             android:exported="false" />
         <activity
             android:name=".branch.BranchActivity"
