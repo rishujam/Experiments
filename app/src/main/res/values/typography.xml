@@ -1,13 +1,411 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <style name="Typography.Docquity.Heading1" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_28sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_36dp</item>
+        <item name="android:fontFamily">@font/lexend_deca_medium</item>
+        <item name="fontFamily">@font/lexend_deca_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.Heading2" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_24sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_32dp</item>
+        <item name="android:fontFamily">@font/lexend_deca_medium</item>
+        <item name="fontFamily">@font/lexend_deca_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.Heading3" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_18sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_24dp</item>
+        <item name="android:fontFamily">@font/lexend_deca_medium</item>
+        <item name="fontFamily">@font/lexend_deca_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.Heading4" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_16sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_22dp</item>
+        <item name="android:fontFamily">@font/lexend_deca_medium</item>
+        <item name="fontFamily">@font/lexend_deca_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.Heading5" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_14sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/lexend_deca_medium</item>
+        <item name="fontFamily">@font/lexend_deca_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.Heading6" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_14sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/lexend_deca_regular</item>
+        <item name="fontFamily">@font/lexend_deca_regular</item>
+    </style>
+
+    <style name="Typography.Docquity.Paragraph" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_16sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_26dp</item>
+        <item name="android:fontFamily">@font/manrope_regular</item>
+        <item name="fontFamily">@font/manrope_regular</item>
+    </style>
+
+    <style name="Typography.Docquity.Paragraph.Small" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_14sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_24dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
     <style name="Typography.Docquity.Button" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:lineHeight" tools:targetApi="p">20dp</item>
-<!--        <item name="android:fontFamily">@font/manrope_semi_bold</item>-->
-<!--        <item name="fontFamily">@font/manrope_semi_bold</item>-->
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/manrope_semi_bold</item>
+        <item name="fontFamily">@font/manrope_semi_bold</item>
         <item name="android:textFontWeight" tools:targetApi="p">600</item>
+    </style>
+
+    <style name="Typography.Docquity.HelpText1" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_13sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/manrope_regular</item>
+        <item name="fontFamily">@font/manrope_regular</item>
+    </style>
+
+    <style name="Typography.Docquity.HelpText2" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_16dp</item>
+        <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="fontFamily">@font/manrope_bold</item>
+    </style>
+
+    <style name="Typography.Docquity.Message" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_11sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_16dp</item>
+        <item name="android:fontFamily">@font/manrope_regular</item>
+        <item name="fontFamily">@font/manrope_regular</item>
+    </style>
+
+    <style name="Typography.Docquity.Tags" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_11sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_14dp</item>
+        <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="fontFamily">@font/manrope_bold</item>
+    </style>
+
+    <style name="Typography.Docquity.SemiBold" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_11sp</item>
+        <item name="android:fontFamily">@font/manrope_semi_bold</item>
+        <item name="fontFamily">@font/manrope_semi_bold</item>
+    </style>
+
+    <style name="Typography.Docquity.SemiBold_white" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_white</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:fontFamily">@font/manrope_semi_bold</item>
+        <item name="fontFamily">@font/manrope_semi_bold</item>
+    </style>
+
+ <style name="Typography.Docquity.Bold_blue" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_secondary_deep_green</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="fontFamily">@font/manrope_bold</item>
+    </style>
+
+    <style name="Typography.Docquity.medium_gray" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_grey_500</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.SemiBold_white_15" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_white</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:fontFamily">@font/manrope_semi_bold</item>
+        <item name="fontFamily">@font/manrope_semi_bold</item>
+    </style>
+
+    <style name="Typography.Docquity.SemiBold_20" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_20sp</item>
+        <item name="android:fontFamily">@font/manrope_semi_bold</item>
+        <item name="fontFamily">@font/manrope_semi_bold</item>
+    </style>
+
+    <style name="Typography.Docquity.medium_white_12" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_white</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:fontFamily">@font/manrope_semi_bold</item>
+        <item name="fontFamily">@font/manrope_semi_bold</item>
+    </style>
+
+
+    <style name="Typography.Docquity.Bold" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_14sp</item>
+        <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="fontFamily">@font/manrope_bold</item>
+    </style>
+
+    <style name="Typography.Docquity.Bold_20" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_18sp</item>
+        <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="fontFamily">@font/manrope_bold</item>
+    </style>
+
+    <style name="Typography.Docquity.medium_gray_15" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_grey_500</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.medium_dark_gray_15" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_grey_700</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="MyEditText">
+        <item name="colorControlNormal">#FFFFFF</item>
+        <item name="colorControlActivated">#FFFFFF</item>
+        <item name="colorControlHighlight">#FFFFFF</item>
+    </style>
+
+    <style name="Typography.Docquity.SecularOne" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_16sp</item>
+        <item name="android:fontFamily">@font/secularone_regular</item>
+        <item name="fontFamily">@font/secularone_regular</item>
+    </style>
+
+
+<!--    1.5 Design styles-->
+
+    <style name="Typography.Docquity.SubHeadingBold" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/manrope_semi_bold</item>
+        <item name="fontFamily">@font/manrope_semi_bold</item>
+    </style>
+
+    <style name="Typography.Docquity.HeadingMedium" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_20sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_24dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.SubHeadingRegular" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.SubHeadingRegularSecondary" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_secondary_blue</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.SubHeadingMediumWhite" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_white</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.SubHeadingMediumGrey75" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_grey_500</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.SubHeadingMediumSecondary" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_secondary_blue</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.SubHeadingMediumPrimary" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.SubHeadingMedium" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+     <style name="Typography.Docquity.SubHeadingRegularGrey50" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_grey_400</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.ParagraphBold" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_grey_400</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.ParagraphRegularGrey50" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_grey_400</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_15dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.ParagraphRegular" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_15dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.ParagraphRegularSecondary" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_black</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_15dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.ParagraphMediumGrey75" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_grey_500</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_15dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.ParagraphMediumWhite" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_white</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_15dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.ParagraphMediumRegularSecondary" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_secondary_blue</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_15dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.ParagraphConsent" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_secondary_blue</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_15dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.ParagraphMediumError" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_secondary_error_red</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_15dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.SmallMediumGrey75" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_grey_500</item>
+        <item name="android:textSize">@dimen/dimen_10sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_15dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.HeadingRegularSecondary" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_secondary_blue</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.LargeMediumWhite" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_white</item>
+        <item name="android:textSize">@dimen/dimen_42sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_50dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.SmallMediumWhite" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_white</item>
+        <item name="android:textSize">@dimen/dimen_10sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_15dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.SubHeadingRegularWhite" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_white</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_15dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.SmallRegularWhite" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_primary_white</item>
+        <item name="android:textSize">@dimen/dimen_10sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_15dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
+    </style>
+
+    <style name="Typography.Docquity.HeadingEditorChoice" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/color_grey_700</item>
+        <item name="android:textSize">@dimen/dimen_15sp</item>
+        <item name="android:lineHeight" tools:targetApi="p">@dimen/dimen_20dp</item>
+        <item name="android:fontFamily">@font/manrope_medium</item>
+        <item name="fontFamily">@font/manrope_medium</item>
     </style>
 
 </resources>

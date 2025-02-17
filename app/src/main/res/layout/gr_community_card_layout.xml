@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/dimen_16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/gr_community_card_top_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:separator_orientation="horizontal"
+        app:separator_width="@dimen/dimen_8dp" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_community_card_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:textColor="@color/color_primary_black"
+        android:textSize="@dimen/dimen_15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gr_community_card_top_separator"
+        tools:text="Suggested for you" />
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/gr_community_card_profile_picture"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gr_community_card_header" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_community_card_community_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:textColor="@color/color_primary_black"
+        android:textSize="@dimen/dimen_20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gr_community_card_profile_picture"
+        tools:text="Center 4Asthma Allergy" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_community_card_community_creator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_12sp"
+        app:layout_constraintEnd_toStartOf="@+id/gr_community_card_dot_separator"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gr_community_card_community_name"
+        tools:text="Created by John"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/gr_community_card_dot_separator"
+        android:layout_width="@dimen/dimen_4dp"
+        android:layout_height="@dimen/dimen_4dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/gr_community_card_community_creator"
+        app:layout_constraintEnd_toStartOf="@+id/gr_community_card_privacy"
+        app:layout_constraintStart_toEndOf="@+id/gr_community_card_community_creator"
+        app:layout_constraintTop_toTopOf="@+id/gr_community_card_community_creator"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/gr_community_card_privacy"
+        android:layout_width="@dimen/dimen_12dp"
+        android:layout_height="@dimen/dimen_12dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/gr_community_card_dot_separator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/gr_community_card_dot_separator"
+        app:layout_constraintTop_toTopOf="@+id/gr_community_card_dot_separator"
+        tools:visibility="visible" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_community_card_community_desc"
+        android:textSize="@dimen/dimen_12sp"
+        android:textColor="@color/color_grey_700"
+        android:lineHeight="@dimen/dimen_20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:gravity="center_horizontal"
+        app:default_link_check="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gr_community_card_community_creator"
+        tools:text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque... read more"
+        tools:visibility="visible" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_community_card_tagged_speciality"
+        android:textColor="@color/color_grey_700"
+        android:textSize="@dimen/dimen_12sp"
+        android:paddingHorizontal="@dimen/dimen_4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gr_community_card_community_desc"
+        tools:text="#cardiology  #cardiology  #cardiology" />
+
+    <com.example.experiments.atomdesign.component.Button
+        android:id="@+id/gr_community_card_join_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_16dp"
+        app:atomButtonSize="large"
+        app:buttonType="primary"
+        android:stateListAnimator="@null"
+        android:textAllCaps="false"
+        android:textColor="@color/color_primary_white"
+        app:layout_constraintEnd_toStartOf="@+id/gr_community_card_share_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gr_community_card_tagged_speciality"
+        tools:visibility="visible" />
+
+    <com.example.experiments.atomdesign.component.Button
+        android:id="@+id/gr_community_card_share_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_16dp"
+        app:buttonType="secondary"
+        app:atomButtonSize="large"
+        android:drawablePadding="@dimen/dimen_2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gr_community_card_join_button"
+        app:layout_constraintBottom_toBottomOf="@+id/gr_community_card_join_button"
+        tools:visibility="visible" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

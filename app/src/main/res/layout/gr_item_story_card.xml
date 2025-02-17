@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dimen_110dp"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/dimen_16dp"
+    android:layout_marginStart="@dimen/dimen_16dp"
+    app:cardCornerRadius="@dimen/dimen_8dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/story_card"
+        android:layout_width="@dimen/dimen_110dp"
+        android:layout_height="@dimen/dimen_180dp"
+        app:cardCornerRadius="@dimen/dimen_8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.example.experiments.atomdesign.component.RoundedImageView
+                android:id="@+id/story_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:cornerRadius="@dimen/dimen_8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50dp"
+                android:elevation="@dimen/dimen_10dp"
+                android:alpha="0.7"
+
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/story_title"
+
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/dimen_2dp"
+        android:gravity="top"
+        android:lineSpacingExtra="1sp"
+        android:maxLines="2"
+        android:paddingHorizontal="@dimen/dimen_4dp"
+        android:paddingTop="@dimen/dimen_8dp"
+        android:paddingBottom="@dimen/dimen_16dp"
+        app:layout_constraintEnd_toEndOf="@id/story_card"
+        app:layout_constraintStart_toStartOf="@id/story_card"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Chinese new year template" />
+
+    <com.example.experiments.atomdesign.component.StoryCircularImageView
+        android:id="@+id/story_channel_image"
+        android:layout_width="@dimen/dimen_40dp"
+        android:layout_height="@dimen/dimen_40dp"
+        android:elevation="@dimen/dimen_10dp"
+        app:layout_constraintBottom_toBottomOf="@id/story_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/story_card"
+ />
+
+    <com.example.experiments.atomdesign.component.StoryCircularImageView
+        android:id="@+id/story_user_image"
+        android:layout_width="@dimen/dimen_35dp"
+        android:layout_height="@dimen/dimen_35dp"
+        android:layout_margin="@dimen/dimen_4dp"
+        android:elevation="@dimen/dimen_10dp"
+        app:layout_constraintBottom_toBottomOf="@id/story_card"
+        app:layout_constraintStart_toStartOf="parent"
+  />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

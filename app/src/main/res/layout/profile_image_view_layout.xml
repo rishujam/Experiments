@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.virinchi.atomdesign.component.CircularImageView
+        android:id="@+id/cv_profile_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:visibility="gone"
+        android:id="@+id/iv_profile_badge"
+        android:layout_width="@dimen/dimen_12dp"
+        android:layout_height="@dimen/dimen_12dp"
+        app:layout_constraintBottom_toBottomOf="@id/cv_profile_main"
+        app:layout_constraintEnd_toEndOf="@id/cv_profile_main" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

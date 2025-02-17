@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:animateLayoutChanges="true"
+    android:layout_height="wrap_content"
+    android:background="@color/color_grey_300">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="@dimen/dimen_1dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/dimen_16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="@dimen/dimen_1dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/dimen_16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="@dimen/dimen_1dp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/dimen_16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom"
+        android:layout_width="@dimen/dimen_1dp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/dimen_16dp" />
+
+    <ProgressBar
+        android:id="@+id/pb_media_audio"
+        android:layout_width="@dimen/dimen_32dp"
+        android:layout_height="@dimen/dimen_32dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/iv_media_audio_play"
+        app:layout_constraintEnd_toEndOf="@id/iv_media_audio_play"
+        app:layout_constraintStart_toStartOf="@id/iv_media_audio_play"
+        app:layout_constraintTop_toTopOf="@id/iv_media_audio_play" />
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/iv_media_audio_play"
+        android:layout_width="@dimen/dimen_48dp"
+        android:layout_height="@dimen/dimen_48dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
+        app:layout_constraintStart_toEndOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/iv_media_audio_icon"
+        android:src="@drawable/ic_dd_play"
+        app:srcCompat="@drawable/ic_dd_play" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_media_audio_time_duration"
+        style="@style/Typography.Docquity.HelpText2"
+        android:layout_width="@dimen/dimen_50dp"
+        android:layout_height="@dimen/dimen_16dp"
+        android:gravity="center"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="@id/iv_media_audio_play"
+        app:layout_constraintStart_toEndOf="@id/iv_media_audio_play"
+        app:layout_constraintTop_toTopOf="@id/iv_media_audio_play"
+        tools:text="00:00"
+        tools:visibility="visible" />
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/iv_media_audio_icon"
+        android:layout_width="@dimen/dimen_48dp"
+        android:layout_height="@dimen/dimen_48dp"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/guideline_left"
+        app:layout_constraintTop_toTopOf="@id/guideline_top"
+        android:src="@drawable/ic_dd_audio_listen"
+        app:srcCompat="@drawable/ic_dd_audio_listen" />
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/sb_media_audio"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:translationX="-4dp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_media_audio_play"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/tv_media_audio_time_duration"
+        app:layout_constraintTop_toTopOf="@id/iv_media_audio_play"
+        app:layout_goneMarginStart="@dimen/dimen_4dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

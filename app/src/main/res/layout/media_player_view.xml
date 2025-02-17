@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_400dp"
+    android:layout_margin="@dimen/dimen_16dp">
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/iv_media_player_video_play"
+        android:layout_width="@dimen/dimen_48dp"
+        android:layout_height="@dimen/dimen_48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_dd_play" />
+
+    <com.google.android.exoplayer2.ui.StyledPlayerView
+        android:id="@+id/exo_media_player_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0dp"
+        android:visibility="visible"
+        app:use_controller="false"
+        app:keep_content_on_player_reset="true"
+        android:background="@color/color_primary_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/iv_video_player_view_mute"
+        android:layout_width="@dimen/dimen_24dp"
+        android:layout_height="@dimen/dimen_24dp"
+        android:padding="@dimen/dimen_4dp"
+        android:layout_marginBottom="@dimen/dimen_12dp"
+        android:layout_marginEnd="@dimen/dimen_12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/grp_player_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="iv_video_player_view_mute,exo_media_player_view" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

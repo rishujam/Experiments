@@ -6,12 +6,12 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:paddingHorizontal="12dp"
-    tools:background="@color/red"
+    android:paddingHorizontal="@dimen/dimen_12dp"
+    tools:background="@drawable/bg_btn_primary"
     tools:ignore="MissingDefaultResource">
 
 
-    <com.example.experiments.AtomTextView
+    <com.example.experiments.atomdesign.component.TextView
         android:id="@+id/btn_text"
         style="@style/Typography.Docquity.Button"
         android:layout_width="wrap_content"
@@ -21,7 +21,7 @@
         android:textAlignment="center"
         android:text="View 2"
         android:ellipsize="end"
-        android:textColor="@color/white"
+        android:textColor="@color/color_primary_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

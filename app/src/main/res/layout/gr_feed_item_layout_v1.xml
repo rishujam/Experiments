@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/cl_feed_main"
+    android:layout_height="wrap_content">
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/top_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:separator_orientation="horizontal"
+        app:separator_width="@dimen/dimen_8dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="@dimen/dimen_1dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/dimen_16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="@dimen/dimen_1dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/dimen_16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="@dimen/dimen_1dp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/dimen_16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom"
+        android:layout_width="@dimen/dimen_1dp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/dimen_16dp" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_feed_heading"
+        style="@style/Typography.Docquity.Tags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dimen_15sp"
+        android:layout_marginEnd="@dimen/dimen_4dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toStartOf="@+id/iv_header_icon"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top"
+        tools:text="Case for you" />
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/iv_header_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/separator_below_feed_heading_text"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top"
+        android:src="@drawable/baseline_more_horizontal_24"
+        app:srcCompat="@drawable/baseline_more_horizontal_24" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/separator_below_feed_heading_text"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_0dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_feed_heading"
+        />
+
+    <ViewStub
+        android:id="@+id/gr_feed_verify_profile_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inflatedId="@+id/gr_feed_verify_profile_layout"
+        android:layout="@layout/gr_nudge_verify_generic_type1"
+        app:layout_constraintTop_toBottomOf="@id/separator_below_feed_heading_text"
+        />
+
+    <include
+        android:visibility="visible"
+        android:id="@+id/gr_feed_user_profile_layout"
+        layout="@layout/user_profile_layout"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dimen_8dp"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/gr_feed_verify_profile_layout" />
+
+
+    <com.example.experiments.atomdesign.component.ChannelProfileView
+        android:visibility="gone"
+        android:id="@+id/gr_feed_user_channel_layout"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_marginVertical="@dimen/dimen_8dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gr_feed_verify_profile_layout" />
+
+    <!-- Barrier to include both layouts -->
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_below_include_layouts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="gr_feed_user_profile_layout,gr_feed_user_channel_layout" />
+
+    <ViewStub
+        android:id="@+id/ap_feed_media"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inflatedId="@+id/ap_feed_media"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout="@layout/audio_player_view_stub"
+        app:layout_constraintTop_toBottomOf="@id/barrier_below_include_layouts"
+        />
+
+    <ViewStub
+        android:id="@+id/mp_feed_media"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintDimensionRatio="9:5"
+        android:inflatedId="@+id/mp_feed_media"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout="@layout/media_player_view_stub"
+        app:layout_constraintTop_toBottomOf="@id/barrier_below_include_layouts"
+        />
+
+    <ViewStub
+        android:id="@+id/single_image_view_stub"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:inflatedId="@+id/single_image_view_stub"
+        android:layout="@layout/feed_single_image_view_stub"
+        app:layout_constraintTop_toBottomOf="@id/barrier_below_include_layouts" />
+
+    <ViewStub
+        android:id="@+id/two_images_view_stub"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_400dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:inflatedId="@+id/two_images_view_stub"
+        android:layout="@layout/feed_two_images_view_stub"
+        app:layout_constraintTop_toBottomOf="@id/barrier_below_include_layouts" />
+
+    <ViewStub
+        android:id="@+id/two_or_more_images_view_stub"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_400dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:inflatedId="@+id/two_or_more_images_view_stub"
+        android:layout="@layout/feed_three_or_more_images_view_stub"
+        app:layout_constraintTop_toBottomOf="@id/barrier_below_include_layouts" />
+
+
+    <!-- Barrier to include both layouts -->
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_below_rv_media"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="single_image_view_stub,two_or_more_images_view_stub,two_images_view_stub,mp_feed_media,ap_feed_media" />
+
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_feed_content"
+        style="@style/Typography.Docquity.Message"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dimen_15sp"
+        android:textColor="@color/color_grey_700"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:textColorLink="@color/color_secondary_blue"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/barrier_below_rv_media"
+        tools:text="Content" />
+
+    <ViewStub
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mp_feed_meta_preview"
+        android:inflatedId="@+id/mp_feed_meta_preview"
+        android:layout="@layout/feed_meta_preview_view_stub"
+        app:layout_constraintTop_toBottomOf="@id/tv_feed_content"/>
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_feed_user_tags"
+        style="@style/Typography.Docquity.Paragraph.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:lineHeight="@dimen/dimen_18dp"
+        android:textColor="@color/color_secondary_blue"
+        android:textSize="@dimen/dimen_15sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/mp_feed_meta_preview"
+        tools:text="Tagged User"
+        tools:textColor="@color/color_secondary_blue"
+        tools:visibility="visible" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_feed_tagged_user_others"
+        style="@style/Typography.Docquity.Paragraph.Small"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_4dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:textSize="@dimen/dimen_15sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@id/tv_feed_user_tags"
+        app:layout_constraintTop_toBottomOf="@id/mp_feed_meta_preview"
+        tools:text="and Others"
+        tools:visibility="visible"
+        tools:textColor="@color/black" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_feed_tags"
+        style="@style/Typography.Docquity.Paragraph.Small"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:textColor="@color/color_grey_500"
+        android:lineHeight="@dimen/dimen_18dp"
+        android:textSize="@dimen/dimen_12sp"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/tv_feed_user_tags"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        tools:text="#Docquity"
+        tools:textColor="@color/color_secondary_warning_success_green" />
+
+    <ViewStub
+        android:id="@+id/rv_feed_poll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inflatedId="@+id/rv_feed_poll"
+        android:layout="@layout/recycler_view_viewstub"
+        app:layout_constraintTop_toBottomOf="@id/tv_feed_tags" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/separator_below_feed_tags"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_1dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_feed_poll" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_feed_likes_count"
+        style="@style/Typography.Docquity.Message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_10sp"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/separator_below_feed_tags"
+        tools:text="Be the first one to like" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_feed_comment_count"
+        style="@style/Typography.Docquity.Message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_10sp"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintTop_toBottomOf="@id/separator_below_feed_tags"
+        tools:text="2  Comments" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/separator_below_like_count"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_1dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_feed_likes_count" />
+
+    <com.example.experiments.atomdesign.component.SocialBarViewV2
+        android:layout_marginTop="@dimen/dimen_10dp"
+        android:id="@+id/sbv_feed"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/separator_below_like_count" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/separator_below_user_actions"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_0dp"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sbv_feed"
+        app:separator_width="@dimen/dimen_4dp" />
+
+    <ViewStub
+        android:id="@+id/rv_feed_comments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inflatedId="@+id/rv_feed_comments"
+        android:layout="@layout/recycler_view_viewstub"
+        app:layout_constraintTop_toBottomOf="@id/separator_below_user_actions" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/separator_below_rv_comments"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_0dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_feed_comments" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_feed_comment_view_more"
+        style="@style/Typography.Docquity.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/dimen_17dp"
+        android:paddingBottom="@dimen/dimen_14dp"
+        android:textColor="@color/color_primary_black"
+        android:textSize="@dimen/dimen_15sp"
+        android:drawableEnd="@drawable/ic_arrow_down_20dp_2_0"
+        app:drawableRightCompat="@drawable/ic_arrow_down_20dp_2_0"
+        app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/rv_feed_comments"
+        tools:text="View More Discussion" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

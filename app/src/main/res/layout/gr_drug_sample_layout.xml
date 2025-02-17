@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_drug_sample_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/sp_drug_sample_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/guideline_left"
+        app:layout_constraintTop_toTopOf="parent"
+        app:separator_width="@dimen/dimen_8dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="@dimen/dimen_1dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/dimen_16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="@dimen/dimen_1dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/dimen_16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="@dimen/dimen_1dp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/dimen_16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom"
+        android:layout_width="@dimen/dimen_1dp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/dimen_16dp" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_drug_sample_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dimen_15sp"
+        app:layout_constraintStart_toEndOf="@id/guideline_left"
+        app:layout_constraintTop_toTopOf="@id/guideline_top"
+        tools:text="Product Sample" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/sp_drug_sample_below_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        app:layout_constraintStart_toEndOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/tv_drug_sample_label" />
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/iv_drug_sample_logo"
+        android:layout_width="@dimen/dimen_140dp"
+        android:layout_height="@dimen/dimen_45dp"
+        android:layout_gravity="center_vertical"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/btn_drug_sample_view_drug"
+        app:layout_constraintStart_toEndOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/sp_drug_sample_below_heading"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_drug_sample_heading_main"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_12dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textSize="@dimen/dimen_15sp"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/iv_drug_sample_logo"
+        app:layout_constraintTop_toBottomOf="@id/sp_drug_sample_below_heading"
+        tools:text="Heading" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_drug_sample_sub_heading"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_12dp"
+        android:layout_marginTop="@dimen/dimen_6dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_12sp"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/iv_drug_sample_logo"
+        app:layout_constraintTop_toBottomOf="@id/tv_drug_sample_heading_main"
+        tools:text="Sub Heading"
+        tools:visibility="visible" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_drug_sample_title"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_12dp"
+        android:layout_marginTop="@dimen/dimen_6dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_12sp"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/iv_drug_sample_logo"
+        app:layout_constraintTop_toBottomOf="@id/tv_drug_sample_sub_heading"
+        tools:text="Title" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_drug_sample_sub_title"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_12dp"
+        android:layout_marginTop="@dimen/dimen_6dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_12sp"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/iv_drug_sample_logo"
+        app:layout_constraintTop_toBottomOf="@id/tv_drug_sample_title"
+        tools:text="Sub Title" />
+
+    <com.example.experiments.atomdesign.component.Button
+        android:id="@+id/btn_drug_sample_view_drug"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        app:buttonType="secondary"
+        app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/tv_drug_sample_sub_title"
+        tools:textValue="View Drug" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

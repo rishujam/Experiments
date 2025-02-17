@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/gr_event_separator_event_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:separator_width="@dimen/dimen_8dp" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_event_tv_event_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_12dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:gravity="center_vertical"
+        android:lineHeight="@dimen/dimen_24dp"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gr_event_separator_event_top"
+        tools:text="Product Sample" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/gr_event_separator_event_heading"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gr_event_tv_event_heading" />
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/gr_event_iv_event_image"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_200dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gr_event_separator_event_heading" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/gr_event_separator_event_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gr_event_iv_event_image" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_event_tv_event_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:textColor="@color/color_grey_700"
+        android:textFontWeight="600"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gr_event_separator_event_date"
+        app:layout_constraintVertical_bias="1"
+        tools:text="20" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/gr_event_separator_event_date"
+        android:layout_width="@dimen/dimen_1dp"
+        android:layout_height="@dimen/dimen_0dp"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/gr_event_tv_event_location"
+        app:layout_constraintStart_toEndOf="@+id/gr_event_tv_event_date"
+        app:layout_constraintTop_toTopOf="@+id/gr_event_tv_event_time"
+        app:separator_orientation="vertical" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_event_tv_event_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_grey_700"
+        android:textFontWeight="600"
+        app:layout_constraintEnd_toEndOf="@id/gr_event_tv_event_date"
+        app:layout_constraintStart_toStartOf="@id/gr_event_tv_event_date"
+        app:layout_constraintTop_toBottomOf="@+id/gr_event_tv_event_date"
+        tools:text="July" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_event_tv_event_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dimen_8dp"
+        android:textColor="@color/color_primary_white"
+        android:visibility="gone"
+        app:atomButtonSize="wrapContent"
+        app:buttonType="secondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/gr_event_separator_event_date"
+        app:layout_constraintTop_toBottomOf="@+id/gr_event_separator_event_image"
+        tools:text="Missed"
+        tools:visibility="visible" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_event_tv_event_name"
+        style="@style/Typography.Docquity.Button"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:lineHeight="@dimen/dimen_18dp"
+        android:textColor="@color/color_grey_700"
+        android:textFontWeight="700"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/gr_event_separator_event_date"
+        app:layout_constraintTop_toBottomOf="@+id/gr_event_tv_event_tag"
+        tools:text="Its Cmplicated: Managing the Enexpacted in Neurology and New.." />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_event_tv_event_time"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:drawablePadding="@dimen/dimen_12dp"
+        android:lineHeight="@dimen/dimen_15dp"
+        android:textColor="@color/color_grey_500"
+        android:textFontWeight="500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/gr_event_separator_event_date"
+        app:layout_constraintTop_toBottomOf="@+id/gr_event_tv_event_name"
+        tools:text="18 Sep 2022, 05:30 AM - 31 Dec 2023, 06:00 PM (Asia /Jak)" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_event_tv_event_location"
+
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+
+        android:drawablePadding="@dimen/dimen_12dp"
+        android:lineHeight="@dimen/dimen_15dp"
+        android:textColor="@color/color_grey_500"
+        android:textFontWeight="500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/gr_event_separator_event_date"
+        app:layout_constraintTop_toBottomOf="@+id/gr_event_tv_event_time"
+        tools:text="Indonesia" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_event_tv_event_calendar"
+
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+
+        android:drawablePadding="@dimen/dimen_12dp"
+        android:lineHeight="@dimen/dimen_15dp"
+        android:paddingBottom="@dimen/dimen_20dp"
+        android:textColor="@color/color_grey_500"
+        android:textFontWeight="500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/gr_event_separator_event_date"
+        app:layout_constraintTop_toBottomOf="@+id/gr_event_tv_event_location"
+        tools:text="2 Day Event" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/gr_event_separator_event_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gr_event_tv_event_calendar" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_event_btn_event_cme_earned"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:drawablePadding="@dimen/dimen_12dp"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dimen_8dp"
+        android:visibility="gone"
+        app:atomButtonSize="wrapContent"
+        app:buttonType="secondary"
+        app:layout_constraintBottom_toTopOf="@+id/gr_event_separator_event_cme_points"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gr_event_separator_event_details"
+        tools:text="CME"
+        tools:visibility="visible" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_event_tv_event_attendees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:gravity="center_vertical"
+        android:lineHeight="@dimen/dimen_15dp"
+        android:textColor="@color/color_grey_500"
+        android:textFontWeight="500"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/gr_event_separator_event_cme_points"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gr_event_separator_event_details"
+        tools:text="9 doctors" />
+
+    <com.example.experiments.atomdesign.component.Button
+        android:id="@+id/gr_event_btn_event_view_certificate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:visibility="gone"
+        app:atomButtonSize="wrapContent"
+        app:buttonType="secondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gr_event_separator_event_details"
+        app:textValue="View Certificate" />
+
+    <com.example.experiments.atomdesign.component.Button
+        android:id="@+id/gr_event_btn_event_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        app:atomButtonSize="wrapContent"
+        app:buttonType="secondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gr_event_separator_event_details"
+        app:textValue="Details" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/gr_event_separator_event_cme_points"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gr_event_btn_event_details" />
+
+    <com.example.experiments.atomdesign.component.Button
+        android:id="@+id/gr_event_btn_event_share"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:paddingBottom="@dimen/dimen_12dp"
+        app:buttonType="secondary"
+        app:layout_constraintEnd_toStartOf="@+id/gr_event_btn_event_going"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gr_event_separator_event_cme_points" />
+
+    <com.example.experiments.atomdesign.component.Button
+        android:id="@+id/gr_event_btn_event_going"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:paddingBottom="@dimen/dimen_12dp"
+        app:buttonType="primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/gr_event_btn_event_share"
+        app:layout_constraintTop_toBottomOf="@+id/gr_event_separator_event_cme_points" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

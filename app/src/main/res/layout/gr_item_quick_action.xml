@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dimen_90dp"
+    android:layout_height="@dimen/dimen_100dp"
+    tools:background="@color/color_grey_700">
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/dimen_45dp"
+        android:layout_height="@dimen/dimen_45dp"
+        app:layout_constraintBottom_toTopOf="@+id/quick_action_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars"
+        android:padding="@dimen/dimen_10dp"
+        app:layout_constraintVertical_chainStyle="packed"
+ />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/quick_action_title"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:textColor="@color/color_grey_700"
+        android:textSize="@dimen/dimen_12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icon"
+        tools:background="@color/color_primary_red"
+        tools:text="Android" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

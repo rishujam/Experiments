@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_primary_white"
+    android:paddingBottom="@dimen/dimen_20dp">
+
+    <View
+        android:id="@+id/view_editor_choice_gradient"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_0dp"
+        app:layout_constraintBottom_toTopOf="@+id/separator_editor_choice_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_separator" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/top_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:separator_orientation="horizontal"
+        app:separator_width="@dimen/dimen_8dp" />
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/iv_editor_choice_icon"
+        android:layout_width="20dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_editor_choice_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_editor_choice_header" />
+
+    <TextView
+        android:id="@+id/tv_editor_choice_header"
+        style="@style/Typography.Docquity.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_4dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:gravity="center"
+        android:textColor="@color/color_grey_700"
+        android:textFontWeight="600"
+        android:textSize="@dimen/dimen_15dp"
+        app:layout_constraintBottom_toTopOf="@+id/separator_editor_choice_toolbar"
+        app:layout_constraintEnd_toStartOf="@+id/iv_editor_choice_banner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/iv_editor_choice_icon"
+        app:layout_constraintTop_toBottomOf="@+id/top_separator"
+        tools:text="Weekly Choice" />
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/iv_editor_choice_banner"
+        android:layout_width="@dimen/dimen_130dp"
+        android:layout_height="@dimen/dimen_70dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:paddingTop="@dimen/dimen_12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_separator" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/separator_editor_choice_toolbar"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_editor_choice_banner" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_editor_choice_title"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:textColor="@color/color_grey_700"
+        android:textFontWeight="500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/separator_editor_choice_toolbar"
+        tools:text="May week - 3" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_editor_choice_description"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_editor_choice_title"
+        tools:text="@tools:sample/lorem"
+        tools:visibility="gone" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_feed_tags"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:textColor="@color/color_grey_500"
+        android:textFontWeight="500"
+        android:textSize="@dimen/dimen_15sp"
+        app:layout_constraintEnd_toEndOf="@+id/top_separator"
+        app:layout_constraintStart_toStartOf="@+id/top_separator"
+        app:layout_constraintTop_toBottomOf="@+id/tv_editor_choice_description"
+        tools:text="#Docquity" />
+
+<!--    <include-->
+<!--        android:id="@+id/gr_editor_choice_author_layout"-->
+<!--        android:layout_width="@dimen/dimen_0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/dimen_16dp"-->
+<!--        android:layout_marginTop="@dimen/dimen_24dp"-->
+<!--        android:layout_marginEnd="@dimen/dimen_16dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tv_feed_tags"-->
+<!--        tools:visibility="visible" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_editor_choice_products"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:itemCount="2" />
+
+    <com.example.experiments.atomdesign.component.Button
+        android:id="@+id/btn_editor_choice_bookmark_single_item"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        app:buttonType="secondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_editor_choice_products"
+        tools:visibility="visible" />
+
+    <com.example.experiments.atomdesign.component.Button
+        android:id="@+id/btn_editor_choice_bookmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        app:buttonType="secondary"
+        app:layout_constraintEnd_toStartOf="@+id/btn_editor_choice_view_all"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_editor_choice_products"
+        tools:visibility="visible" />
+
+    <com.example.experiments.atomdesign.component.Button
+        android:id="@+id/btn_editor_choice_view_all"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        app:buttonType="secondary"
+        app:drawableGravity="end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_editor_choice_bookmark"
+        app:layout_constraintTop_toBottomOf="@+id/rv_editor_choice_products"
+        tools:textValue="View All"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,78 +10,78 @@
         <attr name="progressCount" format="integer|reference" />
     </declare-styleable>
 
-    <declare-styleable name="Button">
-        <attr name="textValue" format="string" />
-        <attr name="drawableSrc" format="integer" />
-        <attr name="drawableTint" format="color" />
-        <attr name="isButtonEnabled" format="boolean" />
-        <attr name="buttonType">
-            <enum name="primary" value="1" />
-            <enum name="secondary" value="2" />
-        </attr>
+<!--    <declare-styleable name="Button">-->
+<!--        <attr name="textValue" format="string" />-->
+<!--        <attr name="drawableSrc" format="integer" />-->
+<!--        <attr name="drawableTint" format="color" />-->
+<!--        <attr name="isButtonEnabled" format="boolean" />-->
+<!--        <attr name="buttonType">-->
+<!--            <enum name="primary" value="1" />-->
+<!--            <enum name="secondary" value="2" />-->
+<!--        </attr>-->
 
-        <attr name="atomButtonSize">
-            <enum name="large" value="1" />
-            <enum name="medium" value="2" />
-            <enum name="small" value="3" />
-            <enum name="smallExtended" value="4" />
-            <enum name="wrapContent" value="5" />
-            <enum name="smallWrapContent" value="6" />
-        </attr>
+<!--        <attr name="atomButtonSize">-->
+<!--            <enum name="large" value="1" />-->
+<!--            <enum name="medium" value="2" />-->
+<!--            <enum name="small" value="3" />-->
+<!--            <enum name="smallExtended" value="4" />-->
+<!--            <enum name="wrapContent" value="5" />-->
+<!--            <enum name="smallWrapContent" value="6" />-->
+<!--        </attr>-->
 
-        <attr name="drawableGravity">
-            <enum name="start" value="1" />
-            <enum name="end" value="2" />
-        </attr>
+<!--        <attr name="drawableGravity">-->
+<!--            <enum name="start" value="1" />-->
+<!--            <enum name="end" value="2" />-->
+<!--        </attr>-->
 
-    </declare-styleable>
+<!--    </declare-styleable>-->
 
-    <declare-styleable name="FabButton">
-        <attr name="fabTextValue" format="string" />
-        <attr name="fabDrawableSrc" format="integer" />
-        <attr name="isFabButtonEnabled" format="boolean" />
-        <attr name="fabButtonType">
-            <enum name="floating" value="1" />
-            <enum name="floatingWithText" value="2" />
-        </attr>
-        <attr name="fabButtonSize">
-            <enum name="largeFloating" value="1" />
-            <enum name="midFloating" value="2" />
-            <enum name="miniFloating" value="3" />
-            <enum name="largeWithText" value="4" />
-            <enum name="midWithText" value="5" />
-            <enum name="miniWithText" value="6" />
-        </attr>
+<!--    <declare-styleable name="FabButton">-->
+<!--        <attr name="fabTextValue" format="string" />-->
+<!--        <attr name="fabDrawableSrc" format="integer" />-->
+<!--        <attr name="isFabButtonEnabled" format="boolean" />-->
+<!--        <attr name="fabButtonType">-->
+<!--            <enum name="floating" value="1" />-->
+<!--            <enum name="floatingWithText" value="2" />-->
+<!--        </attr>-->
+<!--        <attr name="fabButtonSize">-->
+<!--            <enum name="largeFloating" value="1" />-->
+<!--            <enum name="midFloating" value="2" />-->
+<!--            <enum name="miniFloating" value="3" />-->
+<!--            <enum name="largeWithText" value="4" />-->
+<!--            <enum name="midWithText" value="5" />-->
+<!--            <enum name="miniWithText" value="6" />-->
+<!--        </attr>-->
 
 
-    </declare-styleable>
+<!--    </declare-styleable>-->
 
-    <declare-styleable name="RadioButton">
-        <attr name="isRadioButtonEnabled" format="boolean" />
-        <attr name="isRadioButtonSelected" format="boolean" />
-    </declare-styleable>
+<!--    <declare-styleable name="RadioButton">-->
+<!--        <attr name="isRadioButtonEnabled" format="boolean" />-->
+<!--        <attr name="isRadioButtonSelected" format="boolean" />-->
+<!--    </declare-styleable>-->
 
-    <declare-styleable name="NewRadioButton">
-        <attr name="isNewRadioButtonEnabled" format="boolean" />
-        <attr name="isNewRadioButtonSelected" format="boolean" />
-        <attr name="radioButtonTitle" format="string" />
-        <attr name="radioButtonSubTitle" format="string" />
-    </declare-styleable>
+<!--    <declare-styleable name="NewRadioButton">-->
+<!--        <attr name="isNewRadioButtonEnabled" format="boolean" />-->
+<!--        <attr name="isNewRadioButtonSelected" format="boolean" />-->
+<!--        <attr name="radioButtonTitle" format="string" />-->
+<!--        <attr name="radioButtonSubTitle" format="string" />-->
+<!--    </declare-styleable>-->
 
-    <declare-styleable name="RoundedImageView">
-        <attr name="cornerRadius" format="dimension" />
-        <attr name="topLeftRadius" format="dimension" />
-        <attr name="topRightRadius" format="dimension" />
-        <attr name="bottomRightRadius" format="dimension" />
-        <attr name="bottomLeftRadius" format="dimension" />
-        <attr name="borderWidth" format="dimension" />
-        <attr name="borderColor" format="color" />
-    </declare-styleable>
+<!--    <declare-styleable name="RoundedImageView">-->
+<!--        <attr name="cornerRadius" format="dimension" />-->
+<!--        <attr name="topLeftRadius" format="dimension" />-->
+<!--        <attr name="topRightRadius" format="dimension" />-->
+<!--        <attr name="bottomRightRadius" format="dimension" />-->
+<!--        <attr name="bottomLeftRadius" format="dimension" />-->
+<!--        <attr name="borderWidth" format="dimension" />-->
+<!--        <attr name="borderColor" format="color" />-->
+<!--    </declare-styleable>-->
 
-    <declare-styleable name="CircularImageView">
-        <attr name="ciBorderWidth" format="dimension" />
-        <attr name="ciBorderColor" format="color" />
-    </declare-styleable>
+<!--    <declare-styleable name="CircularImageView">-->
+<!--        <attr name="ciBorderWidth" format="dimension" />-->
+<!--        <attr name="ciBorderColor" format="color" />-->
+<!--    </declare-styleable>-->
 
     <declare-styleable name="DCTextView">
         <attr name="default_link_check" format="boolean" />

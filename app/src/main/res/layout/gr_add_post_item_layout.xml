@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/top_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:separator_orientation="horizontal"
+        app:separator_width="@dimen/dimen_8dp" />
+
+    <com.example.experiments.atomdesign.component.ProfileImageView
+        android:id="@+id/profile_image"
+        android:layout_width="@dimen/dimen_40dp"
+        android:layout_height="@dimen/dimen_40dp"
+        android:layout_margin="@dimen/dimen_10dp"
+        app:piv_image_src="@drawable/ic_default_avatar_2_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_separator" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_add_post_post_feed_main"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_10dp"
+        android:paddingHorizontal="@dimen/dimen_16dp"
+        android:paddingVertical="@dimen/dimen_8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/profile_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_separator">
+
+        <com.example.experiments.atomdesign.component.TextView
+            android:id="@+id/title"
+            android:textSize="@dimen/dimen_15sp"
+            android:textColor="@color/color_grey_700"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Title"/>
+
+        <com.example.experiments.atomdesign.component.TextView
+            android:id="@+id/description"
+            android:textSize="@dimen/dimen_12sp"
+            android:textColor="@color/color_grey_500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Description"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

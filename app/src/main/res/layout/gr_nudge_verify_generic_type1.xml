@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_primary_white">
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/iv_nudge_verify_generic_complete_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        android:layout_marginVertical="@dimen/dimen_16dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_nudge_verify_generic_description"
+
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:paddingStart="@dimen/dimen_16dp"
+        android:paddingEnd="@dimen/dimen_8dp"
+        android:textColor="@color/color_primary_white"
+        android:textSize="@dimen/dimen_15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_nudge_verify_generic_complete_now"
+        app:layout_constraintStart_toEndOf="@+id/iv_nudge_verify_generic_complete_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/lorem" />
+
+    <com.example.experiments.atomdesign.component.Button
+        android:id="@+id/btn_nudge_verify_generic_complete_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        app:atomButtonSize="wrapContent"
+        app:buttonType="secondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

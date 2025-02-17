@@ -110,7 +110,6 @@ class TestFragment : Fragment() {
         exoPlayer?.prepare()
 
         binding?.btnClose?.setOnClickListener {
-            (activity as MainActivity).removeCurrFrag()
         }
 
         binding?.btnNext?.setOnClickListener {

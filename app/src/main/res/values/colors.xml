@@ -22,6 +22,15 @@
 
 
 
+
+
+
+    <color name="separator_color">#CFD0D1</color>
+    <color name="separator_color_default">#EAEAE9</color>
+    <color name="gradient_btn_default_color">#6660D67F</color>
+    <color name="default_selected_dot_color">#ffffff</color>
+    <color name="default_dot_color">#e8e8e8</color>
+
     <color name="color_primary_red">#E2504B</color>
     <color name="color_primary_black">#1D1919</color>
     <color name="color_primary_white">#FFFFFF</color>

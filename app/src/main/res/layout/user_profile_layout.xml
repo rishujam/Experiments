@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:animateLayoutChanges="true"
+    android:layout_height="wrap_content">
+
+    <com.example.experiments.atomdesign.component.ProfileImageView
+        android:id="@+id/piv_profile_main"
+        android:layout_width="@dimen/dimen_40dp"
+        android:layout_height="@dimen/dimen_40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_profile_name"
+        style="@style/Typography.Docquity.Tags"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_8dp"
+        android:lineHeight="@dimen/dimen_18dp"
+        android:textColor="@color/color_grey_700"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textSize="@dimen/dimen_15sp"
+        app:layout_constraintEnd_toStartOf="@id/iv_profile_connect"
+        app:layout_constraintStart_toEndOf="@id/piv_profile_main"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/lorem/random" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_profile_desc"
+        style="@style/Typography.Docquity.Paragraph.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dimen_4dp"
+        android:textColor="@color/color_grey_500"
+        android:ellipsize="end"
+        android:maxWidth="@dimen/dimen_120dp"
+        android:maxLines="1"
+        android:textSize="@dimen/dimen_12sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/tv_profile_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_profile_name"
+        tools:text="Description" />
+
+    <View
+        android:id="@+id/tv_sub_heading_dot"
+        android:layout_width="@dimen/dimen_4dp"
+        android:layout_height="@dimen/dimen_4dp"
+        android:layout_marginHorizontal="@dimen/dimen_8dp"
+        android:background="@color/color_grey_500"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/tv_profile_desc_time"
+        app:layout_constraintTop_toTopOf="@id/tv_profile_desc_time"
+        app:layout_constraintStart_toEndOf="@id/tv_profile_desc" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_profile_desc_time"
+        style="@style/Typography.Docquity.Paragraph.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_8dp"
+        android:textColor="@color/color_grey_500"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="@dimen/dimen_12sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@id/tv_sub_heading_dot"
+        app:layout_constraintTop_toTopOf="@id/tv_profile_desc"
+        tools:text="Description" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_profile_sub_desc"
+        style="@style/Typography.Docquity.Paragraph.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4dp"
+        android:layout_marginBottom="@dimen/dimen_8dp"
+        android:textColor="@color/color_grey_500"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="@dimen/dimen_12sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/tv_profile_desc"
+        app:layout_constraintTop_toBottomOf="@+id/tv_profile_desc"
+        tools:text="Description" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/iv_profile_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:atomButtonSize="wrapContent"
+        android:layout_marginEnd="@dimen/dimen_12dp"
+        android:src="@drawable/ic_people_send_request_v1_5"
+        app:buttonType="secondary"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@id/iv_profile_chat"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/piv_profile_main"
+        app:layout_goneMarginEnd="@dimen/dimen_0dp"
+        tools:textValue="Connect" />
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/iv_profile_chat"
+        android:layout_width="@dimen/dimen_24dp"
+        android:layout_height="@dimen/dimen_24dp"
+        android:visibility="visible"
+        android:layout_marginEnd="@dimen/dimen_8dp"
+        app:layout_constraintEnd_toStartOf="@id/iv_profile_more"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/piv_profile_main"
+        android:src="@drawable/ic_msg_icon_2_0"
+        app:srcCompat="@drawable/ic_msg_icon_2_0" />
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/iv_profile_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/piv_profile_main"
+        android:rotation="90"
+        android:src="@drawable/baseline_more_horizontal_24"
+        app:srcCompat="@drawable/baseline_more_horizontal_24" />
+
+    <!-- Barrier to adjust constraints of tv_profile_name -->
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="tv_profile_desc,tv_sub_heading_dot,tv_profile_desc_time,tv_profile_sub_desc" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

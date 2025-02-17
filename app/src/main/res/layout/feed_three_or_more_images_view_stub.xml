@@ -1,0 +1,66 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/two_or_more_images_view_stub"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_300dp"
+>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.60" />
+
+    <ImageView
+        android:id="@+id/image_one"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_300dp"
+        android:scaleType="centerCrop"
+        android:background="@color/color_grey_500"
+        app:layout_constraintEnd_toStartOf="@id/vertical_guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <ImageView
+        android:id="@+id/image_two"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_0dp"
+        android:scaleType="centerCrop"
+        android:background="@color/color_grey_500"
+        app:layout_constraintBottom_toTopOf="@id/image_three"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <ImageView
+        android:id="@+id/image_three"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_0dp"
+        android:scaleType="centerCrop"
+        android:background="@color/color_grey_500"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@id/image_two"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_image_item_count"
+        style="@style/Typography.Docquity.Button"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_0dp"
+        android:textSize="@dimen/dimen_24sp"
+        android:gravity="center"
+        android:textColor="@color/color_primary_white"
+        app:layout_constraintBottom_toBottomOf="@id/image_three"
+        app:layout_constraintEnd_toEndOf="@id/image_three"
+        app:layout_constraintStart_toStartOf="@id/image_three"
+        app:layout_constraintTop_toTopOf="@id/image_three"
+        tools:text="+ 6" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

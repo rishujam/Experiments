@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_webinar_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/top_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:separator_orientation="horizontal"
+        app:separator_width="@dimen/dimen_8dp" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/title"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_12dp"
+        android:layout_marginTop="@dimen/dimen_15dp"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_separator"
+        tools:text="Webinar you may like" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/content_separator_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:separator_orientation="horizontal"
+        app:separator_width="@dimen/dimen_1dp" />
+
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/webinar_title"
+
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_12dp"
+        android:layout_marginTop="@dimen/dimen_15dp"
+        android:lineHeight="@dimen/dimen_20dp"
+        android:textColor="@color/color_grey_700"
+        android:textSize="@dimen/dimen_15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:text="Webinar you may like" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/hashtags"
+
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_12dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:lineHeight="@dimen/dimen_20dp"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/webinar_title"
+        tools:text="#General Practitioner #Medicine" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/watch_count"
+
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_12dp"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        android:lineHeight="@dimen/dimen_20dp"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hashtags"
+        tools:text="273+ People are watching" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/upcoming_webinar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_12dp"
+
+        android:padding="@dimen/dimen_8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/watch_count">
+
+        <com.example.experiments.atomdesign.component.TextView
+            android:id="@+id/release_label"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_grey_500"
+            android:textFontWeight="500"
+            android:textSize="@dimen/dimen_12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Releasing" />
+
+        <com.example.experiments.atomdesign.component.TextView
+            android:id="@+id/release_date"
+
+            android:layout_width="@dimen/dimen_0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            android:lineHeight="@dimen/dimen_18dp"
+            android:textColor="@color/color_grey_700"
+            android:textSize="@dimen/dimen_14sp"
+            app:layout_constraintEnd_toStartOf="@id/btnNotifyMe"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/release_label"
+            tools:text="25 august" />
+
+        <com.example.experiments.atomdesign.component.Button
+            android:id="@+id/btnNotifyMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawablePadding="@dimen/dimen_8dp"
+            app:atomButtonSize="wrapContent"
+            app:buttonType="primary"
+            app:drawableTint="@color/color_primary_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Register" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/content_separator_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/upcoming_webinar_layout"
+        app:separator_orientation="horizontal"
+        app:separator_width="@dimen/dimen_1dp" />
+
+    <com.example.experiments.atomdesign.component.ChannelProfileView
+        android:id="@+id/channel_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/content_separator_bottom" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/channel_separator_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/channel_profile"
+        app:separator_orientation="horizontal"
+        app:separator_width="@dimen/dimen_1dp" />
+
+    <com.example.experiments.atomdesign.component.SocialBarViewV2
+        android:id="@+id/social_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dimen_10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/channel_separator_bottom" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

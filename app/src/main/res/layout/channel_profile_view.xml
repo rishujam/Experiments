@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dimen_12dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.virinchi.atomdesign.component.CircularImageView
+        android:id="@+id/publisher_image"
+        android:layout_width="@dimen/dimen_48dp"
+        android:layout_height="@dimen/dimen_48dp"
+        android:padding="@dimen/dimen_4dp"
+        android:background="@drawable/bg_transparent_stroke_light_grey_rounded_4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/publisher_name"
+        style="@style/Typography.Docquity.Tags"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_12dp"
+        android:lineHeight="@dimen/dimen_18dp"
+        android:maxLines="1"
+        android:textSize="@dimen/dimen_15sp"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toStartOf="@id/cta_publisher"
+        app:layout_constraintStart_toEndOf="@id/publisher_image"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/lorem/random"
+        app:layout_constraintBottom_toTopOf="@id/powered_by"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/powered_by"
+        style="@style/Typography.Docquity.Paragraph.Small"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_12dp"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:lineHeight="@dimen/dimen_15dp"
+        android:maxLines="1"
+        android:textColor="@color/color_grey_500"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="@dimen/dimen_12sp"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@id/cta_publisher"
+        app:layout_constraintStart_toEndOf="@id/publisher_image"
+        app:layout_constraintTop_toBottomOf="@id/publisher_name"
+        tools:text="Powered By Docquity Internal" />
+
+
+    <com.example.experiments.atomdesign.component.Button
+        android:id="@+id/cta_publisher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:atomButtonSize="wrapContent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:drawableTint="@color/color_primary_white"
+        app:textValue="Follow" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

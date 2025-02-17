@@ -1,6 +1,7 @@
 package com.example.experiments.imageeditor
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +18,7 @@ import kotlinx.coroutines.withContext
 import java.util.concurrent.ThreadPoolExecutor.DiscardPolicy
 
 
-class PhotoEditActivity : AppCompatActivity() {
+internal class PhotoEditActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPhotoEditBinding
 
@@ -91,5 +92,35 @@ class PhotoEditActivity : AppCompatActivity() {
 //                constraintSet.applyTo(binding.root)
 //            }
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("Lifecycle", "onRestart photo Activity")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("Lifecycle", "onStart photo activity")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("Lifecycle", "onStop photo activity")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("Lifecycle", "onResume photo Activity")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("Lifecycle", "onPause photoActivity")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("Lifecycle", "onDestroy photoActivity")
     }
 }

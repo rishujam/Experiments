@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ct_feed_meta_preview_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_bg_blue_100"
+    android:paddingBottom="@dimen/dimen_10dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/iv_feed_meta_preview_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_150dp"
+        android:background="@color/color_grey_500"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_feed_placeholder_v1_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/iv_feed_meta_preview_cross"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        android:layout_marginEnd="@dimen/dimen_8dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_feed_meta_preview_title"
+        style="@style/Typography.Docquity.HelpText2"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_12dp"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:layout_marginEnd="@dimen/dimen_12dp"
+        android:ellipsize="end"
+        android:lineHeight="@dimen/dimen_22dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textSize="@dimen/dimen_16sp"
+        app:layout_constraintEnd_toStartOf="@+id/iv_feed_meta_preview_cross"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_feed_meta_preview_image"
+        tools:text="Test tv_feed_meta_preview_title" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_feed_meta_preview_description"
+        style="@style/Typography.Docquity.HelpText1"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_12dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:layout_marginEnd="@dimen/dimen_12dp"
+        android:ellipsize="end"
+        android:lineHeight="@dimen/dimen_20dp"
+        android:maxLines="2"
+        android:textColor="@color/color_grey_500"
+        app:layout_constraintEnd_toStartOf="@+id/iv_feed_meta_preview_cross"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_feed_meta_preview_title"
+        tools:text="Description" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_feed_meta_preview_url"
+        style="@style/Typography.Docquity.Message"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_12dp"
+        android:layout_marginTop="@dimen/dimen_4dp"
+        android:layout_marginEnd="@dimen/dimen_12dp"
+        android:layout_marginBottom="@dimen/dimen_4dp"
+        android:ellipsize="end"
+        android:lineHeight="@dimen/dimen_24dp"
+        android:maxLines="2"
+        android:textColor="@color/color_grey_700"
+        android:textColorLink="@color/color_secondary_blue"
+        android:textSize="@dimen/dimen_14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_feed_meta_preview_description"
+        tools:text="https://jsonOrganic.com" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

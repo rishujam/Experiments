@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:id="@+id/cl_cme_card_main"
+    android:paddingBottom="@dimen/dimen_12dp">
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/gr_cme_top_card_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:separator_orientation="horizontal"
+        app:separator_width="@dimen/dimen_8dp" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_cme_card_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_12dp"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:gravity="center_vertical"
+        android:lineHeight="@dimen/dimen_24dp"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gr_cme_top_card_separator"
+        tools:text="New SKP available" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/gr_cme_top_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gr_cme_card_title"
+        app:separator_orientation="horizontal"
+        app:separator_width="@dimen/dimen_1dp" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_cme_title"
+        android:layout_width="@dimen/dimen_0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/gr_cme_banner"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:layout_marginStart="@dimen/dimen_12dp"
+        android:layout_marginEnd="@dimen/dimen_20dp"
+        android:lineHeight="@dimen/dimen_20dp"
+        android:maxLines="2"
+        android:textSize="@dimen/dimen_15sp"
+        app:layout_constraintTop_toBottomOf="@id/gr_cme_top_separator"
+        tools:text="@tools:sample/lorem/random" />
+
+    <com.example.experiments.atomdesign.component.RoundedImageView
+        android:id="@+id/gr_cme_banner"
+        android:layout_width="@dimen/dimen_70dp"
+        android:layout_height="@dimen/dimen_70dp"
+        android:scaleType="centerCrop"
+        app:borderColor="@color/color_grey_light_border"
+        app:borderWidth="@dimen/dimen_1dp"
+        app:cornerRadius="@dimen/dimen_4dp"
+        android:layout_margin="@dimen/dimen_12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gr_cme_top_separator"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_cme_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:lineHeight="@dimen/dimen_25dp"
+        android:textSize="@dimen/dimen_20sp"
+        android:gravity="center_vertical"
+        android:textColor="@color/color_grey_700"
+        app:layout_constraintEnd_toEndOf="@id/gr_cme_banner"
+        app:layout_constraintTop_toBottomOf="@id/gr_cme_banner"
+        tools:text="10" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_credit_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4dp"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:textColor="@color/color_grey_700"
+        android:lineHeight="@dimen/dimen_25dp"
+        android:textSize="@dimen/dimen_12sp"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="@id/gr_cme_points"
+        app:layout_constraintTop_toBottomOf="@id/gr_cme_points"
+        android:text="Credit" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_cme_number_of_days"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_12dp"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:lineHeight="@dimen/dimen_15dp"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gr_cme_title"
+        app:layout_constraintEnd_toStartOf="@id/gr_cme_banner"
+        tools:text="Expires on 20 Dec 2023" />
+
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_cme_speciality"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_12dp"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:lineHeight="@dimen/dimen_15dp"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_12sp"
+        android:maxLines="5"
+        android:ellipsize="end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gr_cme_number_of_days"
+        app:layout_constraintEnd_toStartOf="@id/gr_cme_banner"
+        tools:text="#General Practitioner #Medicine" />
+
+
+    <com.example.experiments.atomdesign.component.ImageView
+        android:id="@+id/accr_image"
+        android:layout_width="@dimen/dimen_20dp"
+        android:layout_height="@dimen/dimen_20dp"
+        android:layout_marginStart="@dimen/dimen_12dp"
+        android:layout_marginTop="@dimen/dimen_20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gr_cme_speciality"/>
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/accr_text"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_8dp"
+        android:layout_marginEnd="@dimen/dimen_8dp"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:lineHeight="@dimen/dimen_15dp"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_12sp"
+        app:layout_constraintStart_toEndOf="@+id/accr_image"
+        app:layout_constraintTop_toTopOf="@id/accr_image"
+        app:layout_constraintBottom_toBottomOf="@id/accr_image"
+        app:layout_constraintEnd_toStartOf="@+id/gr_cme_banner"
+        tools:text="by Team Docquity" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/gr_attempts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_12dp"
+        android:layout_marginTop="@dimen/dimen_32dp"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:lineHeight="@dimen/dimen_15dp"
+        android:textColor="@color/color_grey_500"
+        android:textSize="@dimen/dimen_12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/accr_text"
+        tools:text="5+ Doctors Attempted " />
+
+    <com.example.experiments.atomdesign.component.Button
+        android:id="@+id/gr_cme_follow_publisher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_12dp"
+        app:atomButtonSize="wrapContent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/gr_attempts"
+        app:layout_constraintBottom_toBottomOf="@id/gr_attempts"
+        app:textValue="Start" />
+
+    <com.example.experiments.atomdesign.component.Separator
+        android:id="@+id/gr_cme_bottom_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gr_cme_follow_publisher"
+        app:separator_orientation="horizontal"
+        app:separator_width="@dimen/dimen_1dp" />
+
+    <com.example.experiments.atomdesign.component.SocialBarViewV2
+        android:id="@+id/gr_cme_social_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dimen_12dp"
+        app:layout_constraintTop_toBottomOf="@id/gr_cme_bottom_separator" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

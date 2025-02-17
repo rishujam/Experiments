@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_social_user_action_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_social_user_action_like"
+        style="@style/Typography.Docquity.HelpText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_like_2_0"
+        android:drawablePadding="@dimen/dimen_8dp"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/tv_social_user_action_comment"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:text="Like" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_social_user_action_comment"
+        style="@style/Typography.Docquity.HelpText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_comment_2_0"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/tv_social_user_action_share"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_social_user_action_like"
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:text="Comment" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_social_user_action_share"
+        style="@style/Typography.Docquity.HelpText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_share_2_0"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:gravity="center"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/tv_social_user_action_bookmark"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_social_user_action_comment"
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:text="Share" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_social_user_action_bookmark"
+        style="@style/Typography.Docquity.HelpText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_bookmark_2_0"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:visibility="visible"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_social_user_action_share"
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:text="Bookmark" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_social_user_action_download"
+        style="@style/Typography.Docquity.HelpText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_download_2_0"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:visibility="visible"
+        android:gravity="center"
+        app:layout_constraintEnd_toStartOf="@id/tv_social_user_action_share"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_social_user_action_bookmark"
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:text="Download" />
+
+    <com.example.experiments.atomdesign.component.TextView
+        android:id="@+id/tv_social_user_action_repost"
+        style="@style/Typography.Docquity.HelpText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_repost_2_0"
+        android:drawablePadding="@dimen/dimen_4dp"
+        android:visibility="gone"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_social_user_action_share"
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:text="Repost" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow_social_user_actions"
+        android:layout_width="@dimen/dimen_0dp"
+        android:layout_height="@dimen/dimen_0dp"
+        android:orientation="horizontal"
+        app:constraint_referenced_ids="tv_social_user_action_like,tv_social_user_action_comment,tv_social_user_action_bookmark,tv_social_user_action_download,tv_social_user_action_share,tv_social_user_action_repost"
+        app:flow_horizontalStyle="spread"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
